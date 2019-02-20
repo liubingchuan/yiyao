@@ -2,18 +2,22 @@ spring:
   application:
      name: car
   datasource:
-#     url: 'jdbc:mysql://119.23.227.180:3306/?useUnicode=true&characterEncoding=utf-8&useSSL=false'
-#     username: root
-#     password: Alibaba%1688
-     url: 'jdbc:mysql://127.0.0.1:3306/?useUnicode=true&characterEncoding=utf-8&useSSL=false'
+     url: 'jdbc:mysql://47.104.7.73:3306/?useUnicode=true&characterEncoding=utf-8&useSSL=false'
      username: root
-     password: Alibaba%1688
+     password: 123456
      driver-class: 'com.mysql.jdbc.Driver'
-     database-name: car
+     database-name: yiyao
      init-sql: mysql/init.sql
+  thymeleaf:
+     cache: false
+     prefix: classpath:/templates/
+     suffix: .html
+     encoding: UTF-8
+     content-type: text/html
+     mode: HTML5
 
 server:
-  port: 80
+  port: 8090
     
 mybatis:
   configuration:

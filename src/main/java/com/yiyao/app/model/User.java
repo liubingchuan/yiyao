@@ -3,7 +3,7 @@ package com.yiyao.app.model;
 import com.yiyao.app.annotation.IdFlag;
 import com.yiyao.app.annotation.TableName;
 
-@TableName("car_user")
+@TableName("yiyao_user")
 public class User {
 
 	public User() {
@@ -14,9 +14,16 @@ public class User {
 	private Integer id;
 	private String account;
 	private String password;
-	private String nick;
-	private String imei;
-	private String uType;
+	private String name;
+	private String identity;
+	private String unit;
+	private String job;
+	private String duty;
+	private String major;
+	private String email;
+	private String phone;
+	private String wechat;
+	private Long stamp;
 	public Integer getId() {
 		return id;
 	}
@@ -35,23 +42,65 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getImei() {
-		return imei;
+	public String getName() {
+		return name;
 	}
-	public void setImei(String imei) {
-		this.imei = imei;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getuType() {
-		return uType;
+	public String getIdentity() {
+		return identity;
 	}
-	public void setuType(String uType) {
-		this.uType = uType;
+	public void setIdentity(String identity) {
+		this.identity = identity;
 	}
-	public String getNick() {
-		return nick;
+	public String getUnit() {
+		return unit;
 	}
-	public void setNick(String nick) {
-		this.nick = nick;
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
+	}
+	public String getDuty() {
+		return duty;
+	}
+	public void setDuty(String duty) {
+		this.duty = duty;
+	}
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major = major;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getWechat() {
+		return wechat;
+	}
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+	public Long getStamp() {
+		return stamp;
+	}
+	public void setStamp(Long stamp) {
+		this.stamp = stamp;
 	}
 
 }

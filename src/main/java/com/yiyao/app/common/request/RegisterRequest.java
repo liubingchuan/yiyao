@@ -6,11 +6,9 @@ public class RegisterRequest extends BaseRequest{
 
 	private String account;
 	
-	private String imei;
+	private String email;
 	
 	private String password;
-	
-	private String type;
 
 	public String getAccount() {
 		return account;
@@ -20,12 +18,12 @@ public class RegisterRequest extends BaseRequest{
 		this.account = account;
 	}
 
-	public String getImei() {
-		return imei;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setImei(String imei) {
-		this.imei = imei;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -35,14 +33,7 @@ public class RegisterRequest extends BaseRequest{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
+	
 	
 	
 }

@@ -12,11 +12,11 @@ import java.util.List;
 @Component
 public interface UserMapper {
 
+	@Select("SELECT * FROM yiyao_user where account = #{account}")
+	List<User> getUserByAccount(@Param("account") String account);
+	
     @Select("SELECT * FROM car_user")
     List<User> getAll();
-    
-    @Select("SELECT * FROM car_user where account = #{account}")
-    List<User> getUserByAccount(@Param("account") String account);
 
     @InsertProvider(type = BasedProvider.class, method = BasedProvider.INSERT)
     int insertUser(User user);
