@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,15 +44,6 @@ public class UserController {
     private UserMapper userMapper;
 	
 	@Autowired
-	private ImeiUserMapper iuMapper;
-	
-	@Autowired
-	private InfoMapper infoMapper;
-	
-	@Autowired
-	private FriendsMapper friendsMapper;
-	
-	@Autowired
 	private Cache cache;
 	
 	
@@ -67,11 +59,11 @@ public class UserController {
 		String account = request.getAccount();
 		String password = request.getPassword();
 		String email = request.getEmail();
-		List<User> users = userMapper.getUserByAccount(account);
-		if(users != null && users.size()>0) {
+		User user = userMapper.getUserByAccount(account);
+		if(user != null) {
 			return R.error().put("token", "0");
 		}
-		User user = new User();
+		user = new User();
 		user.setAccount(account);
 		user.setPassword(password);
 		user.setEmail(email);
@@ -81,69 +73,71 @@ public class UserController {
 		return R.ok().put("token", JWT);
 	}
 	
-	
 	@PostMapping(value = "user/login")
 	public String login(LoginRequest request,Model model) {
 		System.out.println();
-		if(request.getToken() != null) {
+		String account = "";
+		if(request.getToken() != null && !"".equals(request.getToken())) {
 			try {
-				String subject = JwtUtils.parseJWT(request.getToken()).getSubject();
-				model.addAttribute("login", "true");
-				return "index";
+				account = JwtUtils.parseJWT(request.getToken()).getSubject();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		List<User> users = userMapper.getUserByAccount(request.getAccount());
-		Date exp = new Date();
+		account = request.getAccount();
+		User user = userMapper.getUserByAccount(account);
+		String password = request.getPassword();
+		if(user !=null) {
+			model.addAttribute("user", user);
+			if(password != null && !password.equals(user.getPassword())) {
+				model.addAttribute("token", "1");
+			}else {
+				String JWT = JwtUtils.createJWT("1", account, SystemConstant.JWT_TTL);
+				model.addAttribute("token", JWT);
+			}
+		}else {
+			model.addAttribute("token", "2");
+			model.addAttribute("user", new User());
+		}
 		return "index";
-//		if(users != null && users.size()>0) {
-//			System.out.println();
-//			User u = users.get(0);
-//			if(u.getPassword().equals(request.getPassword())) {
-//				String deviceToken = request.getDeviceToken();
-//				logger.info("username is ->" + request.getAccount() + "device token is ->" + request.getDeviceToken());
-//				if(deviceToken != null) {
-//					if (cache.get(request.getAccount()) == null || "".equals(cache.get(request.getAccount()))) {
-//						cache.save(request.getAccount(), deviceToken);
-//					}else {
-//						cache.update(request.getAccount(), deviceToken);
-//					}
-//				}
-//				//把token返回给客户端-->客户端保存至cookie-->客户端每次请求附带cookie参数
-//				String JWT = JwtUtils.createJWT("1", u.getAccount(), SystemConstant.JWT_TTL);
-//				List<String> imeis = new ArrayList<String>();
-////				imeis.add(u.getImei());
-//				try {	
-//					exp = JwtUtils.parseJWT(JWT).getExpiration();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//					return R.error().put("status", "4").put("msg", "JWT解析异常");
-//				}
-//				return R.ok().put("expirationDate", exp).put("status", "1").put("accessToken", JWT).put("userID", u.getId()).put("imeis", imeis);
-//			}else {
-//				return R.error().put("status", "3");
-//			}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "resetpassword", method = RequestMethod.POST,consumes = "application/json")
-	public R resetpassword(@RequestBody ResetRequest request) {
-		String account = request.getAccount();
-		String password = request.getPassword();
-		if(account == null || password == null) {
-			return R.error().put("status", "5");
-		}
-		List<User> users = userMapper.getUserByAccount(request.getAccount());
-		if(users != null && users.size()>0) {
-			userMapper.updatePassword(account, password);;
-			return R.ok().put("status", "1");
+	@GetMapping(value = "user/list")
+	public String users(@RequestParam("token") String token, 
+			@RequestParam(required=false,value="pageSize") String pageSize, 
+			@RequestParam(required=false, value="pageIndex") String pageIndex, 
+			Model model) {
+		if(pageSize != null && pageIndex != null) {
+			if("-1".equals(pageIndex)) {
+				pageIndex = "0";
+			}
+			int start = Integer.valueOf(pageIndex) * Integer.valueOf(pageSize);
+			int totalCount = userMapper.getUserCount();
+			int end = totalCount-1;
+			int totalPages = totalCount/Integer.valueOf(pageSize) + 1;
+			if(pageIndex.equals(String.valueOf(totalPages))) {
+				pageIndex = String.valueOf(Integer.valueOf(pageIndex) - 1);
+			}else {
+				end = Integer.valueOf(pageSize) * Integer.valueOf((Integer.valueOf(pageIndex)+1));
+			}
+			List<User> userList = userMapper.getUsers(start, end);
+			model.addAttribute("userList", userList);
+			model.addAttribute("pageSize", pageSize);
+			model.addAttribute("pageIndex", pageIndex);
+			model.addAttribute("totalPages", totalPages);
 			
-		}else {
-			return R.error().put("status", "2");
 		}
+		return "manage";
 	}
+	
+	@GetMapping(value = "user/getUser")
+	public String getUser(@RequestParam("account") String account, Model model) {
+		User user = userMapper.getUserByAccount(account);
+		model.addAttribute("user", user);
+		return "manage_mess";
+	}
+	
 	
 	
 }

@@ -16,14 +16,23 @@ public class User {
 	private String password;
 	private String name;
 	private String identity;
-	private String unit;
-	private String job;
-	private String duty;
-	private String major;
+	private String unit;  // 工作单位
+	private String job; // 职位
+	private String duty; // 职务
+	private String major; // 研究方向
 	private String email;
 	private String phone;
 	private String wechat;
 	private Long stamp;
+	private String role;
+	
+	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public Integer getId() {
 		return id;
 	}
