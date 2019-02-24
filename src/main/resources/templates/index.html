@@ -47,8 +47,7 @@
 									<em class="loginAfterNoMSj"></em>
 									<p>
 										<span class="loginName" th:text="${user.account}"></span>
-										<span class="vip">
-											超级管理员
+										<span class="vip" th:text="${user.role}">
 										</span>
 									</p>
 									<p>
@@ -511,7 +510,18 @@
 	    <script type="text/javascript" th:src="@{/js/main.js}" ></script>
 	    <script type="text/javascript" th:inline="javascript">
 	    	var token =  [[${token}]];
+	    	var account =  [[${account}]];
+	    	var role =  [[${role}]];
+	    	
 			$(document).ready(function () {
+				console.log($.cookie("account"))
+				console.log($.cookie("role"))
+				if($.cookie("account")!=account){
+					$.cookie('account', account);
+				}
+				if($.cookie("role")!=role){
+					$.cookie('role', role);
+				}
 				if(token == "1"){
 					$('.alertZh').css('display','block');
 					alert("密码输入错误")

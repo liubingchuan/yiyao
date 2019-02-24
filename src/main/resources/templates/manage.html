@@ -16,7 +16,7 @@
 				<a href="#" class="manageMenuF">		
 						订单管理
 				</a>
-				<a href="#" class="manageMenuF">		
+				<a th:href="@{/project/list(pageSize=10,pageIndex=0)}" class="manageMenuF">		
 						项目信息
 				</a>
 				<a href="javascript:;" class="manageMenuF">		
@@ -67,11 +67,9 @@
 								<div class="loginAfterNoM">
 									<em class="loginAfterNoMSj"></em>
 									<p>
-										<span class="loginName">
-											张伟
+										<span class="loginName" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('account')}" th:text="${cookie.getValue()}">
 										</span>
-										<span class="vip">
-											超级管理员
+										<span class="vip" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('role')}" th:text="${cookie.getValue()}">
 										</span>
 									</p>
 									<p>

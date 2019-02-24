@@ -22,19 +22,20 @@ public interface UserMapper {
 	@Select("select count(*) from yiyao_user")
     int getUserCount();
 	
-    @Select("SELECT * FROM car_user")
-    List<User> getAll();
-
-    @InsertProvider(type = BasedProvider.class, method = BasedProvider.INSERT)
-    int insertUser(User user);
-
-    @Delete("DELETE FROM car_user")
-    void deleteAll();
-    
-    @Update("update car_user set password = #{password} where account = #{account}")
-    void updatePassword(@Param("account") String account, @Param("password") String password);
-    
-    @Update("update car_user set nick = #{nick} where account = #{account}")
-    void updateNick(@Param("account") String account, @Param("nick") String nick);
+	@InsertProvider(type = BasedProvider.class, method = BasedProvider.INSERT)
+	int insertUser(User user);
+	
+//    @Select("SELECT * FROM car_user")
+//    List<User> getAll();
+//
+//
+//    @Delete("DELETE FROM car_user")
+//    void deleteAll();
+//    
+//    @Update("update car_user set password = #{password} where account = #{account}")
+//    void updatePassword(@Param("account") String account, @Param("password") String password);
+//    
+//    @Update("update car_user set nick = #{nick} where account = #{account}")
+//    void updateNick(@Param("account") String account, @Param("nick") String nick);
 
 }

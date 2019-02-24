@@ -70,7 +70,7 @@ public class UserController {
 		userMapper.insertUser(user);
 		String JWT = JwtUtils.createJWT("1", account, SystemConstant.JWT_TTL);
 		
-		return R.ok().put("token", JWT);
+		return R.ok().put("token", JWT).put("account", account);
 	}
 	
 	@PostMapping(value = "user/login")
@@ -95,6 +95,8 @@ public class UserController {
 			}else {
 				String JWT = JwtUtils.createJWT("1", account, SystemConstant.JWT_TTL);
 				model.addAttribute("token", JWT);
+				model.addAttribute("account", user.getAccount());
+				model.addAttribute("role", user.getRole());
 			}
 		}else {
 			model.addAttribute("token", "2");

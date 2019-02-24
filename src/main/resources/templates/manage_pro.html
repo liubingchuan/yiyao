@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet" href="css/init.css" />
-		<link rel="stylesheet" href="css/main.css" />
-		<script type="text/javascript" src="js/jquery-1.7.2.js" ></script>
+		<link rel="stylesheet" th:href="@{/css/init.css}" />
+		<link rel="stylesheet" th:href="@{/css/main.css}" />
+		<script type="text/javascript" th:src="@{/js/jquery-1.7.2.js}" ></script>
 	</head>
 	<body class="manageBody">
 		<div class="manageLf">
 			<div class="manageLfM">
 				<div class="manageLfLogo">
-					<img src="images/logo.png" />
+					<img th:src="@{/images/logo.png}" />
 				</div>
 				<a href="#" class="manageMenuF">		
 						订单管理
@@ -58,7 +58,7 @@
 		<div class="managHead clearfix">
 			<div class="right manageTx">
 				<div class="clearfix">
-				<img src="images/tx.jpeg" class="manageTxImg left" />
+				<img th:src="@{/images/tx.jpeg}" class="manageTxImg left" />
 				<span class="left manageTxName">张伟</span>
 				<em class="manageTxIco left"></em>
 				</div>
@@ -67,16 +67,14 @@
 								<div class="loginAfterNoM">
 									<em class="loginAfterNoMSj"></em>
 									<p>
-										<span class="loginName">
-											张伟
+										<span class="loginName" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('account')}" th:text="${cookie.getValue()}">
 										</span>
-										<span class="vip">
-											超级管理员
+										<span class="vip" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('role')}" th:text="${cookie.getValue()}">
 										</span>
 									</p>
 									<p>
 										<a href="#">
-											<img src="images/tuichu.png" />
+											<img th:src="@{/images/tuichu.png}" />
 											退出
 										</a>
 									</p>
@@ -92,7 +90,7 @@
 						<span class="left usermanageOneTl">
 							项目信息（2090）
 						</span>
-						<a href="#" class="left manageproAddA">
+						<a th:href="@{/project/save}" class="left manageproAddA">
 							新增项目
 						</a>
 						<div class="right usermanageOneSS">
@@ -123,220 +121,18 @@
 		    			</th>
 		    			
 		    		</tr>
-		    		<tr>
-		    			<td>
+		    		<tr th:each="project : ${projectList}">
+		    			<td th:text="${project.name}">
 		    				<a href="#" class="manageProTl">
 		    					 招标公告：十七冶房屋公司宿州生物医药科技园项目1#9#10#GMP标准厂房土建劳务工程(第二次）
 		    				</a>
 		    			</td>
-		    			<td>
-		    				鹿寨县国土资源局
+		    			<td th:text="${project.entrust}">
 		    			</td>
 		    			<td>
-		    				<span class="colorGreen">20000万</span>
+		    				<span class="colorGreen" th:text="${project.budget}">20000万</span>
 		    			</td>
-		    			<td>
-		    				2018/11/02 12:50:00
-		    			</td>
-		    			<td>
-		    				<a href="#" class="manageProBj">
-		    					编辑
-		    				</a>
-		    				<a href="#" class="manageProsc">
-		    					删除
-		    				</a>
-		    			</td>
-		    			
-		    		</tr>
-		    	    <tr>
-		    			<td>
-		    				<a href="#" class="manageProTl">
-		    					 招标公告：十七冶房屋公司宿州生物医药科技园项目1#9#10#GMP标准厂房土建劳务工程(第二次）
-		    				</a>
-		    			</td>
-		    			<td>
-		    				鹿寨县国土资源局
-		    			</td>
-		    			<td>
-		    				<span class="colorGreen">20000万</span>
-		    			</td>
-		    			<td>
-		    				2018/11/02 12:50:00
-		    			</td>
-		    			<td>
-		    				<a href="#" class="manageProBj">
-		    					编辑
-		    				</a>
-		    				<a href="#" class="manageProsc">
-		    					删除
-		    				</a>
-		    			</td>
-		    			
-		    		</tr>
-		    		<tr>
-		    			<td>
-		    				<a href="#" class="manageProTl">
-		    					 招标公告：十七冶房屋公司宿州生物医药科技园项目1#9#10#GMP标准厂房土建劳务工程(第二次）
-		    				</a>
-		    			</td>
-		    			<td>
-		    				鹿寨县国土资源局
-		    			</td>
-		    			<td>
-		    				<span class="colorGreen">20000万</span>
-		    			</td>
-		    			<td>
-		    				2018/11/02 12:50:00
-		    			</td>
-		    			<td>
-		    				<a href="#" class="manageProBj">
-		    					编辑
-		    				</a>
-		    				<a href="#" class="manageProsc">
-		    					删除
-		    				</a>
-		    			</td>
-		    			
-		    		</tr>
-		    		<tr>
-		    			<td>
-		    				<a href="#" class="manageProTl">
-		    					 招标公告：十七冶房屋公司宿州生物医药科技园项目1#9#10#GMP标准厂房土建劳务工程(第二次）
-		    				</a>
-		    			</td>
-		    			<td>
-		    				鹿寨县国土资源局
-		    			</td>
-		    			<td>
-		    				<span class="colorGreen">20000万</span>
-		    			</td>
-		    			<td>
-		    				2018/11/02 12:50:00
-		    			</td>
-		    			<td>
-		    				<a href="#" class="manageProBj">
-		    					编辑
-		    				</a>
-		    				<a href="#" class="manageProsc">
-		    					删除
-		    				</a>
-		    			</td>
-		    			
-		    		</tr>
-		    		<tr>
-		    			<td>
-		    				<a href="#" class="manageProTl">
-		    					 招标公告：十七冶房屋公司宿州生物医药科技园项目1#9#10#GMP标准厂房土建劳务工程(第二次）
-		    				</a>
-		    			</td>
-		    			<td>
-		    				鹿寨县国土资源局
-		    			</td>
-		    			<td>
-		    				<span class="colorGreen">20000万</span>
-		    			</td>
-		    			<td>
-		    				2018/11/02 12:50:00
-		    			</td>
-		    			<td>
-		    				<a href="#" class="manageProBj">
-		    					编辑
-		    				</a>
-		    				<a href="#" class="manageProsc">
-		    					删除
-		    				</a>
-		    			</td>
-		    			
-		    		</tr>
-		    		<tr>
-		    			<td>
-		    				<a href="#" class="manageProTl">
-		    					 招标公告：十七冶房屋公司宿州生物医药科技园项目1#9#10#GMP标准厂房土建劳务工程(第二次）
-		    				</a>
-		    			</td>
-		    			<td>
-		    				鹿寨县国土资源局
-		    			</td>
-		    			<td>
-		    				<span class="colorGreen">20000万</span>
-		    			</td>
-		    			<td>
-		    				2018/11/02 12:50:00
-		    			</td>
-		    			<td>
-		    				<a href="#" class="manageProBj">
-		    					编辑
-		    				</a>
-		    				<a href="#" class="manageProsc">
-		    					删除
-		    				</a>
-		    			</td>
-		    			
-		    		</tr>
-		    		<tr>
-		    			<td>
-		    				<a href="#" class="manageProTl">
-		    					 招标公告：十七冶房屋公司宿州生物医药科技园项目1#9#10#GMP标准厂房土建劳务工程(第二次）
-		    				</a>
-		    			</td>
-		    			<td>
-		    				鹿寨县国土资源局
-		    			</td>
-		    			<td>
-		    				<span class="colorGreen">20000万</span>
-		    			</td>
-		    			<td>
-		    				2018/11/02 12:50:00
-		    			</td>
-		    			<td>
-		    				<a href="#" class="manageProBj">
-		    					编辑
-		    				</a>
-		    				<a href="#" class="manageProsc">
-		    					删除
-		    				</a>
-		    			</td>
-		    			
-		    		</tr>
-		    		<tr>
-		    			<td>
-		    				<a href="#" class="manageProTl">
-		    					 招标公告：十七冶房屋公司宿州生物医药科技园项目1#9#10#GMP标准厂房土建劳务工程(第二次）
-		    				</a>
-		    			</td>
-		    			<td>
-		    				鹿寨县国土资源局
-		    			</td>
-		    			<td>
-		    				<span class="colorGreen">20000万</span>
-		    			</td>
-		    			<td>
-		    				2018/11/02 12:50:00
-		    			</td>
-		    			<td>
-		    				<a href="#" class="manageProBj">
-		    					编辑
-		    				</a>
-		    				<a href="#" class="manageProsc">
-		    					删除
-		    				</a>
-		    			</td>
-		    			
-		    		</tr>
-		    		<tr>
-		    			<td>
-		    				<a href="#" class="manageProTl">
-		    					 招标公告：十七冶房屋公司宿州生物医药科技园项目1#9#10#GMP标准厂房土建劳务工程(第二次）
-		    				</a>
-		    			</td>
-		    			<td>
-		    				鹿寨县国土资源局
-		    			</td>
-		    			<td>
-		    				<span class="colorGreen">20000万</span>
-		    			</td>
-		    			<td>
-		    				2018/11/02 12:50:00
+		    			<td th:text="${project.ctime}">
 		    			</td>
 		    			<td>
 		    				<a href="#" class="manageProBj">
@@ -361,6 +157,6 @@
 		        </div>
 		    </div>
 		</div>
-		<script type="text/javascript" src="js/main.js" ></script>
+		<script type="text/javascript" th:src="@{/js/main.js}" ></script>
 	</body>
 </html>

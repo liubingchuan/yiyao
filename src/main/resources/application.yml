@@ -15,6 +15,10 @@ spring:
      encoding: UTF-8
      content-type: text/html
      mode: HTML5
+  data:
+     elasticsearch:
+       cluster-name: docker-cluster
+       cluster-nodes: 47.104.7.73:9300
 
 server:
   port: 8090
