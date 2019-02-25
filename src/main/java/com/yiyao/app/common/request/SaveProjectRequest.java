@@ -4,7 +4,7 @@ import com.yiyao.app.common.BaseRequest;
 
 public class SaveProjectRequest extends BaseRequest{
 
-	private Long id;
+	private String id;
 	private String name;
 	private String classis; // 分类
 	private String description; // 介绍
@@ -20,11 +20,13 @@ public class SaveProjectRequest extends BaseRequest{
 	private String ctime;  // 提交时间
 	private String uploader;
 	private String modifier;
+	private Long now;
 	
-	public Long getId() {
+	
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -116,6 +118,12 @@ public class SaveProjectRequest extends BaseRequest{
 	}
 	public void setCtime(String ctime) {
 		this.ctime = ctime;
+	}
+	public Long getNow() {
+		return now;
+	}
+	public void setNow(Long now) {
+		this.now = now;
 	}
 	
 }

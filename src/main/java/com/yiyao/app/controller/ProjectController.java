@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Controller;
@@ -38,32 +40,28 @@ public class ProjectController {
 	@Autowired
     private ProjectRepository projectRepository;
 	
+	@Autowired
+	private ElasticsearchTemplate esTemplate;
+	
 	@PostMapping(value = "project/save")
 	public String saveProject(SaveProjectRequest request,Model model) {
 		
 		Project project = new Project();
 		BeanUtil.copyBean(request, project);
-		long start =0L;
-		long end = 0L;
-		long ctime = 0L;
-		try {
-			start = new SimpleDateFormat("yyyy年MM月dd").parse(request.getStart()).getTime();
-			end = new SimpleDateFormat("yyyy年MM月dd").parse(request.getEnd()).getTime();
-			ctime = new SimpleDateFormat("YYYY年MM月DD日 hh:mm:ss").parse(request.getCtime()).getTime();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(project.getId() == null) {
+			project.setId(UUID.randomUUID().toString());
 		}
-		project.setStart(start);
-		project.setEnd(end);
-		project.setCtime(ctime);
+		project.setNow(System.currentTimeMillis());
 		projectRepository.save(project);
 		return "redirect:/project/list";
 	}
 	
-	@GetMapping(value = "project/save")
-	public String saveProject(Model model) {
+	@GetMapping(value = "project/get")
+	public String getProject(@RequestParam(required=false,value="id") String id, Model model) {
 		Project project = new Project();
+		if(id != null) {
+			project = projectRepository.findById(id).get();
+		}
 		model.addAttribute("project", project);
 		return "manageProCon";
 	}
@@ -78,16 +76,20 @@ public class ProjectController {
 		if(pageIndex == null) {
 			pageIndex = 0;
 		}
-		long totalCount = projectRepository.count();
-		long totalPages = Math.round(totalCount/pageSize); 
+		long totalCount = 0L;
+		long totalPages = 0L;
 		List<Project> projectList = new ArrayList<Project>();
-		if (totalCount != 0) {
-			Sort sort = new Sort(Direction.DESC, "ctime");
-			Pageable pageable = new PageRequest(pageIndex, pageSize,sort);
-			SearchQuery searchQuery = new NativeSearchQueryBuilder()
-					.withPageable(pageable).build();
-			Page<Project> projectsPage = projectRepository.search(searchQuery);
-			projectList = projectsPage.getContent();
+		if(esTemplate.indexExists(Project.class)) {
+			totalCount = projectRepository.count();
+			totalPages = Math.round(totalCount/pageSize); 
+			if (totalCount != 0) {
+				Sort sort = new Sort(Direction.DESC, "now");
+				Pageable pageable = new PageRequest(pageIndex, pageSize,sort);
+				SearchQuery searchQuery = new NativeSearchQueryBuilder()
+						.withPageable(pageable).build();
+				Page<Project> projectsPage = projectRepository.search(searchQuery);
+				projectList = projectsPage.getContent();
+			}
 		}
 		model.addAttribute("projectList", projectList);
 		model.addAttribute("pageSize", pageSize);

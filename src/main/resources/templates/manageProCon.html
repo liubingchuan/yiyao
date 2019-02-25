@@ -114,7 +114,7 @@
 			    			</span>
 			    			<div class="M_messGpRt">
 			    				<select th:field="*{classis}">
-			    					<option th:value="生物医药">生物医药</option>
+			    					<option th:value="生物医药"></option>
 			    				</select>
 			    			</div>
 			    		</div>
@@ -124,7 +124,7 @@
 			    			</span>
 			    			<div class="M_messGpRt">
 			    				<div class="shuru">
-						          <script id="editor" type="text/plain" style="height:228px;width: 705px;" th:field="*{description}"></script>
+						          <script id="editor" type="text/plain" style="height:228px;width: 705px;" th:field="*{description}" th:utext="*{description}"></script>
 	        	                </div>
 	        	                 <script>
 	        	                 	$(function() {
@@ -149,7 +149,7 @@
 			    				项目预算：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{budget}"/>
+			    				<input type="text" class="M_messInp" th:field="*{budget}" />
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -157,7 +157,7 @@
 			    				开始日期：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" id="dateinfo1" th:field="*{start}"/>
+			    				<input type="text" class="M_messInp" id="dateinfo1" th:field="*{start}" />
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -165,7 +165,7 @@
 			    				截止日期：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" id="dateinfo2" th:field="*{end}"/>
+			    				<input type="text" class="M_messInp" id="dateinfo2" th:field="*{end}" />
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -173,7 +173,7 @@
 			    				项目委托方：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{entrust}"/>
+			    				<input type="text" class="M_messInp" th:field="*{entrust}" />
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -181,7 +181,7 @@
 			    				项目联系人：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{contacts}"/>
+			    				<input type="text" class="M_messInp" th:field="*{contacts}" />
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -189,7 +189,7 @@
 			    				电话：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{phone}"/>
+			    				<input type="text" class="M_messInp" th:field="*{phone}" />
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -197,7 +197,7 @@
 			    				委托方地址：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{address}"/>
+			    				<input type="text" class="M_messInp" th:field="*{address}" />
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -205,7 +205,7 @@
 			    				项目代理机构：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{budget}"/>
+			    				<input type="text" class="M_messInp" th:field="*{budget}" />
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -213,7 +213,15 @@
 			    				原文地址：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{address}"/>
+			    				<input type="text" class="M_messInp" th:field="*{address}" />
+			    			</div>
+			    		</div>
+			    		<div class="M_messGp clearfix">
+			    			<span class="left M_messGpName">
+			    				原文地址：
+			    			</span>
+			    			<div class="M_messGpRt">
+			    				<input type="text" class="M_messInp" th:field="*{address}" />
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -221,7 +229,7 @@
 			    				提交时间：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" id="dateinfo" th:field="*{ctime}"/>
+			    				<input type="text" class="M_messInp" id="dateinfo" th:field="*{ctime}" />
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -237,9 +245,10 @@
 			    				修改人：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{modifier}"/>
+			    				<input type="text" class="M_messInp" th:field="*{modifier}" />
 			    			</div>
 			    		</div>
+			    		<input type="hidden" th:field="*{id}" />
 			    		<input type="submit" value="保存修改" class="M_messSub" />
 			    		</form>
 			    	</div>

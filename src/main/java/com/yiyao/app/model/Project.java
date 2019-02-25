@@ -11,22 +11,23 @@ public class Project implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Long id;
+	private String id;
 	private String name;
 	private String classis; // 分类
 	private String description; // 介绍
 	private String budget; 
-	private Long start;
-	private Long end;
+	private String start;
+	private String end;
 	private String entrust; // 委托
 	private String contacts;
 	private String phone;
 	private String address;
 	private String agent;   // 项目代理机构
 	private String url;   // 原文地址
-	private Long ctime;  // 提交时间
+	private String ctime;  // 提交时间
 	private String uploader;
 	private String modifier;
+	private Long now;
 	public String getName() {
 		return name;
 	}
@@ -50,18 +51,6 @@ public class Project implements Serializable{
 	}
 	public void setBudget(String budget) {
 		this.budget = budget;
-	}
-	public Long getStart() {
-		return start;
-	}
-	public void setStart(Long start) {
-		this.start = start;
-	}
-	public Long getEnd() {
-		return end;
-	}
-	public void setEnd(Long end) {
-		this.end = end;
 	}
 	public String getEntrust() {
 		return entrust;
@@ -99,12 +88,6 @@ public class Project implements Serializable{
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public Long getCtime() {
-		return ctime;
-	}
-	public void setCtime(Long ctime) {
-		this.ctime = ctime;
-	}
 	public String getUploader() {
 		return uploader;
 	}
@@ -117,11 +100,35 @@ public class Project implements Serializable{
 	public void setModifier(String modifier) {
 		this.modifier = modifier;
 	}
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
+	}
+	public String getStart() {
+		return start;
+	}
+	public void setStart(String start) {
+		this.start = start;
+	}
+	public String getEnd() {
+		return end;
+	}
+	public void setEnd(String end) {
+		this.end = end;
+	}
+	public String getCtime() {
+		return ctime;
+	}
+	public void setCtime(String ctime) {
+		this.ctime = ctime;
+	}
+	public Long getNow() {
+		return now;
+	}
+	public void setNow(Long now) {
+		this.now = now;
 	}
 	
 	

@@ -1,7 +1,5 @@
 package com.yiyao.app.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,16 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.yiyao.app.common.R;
 import com.yiyao.app.common.SystemConstant;
 import com.yiyao.app.common.request.LoginRequest;
 import com.yiyao.app.common.request.RegisterRequest;
-import com.yiyao.app.common.request.ResetRequest;
-import com.yiyao.app.mapper.FriendsMapper;
-import com.yiyao.app.mapper.ImeiUserMapper;
-import com.yiyao.app.mapper.InfoMapper;
 import com.yiyao.app.mapper.UserMapper;
 import com.yiyao.app.model.User;
 import com.yiyao.app.service.Cache;
