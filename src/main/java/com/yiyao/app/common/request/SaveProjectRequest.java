@@ -21,8 +21,16 @@ public class SaveProjectRequest extends BaseRequest{
 	private String uploader;
 	private String modifier;
 	private Long now;
+	private String info;
 	
 	
+	
+	public String getInfo() {
+		return info;
+	}
+	public void setInfo(String info) {
+		this.info = info;
+	}
 	public String getId() {
 		return id;
 	}

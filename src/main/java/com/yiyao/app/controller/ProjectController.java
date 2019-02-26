@@ -51,6 +51,7 @@ public class ProjectController {
 		if(project.getId() == null) {
 			project.setId(UUID.randomUUID().toString());
 		}
+		project.setDescription(request.getInfo());
 		project.setNow(System.currentTimeMillis());
 		projectRepository.save(project);
 		return "redirect:/project/list";
@@ -67,7 +68,8 @@ public class ProjectController {
 	}
 	
 	@GetMapping(value = "project/list")
-	public String users(@RequestParam(required=false,value="pageSize") Integer pageSize, 
+	public String users(@RequestParam(required=false,value="title") String title,
+			@RequestParam(required=false,value="pageSize") Integer pageSize, 
 			@RequestParam(required=false, value="pageIndex") Integer pageIndex, 
 			Model model) {
 		if(pageSize == null) {

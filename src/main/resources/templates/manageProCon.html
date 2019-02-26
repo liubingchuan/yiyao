@@ -16,7 +16,7 @@
 		<div class="manageLf">
 			<div class="manageLfM">
 				<div class="manageLfLogo">
-					<img src="images/logo.png" />
+					<img th:src="@{/images/logo.png}" />
 				</div>
 				<a href="#" class="manageMenuF">		
 						订单管理
@@ -63,7 +63,7 @@
 		<div class="managHead clearfix">
 			<div class="right manageTx">
 				<div class="clearfix">
-				<img src="images/tx.jpeg" class="manageTxImg left" />
+				<img th:src="@{/images/tx.jpeg}" class="manageTxImg left" />
 				<span class="left manageTxName">张伟</span>
 				<em class="manageTxIco left"></em>
 				</div>
@@ -81,7 +81,7 @@
 									</p>
 									<p>
 										<a href="#">
-											<img src="images/tuichu.png" />
+											<img th:src="@{/images/tuichu.png}" />
 											退出
 										</a>
 									</p>
@@ -99,7 +99,7 @@
 			    <div class="M_messTwoB">
 			    	
 			        <div class="M_messTwoBm active">
-			    		<form th:action="@{/project/save}" th:object="${project}" th:method="post">
+			    		<form name="saveForm" th:action="@{/project/save}" th:object="${project}" th:method="post">
 			    		<div class="M_messGp clearfix">
 			    			<span class="left M_messGpName">
 			    				项目名称：
@@ -205,7 +205,7 @@
 			    				项目代理机构：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{budget}" />
+			    				<input type="text" class="M_messInp" th:field="*{agent}" />
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -213,15 +213,7 @@
 			    				原文地址：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{address}" />
-			    			</div>
-			    		</div>
-			    		<div class="M_messGp clearfix">
-			    			<span class="left M_messGpName">
-			    				原文地址：
-			    			</span>
-			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{address}" />
+			    				<input type="text" class="M_messInp" th:field="*{url}" />
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -249,7 +241,8 @@
 			    			</div>
 			    		</div>
 			    		<input type="hidden" th:field="*{id}" />
-			    		<input type="submit" value="保存修改" class="M_messSub" />
+			    		<input name="info" type="hidden" id="info">
+			    		<input type="button" value="保存修改" class="M_messSub" onClick="uptext();"/>
 			    		</form>
 			    	</div>
 			    </div>
@@ -258,27 +251,37 @@
 		<script type="text/javascript" th:src="@{/js/main.js}" ></script>
 		<script type="text/javascript">
     
-    jeDate({
-		dateCell:"#dateinfo",
-		format:"YYYY年MM月DD日 hh:mm:ss",
-		isinitVal:true,
-		isTime:true, //isClear:false,
-		minDate:"2014-09-19 00:00:00"
-	})
-     jeDate({
-		dateCell:"#dateinfo1",
-		format:"YYYY年MM月DD日",
-		isinitVal:true,
-		isTime:false, //isClear:false,
-		minDate:"2014-09-19"
-	})
-     jeDate({
-		dateCell:"#dateinfo2",
-		format:"YYYY年MM月DD日",
-		isinitVal:true,
-		isTime:false, //isClear:false,
-		minDate:"2014-09-19"
-	})
-</script>
+			   jeDate({
+				dateCell:"#dateinfo",
+				format:"YYYY年MM月DD日 hh:mm:ss",
+				isinitVal:true,
+				isTime:true, //isClear:false,
+				minDate:"2014-09-19 00:00:00"
+			})
+			    jeDate({
+				dateCell:"#dateinfo1",
+				format:"YYYY年MM月DD日",
+				isinitVal:true,
+				isTime:false, //isClear:false,
+				minDate:"2014-09-19"
+			})
+			    jeDate({
+				dateCell:"#dateinfo2",
+				format:"YYYY年MM月DD日",
+				isinitVal:true,
+				isTime:false, //isClear:false,
+				minDate:"2014-09-19"
+			})
+	
+			//这段要放在文本编辑器的实例化之后
+			function uptext() {
+				if (!UE.getEditor('editor').hasContents()) {
+					alert('请先填写内容!');
+				} else {
+					$("#info").val(UE.getEditor('editor').getContent());
+					$("form[name='saveForm']").submit();
+				}
+			}
+		</script>
 	</body>
 </html>

@@ -85,7 +85,7 @@
 		</div>
 		<div class="headSS clearfix">
 			<input type="text" class="left headSSLf" placeholder="请输入生物医药箱管关键词、企业名称、项目标题" />
-			<input type="button" class="left headSSRt" value="搜索" />
+			<input type="button" class="left headSSRt" value="搜索" id="search"/>
 		</div>
 		<div class="headCompanyTl">
 			<span>
@@ -455,7 +455,7 @@
 	    </div>
 	    <!--绑定账号-->
 	    <th:block th:if="${user}==null">
-	    <div class="alertCon alertbd" id="alertbd" style="display:block">
+	    <div class="alertCon alertbd" id="alertbd" >
 	    	<div class="alertTl">
 	    		信息绑定
 	    	</div>
@@ -596,24 +596,14 @@
 				
 				
 				
-				/* $("#loginButtion").click(function(){
-					if($("#lnaccount").val() == ""){
-						alert('请输入用户名','提示')
-						return;
-					}
-					if($("#lnpassword").val() == ""){
-						alert('请输入密码','提示')
+				 $("#search").click(function(){
+					if($("#search").val() == ""){
+						alert('请输入查询关键字')
 						return;
 					}
 					
-					
-					var formObject = {};
-			        var formArray =$("#loginForm").serializeArray();
-			        $.each(formArray,function(i,item){
-			            formObject[item.name] = item.value;
-			        });
 			        $.ajax({
-			            url:"user/login",
+			            url:"project/login",
 			            type:"post",
 			            contentType: "application/json; charset=utf-8",
 			            data: JSON.stringify(formObject),
@@ -635,7 +625,7 @@
 			            }
 			        });
 	
-				}); */
+				});
 				
 				
 				
