@@ -1,9 +1,12 @@
 package com.yiyao.app.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Document(indexName = "project", type = "pt")
 public class Project implements Serializable{
@@ -15,9 +18,11 @@ public class Project implements Serializable{
 	private String name;
 	private String classis; // 分类
 	private String description; // 介绍
+	@Field(type=FieldType.Keyword)
 	private String budget; 
 	private String start;
 	private String end;
+	@Field(type=FieldType.Keyword)
 	private String entrust; // 委托
 	private String contacts;
 	private String phone;
@@ -28,6 +33,16 @@ public class Project implements Serializable{
 	private String uploader;
 	private String modifier;
 	private Long now;
+	
+	@Field(type=FieldType.Text,fielddata=true)
+	private List<String> list;
+	
+	public List<String> getList() {
+		return list;
+	}
+	public void setList(List<String> list) {
+		this.list = list;
+	}
 	public String getName() {
 		return name;
 	}

@@ -21,7 +21,7 @@
 				<div class="left menu clearfix">
 					<a href="/">平台首页</a>
 					<a href="#">产业监测</a>
-					<a href="#">企业智库</a>
+					<a th:href="@{/org/list(pageSize=10,pageIndex=0,front=0)}">企业智库</a>
 					<a href="#">知识服务</a>
 					<a href="#">专利分析</a>
 					<a href="#">园区介绍</a>
@@ -84,8 +84,8 @@
 			整合稀生物医药领域信息资源，为沈阳高新区提供定制化知识服务
 		</div>
 		<div class="headSS clearfix">
-			<input type="text" class="left headSSLf" placeholder="请输入生物医药箱管关键词、企业名称、项目标题" />
-			<input type="button" class="left headSSRt" value="搜索" id="search"/>
+			<input type="text" class="left headSSLf" placeholder="请输入生物医药箱管关键词、企业名称、项目标题" id="keywords"/>
+			<input type="button" class="left headSSRt" value="搜索" id="search" onClick="search();"/>
 		</div>
 		<div class="headCompanyTl">
 			<span>
@@ -536,7 +536,7 @@
 					$('#noaccount').css('display','block'); */
 				}
 				
-				$("#bindButtion").click(function(){
+				 $("#bindButtion").click(function(){
 					if($("#bdaccount").val() == ""){
 						alert('请输入用户名','提示')
 						return;
@@ -596,43 +596,15 @@
 				
 				
 				
-				 $("#search").click(function(){
-					if($("#search").val() == ""){
-						alert('请输入查询关键字')
-						return;
-					}
-					
-			        $.ajax({
-			            url:"project/login",
-			            type:"post",
-			            contentType: "application/json; charset=utf-8",
-			            data: JSON.stringify(formObject),
-			            dataType: "json",
-			            success:function(data){
-			                if(data.token == "0")
-			                {
-			                	$('#exist').css('display','block');
-			                }
-			                else
-			                {
-			                	$.cookie('token', data.token);
-			                	$("#hiddentoken").val(data.token);
-			                	$("form[name='loginForm']").submit();
-			                }
-			            },
-			            error:function(e){
-			                alert("错误！！");
-			            }
-			        });
-	
-				});
-				
-				
-				
 				$(".alertInp").bind('input propertychange',function(){ 
 					$('.erroText').css('display','none');
 				});
 			});
+			
+			function search(){
+				/* window.location.href="http://127.0.0.1:8088/project/list?q=" + $("#keywords").val(); */
+				window.location.href="http://127.0.0.1:8088/project/list?q=" + $("#keywords").val();
+			}
     </script>
 	</body>
 </html>

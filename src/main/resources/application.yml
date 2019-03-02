@@ -1,6 +1,6 @@
 spring:
   application:
-     name: car
+     name: yiyao
   datasource:
      url: 'jdbc:mysql://47.104.7.73:3306/?useUnicode=true&characterEncoding=utf-8&useSSL=false'
      username: root
@@ -21,7 +21,7 @@ spring:
        cluster-nodes: 47.104.7.73:9300
 
 server:
-  port: 8090
+  port: 8088
     
 mybatis:
   configuration:

@@ -37,57 +37,57 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.yiyao.app.common.request.SaveProjectRequest;
-import com.yiyao.app.model.Project;
-import com.yiyao.app.repository.ProjectRepository;
+import com.yiyao.app.common.request.SavePaperRequest;
+import com.yiyao.app.model.Paper;
+import com.yiyao.app.repository.PaperRepository;
 import com.yiyao.app.utils.BeanUtil;
 
 
 
 @CrossOrigin(origins = "*", maxAge = 3600, allowCredentials = "true")
 @Controller
-public class ProjectController {
+public class PaperController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
+	private static final Logger logger = LoggerFactory.getLogger(PaperController.class);
 	
 	@Autowired
-    private ProjectRepository projectRepository;
+    private PaperRepository paperRepository;
 	
 	@Autowired
 	private ElasticsearchTemplate esTemplate;
 	
-	@PostMapping(value = "project/save")
-	public String saveProject(SaveProjectRequest request,Model model) {
-		
-		Project project = new Project();
-		BeanUtil.copyBean(request, project);
-		if(project.getId() == null || "".equals(project.getId())) {
-			project.setId(UUID.randomUUID().toString());
-		}
-		project.setDescription(request.getInfo());
-		project.setNow(System.currentTimeMillis());
-//		List<String> list = new ArrayList<String>();
-//		list.add("sdf");
-//		list.add("gasdf");
-//		list.add("kkkkkk");
-//		project.setList(list);
-		projectRepository.save(project);
-		return "redirect:/project/list";
-	}
+//	@PostMapping(value = "papepr/save")
+//	public String savePaper(SavePaperRequest request,Model model) {
+//		
+//		Paper paper = new Project();
+//		BeanUtil.copyBean(request, project);
+//		if(project.getId() == null || "".equals(project.getId())) {
+//			project.setId(UUID.randomUUID().toString());
+//		}
+//		project.setDescription(request.getInfo());
+//		project.setNow(System.currentTimeMillis());
+////		List<String> list = new ArrayList<String>();
+////		list.add("sdf");
+////		list.add("gasdf");
+////		list.add("kkkkkk");
+////		project.setList(list);
+//		projectRepository.save(project);
+//		return "redirect:/project/list";
+//	}
 	
-	@GetMapping(value = "project/get")
-	public String getProject(@RequestParam(required=false,value="id") String id, Model model) {
-		Project project = new Project();
+	@GetMapping(value = "paper/get")
+	public String getPaper(@RequestParam(required=false,value="id") String id, Model model) {
+		Paper paper = new Paper();
 		if(id != null) {
-			project = projectRepository.findById(id).get();
+			paper = paperRepository.findById(id).get();
 		}
-		model.addAttribute("project", project);
+		model.addAttribute("paper", paper);
 		return "manageProCon";
 	}
 	
-	@GetMapping(value = "project/list")
+	@GetMapping(value = "paper/list")
 	public String projects(@RequestParam(required=false,value="q") String q,
-			@RequestParam(required=false,value="entrust") String entrust,
+			@RequestParam(required=false,value="year") String year,
 			@RequestParam(required=false,value="pageSize") Integer pageSize, 
 			@RequestParam(required=false, value="pageIndex") Integer pageIndex, 
 			Model model) {
@@ -99,27 +99,27 @@ public class ProjectController {
 		}
 		long totalCount = 0L;
 		long totalPages = 0L;
-		List<Project> projectList = new ArrayList<Project>();
-		String view = "manage_pro";
-		if(esTemplate.indexExists(Project.class)) {
+		List<Paper> paperList = new ArrayList<Paper>();
+		String view = "result-wx";
+		if(esTemplate.indexExists(Paper.class)) {
 			if(q == null) {
-				totalCount = projectRepository.count();
+				totalCount = paperRepository.count();
 				if(totalCount >0) {
 					Sort sort = new Sort(Direction.DESC, "now");
 					Pageable pageable = new PageRequest(pageIndex, pageSize,sort);
 					SearchQuery searchQuery = new NativeSearchQueryBuilder()
 							.withPageable(pageable).build();
-					Page<Project> projectsPage = projectRepository.search(searchQuery);
-					projectList = projectsPage.getContent();
+					Page<Paper> projectsPage = paperRepository.search(searchQuery);
+					paperList = projectsPage.getContent();
 				}
 			}else {
 				// 分页参数
 				Pageable pageable = new PageRequest(pageIndex, pageSize);
 
-				BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery().filter(QueryBuilders.matchQuery("name", q));
-				if(entrust != null) {
-					String[] entrusts = entrust.split("-");
-					queryBuilder.filter(QueryBuilders.termsQuery("entrust", entrusts));
+				BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("title", q));
+				if(year != null) {
+					String[] years = year.split("-");
+					queryBuilder.filter(QueryBuilders.termsQuery("year", years));
 				}
 				
 				
@@ -130,20 +130,19 @@ public class ProjectController {
 				SearchQuery searchQuery = new NativeSearchQueryBuilder().withPageable(pageable)
 						.withQuery(functionScoreQueryBuilder).build();
 
-				Page<Project> searchPageResults = projectRepository.search(searchQuery);
-				projectList = searchPageResults.getContent();
-				totalCount = esTemplate.count(searchQuery, Project.class);
+				Page<Paper> searchPageResults = paperRepository.search(searchQuery);
+				paperList = searchPageResults.getContent();
+				totalCount = esTemplate.count(searchQuery, Paper.class);
 				
 				
-				BoolQueryBuilder queryBuilderAgg = QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("name", q));
+				BoolQueryBuilder queryBuilderAgg = QueryBuilders.boolQuery().filter(QueryBuilders.matchQuery("title", q));
 				FunctionScoreQueryBuilder functionScoreQueryBuilderAgg = QueryBuilders.functionScoreQuery(queryBuilderAgg, ScoreFunctionBuilders.weightFactorFunction(1000));
 				List<String> pList=new ArrayList<>();
 				SearchQuery nativeSearchQueryBuilder = new NativeSearchQueryBuilder()
 						.withQuery(functionScoreQueryBuilderAgg)
 						.withSearchType(SearchType.QUERY_THEN_FETCH)
-						.withIndices("project").withTypes("pt")
-						.addAggregation(AggregationBuilders.terms("agentrust").field("entrust").order(Terms.Order.count(false)).size(10))
-						.addAggregation(AggregationBuilders.terms("agbudget").field("budget").order(Terms.Order.count(false)).size(10))
+						.withIndices("paper").withTypes("pr")
+						.addAggregation(AggregationBuilders.terms("agyear").field("year").order(Terms.Order.count(false)).size(10))
 						.build();
 				Aggregations aggregations = esTemplate.query(nativeSearchQueryBuilder, new ResultsExtractor<Aggregations>() {
 			        @Override
@@ -153,23 +152,15 @@ public class ProjectController {
 			    });
 				
 				if(aggregations != null) {
-					StringTerms entrustTerms = (StringTerms) aggregations.asMap().get("agentrust");
-					Iterator<Bucket> enbit = entrustTerms.getBuckets().iterator();
-					Map<String, Long> entrustMap = new HashMap<String, Long>();
-					while(enbit.hasNext()) {
-						Bucket enBucket = enbit.next();
-						entrustMap.put(enBucket.getKey().toString(), Long.valueOf(enBucket.getDocCount()));
+					StringTerms yearTerms = (StringTerms) aggregations.asMap().get("agyear");
+					Iterator<Bucket> yearbit = yearTerms.getBuckets().iterator();
+					Map<String, Long> yearMap = new HashMap<String, Long>();
+					while(yearbit.hasNext()) {
+						Bucket yearBucket = yearbit.next();
+						yearMap.put(yearBucket.getKey().toString(), Long.valueOf(yearBucket.getDocCount()));
 					}
-					model.addAttribute("agentrust", entrustMap);
+					model.addAttribute("agyear", yearMap);
 					
-					StringTerms budgetTerms = (StringTerms) aggregations.asMap().get("agbudget");
-					Iterator<Bucket> bubit = budgetTerms.getBuckets().iterator();
-					Map<String, Long> budgetMap = new HashMap<String, Long>();
-					while(bubit.hasNext()) {
-						Bucket buBucket = bubit.next();
-						budgetMap.put(buBucket.getKey().toString(), Long.valueOf(buBucket.getDocCount()));
-					}
-					model.addAttribute("agbudget", budgetTerms);
 				}
 //				nativeSearchQueryBuilder.withQuery(functionScoreQueryBuilder);
 //				nativeSearchQueryBuilder.withSearchType(SearchType.QUERY_THEN_FETCH);
@@ -182,17 +173,16 @@ public class ProjectController {
 //		    		pList.add(esBlog.getUsername());
 //				}
 				totalPages = Math.round(totalCount/pageSize);
-				view = "result-xm";
 				
 				
 			}
 		}
-		model.addAttribute("projectList", projectList);
+		model.addAttribute("paperList", paperList);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("pageIndex", pageIndex);
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("name", q);
+		model.addAttribute("title", q);
 			
 		return view;
 	}

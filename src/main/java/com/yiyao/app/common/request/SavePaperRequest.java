@@ -1,23 +1,18 @@
-package com.yiyao.app.model;
-
-import java.io.Serializable;
+package com.yiyao.app.common.request;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "paper", type = "pr")
-public class Paper implements Serializable{
-	private static final long serialVersionUID = 1L;
+import com.yiyao.app.common.BaseRequest;
 
-	@Id
+public class SavePaperRequest extends BaseRequest{
+
 	private String id;
 	private String title;  //标题
 	private String author;
 	private String subject; //摘要
 	private String journal;
-	@Field(type=FieldType.Keyword)
 	private String year; // 发表年
 	private String vp; // 卷期
 	private String page; // 页码
@@ -28,26 +23,6 @@ public class Paper implements Serializable{
 	private Long ref; // 被引量
 	private String keywords;
 	private Long now;
-	
-	
-	public Long getNow() {
-		return now;
-	}
-	public void setNow(Long now) {
-		this.now = now;
-	}
-	public Long getRef() {
-		return ref;
-	}
-	public void setRef(Long ref) {
-		this.ref = ref;
-	}
-	public String getKeywords() {
-		return keywords;
-	}
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
 	public String getId() {
 		return id;
 	}
@@ -120,6 +95,26 @@ public class Paper implements Serializable{
 	public void setNumber(String number) {
 		this.number = number;
 	}
+	public Long getRef() {
+		return ref;
+	}
+	public void setRef(Long ref) {
+		this.ref = ref;
+	}
+	public String getKeywords() {
+		return keywords;
+	}
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+	public Long getNow() {
+		return now;
+	}
+	public void setNow(Long now) {
+		this.now = now;
+	}
+	
+	
 	
 	
 }
