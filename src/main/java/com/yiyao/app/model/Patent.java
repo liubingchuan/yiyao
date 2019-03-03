@@ -26,6 +26,7 @@ public class Patent implements Serializable{
 	@Field(type=FieldType.Keyword)
 	private String country; // 国家
 	private String description; // 专利描述
+	private String claim; // 权利要求
 	@Field(type=FieldType.Keyword)
 	private String person; // 专利权人
 	@Field(type=FieldType.Keyword)
@@ -33,6 +34,16 @@ public class Patent implements Serializable{
 	private String pdf; //pdf全文
 	private String law; //法律状态
 	private Long now;
+	
+	
+	
+	
+	public String getClaim() {
+		return claim;
+	}
+	public void setClaim(String claim) {
+		this.claim = claim;
+	}
 	public String getId() {
 		return id;
 	}

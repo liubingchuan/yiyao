@@ -7,7 +7,7 @@
 		<link rel="stylesheet" th:href="@{/css/datePicker.css}" />
 		<link rel="stylesheet" th:href="@{/css/main.css}" />
 		<script type="text/javascript" th:src="@{/js/jquery-1.7.2.js}" ></script>
-		 <script type="text/javascript" th:src="@{/js/jedate/jedate.js}" ></script>
+
 	</head>
 	<body>
 		<div class="nyMain">
@@ -95,122 +95,87 @@
 		    			专利分析
 		    		</em>
 		    	</div>
-		        <div class="jiansuoCon clearfix">
+		        <div class="jiansuoCon clearfix" th:object="${patent}">
 		        	<div class="left jiansuoLf">
 		        		<div class="jiansuoTl">
-		        			<img src="images/1.png" />
+		        			<img th:src="@{/images/1.png}" />
 		        			<a href="#">首页</a>><span>专利</span>
 		        		</div>
-		        		<div class="jiansuoZX">
-		        			<img src="images/2.png" style="width: 100%;vertical-align: middle;" />
-		        		</div>
-		        		<div class="jiansuoLfGp">
-		        			<h3 class="jiansuoLfGpTl">
-		        				IPC分类
-		        			</h3>
-		        			<div class="jiansuoLfGpList">
-		        				<div class="jiansuoLfGx" th:each="ipc : ${agipc}">
-		        					<input type="checkbox" th:id="'ipc'+${ipc.key}" th:name="ipc" th:value="${ipc.key}" />
-		        					<label th:for="'ipc'+${ipc.key}" th:text="${ipc.key} + '(' + ${ipc.value} + ')'"></label>
-		        				</div>
+		        		<div class="resultLfConNr">
+		        		<div class="resultLfCon">
+		        			<div class="resultLfConTl">
+		        				公开号： 
 		        			</div>
-		        		    <a href="javascript:;" class="jiansuoLfMore">
-		        		    	展开更多
-		        		    </a>
+		        			<p th:text="*{ticket}"></p>
 		        		</div>
-		        	    <div class="jiansuoLfGp">
-		        			<h3 class="jiansuoLfGpTl">
-		        				CPC分类
-		        			</h3>
-		        			<div class="jiansuoLfGpList">
-		        				<div class="jiansuoLfGx" th:each="cpc : ${agcpc}">
-		        					<input type="checkbox" th:id="'cpc'+${cpc.key}" th:name="cpc" th:value="${cpc.key}" />
-		        					<label th:for="'cpc'+${cpc.key}" th:text="${cpc.key} + '(' + ${cpc.value} + ')'"></label>
-		        				</div>
+		        		<div class="resultLfCon">
+		        			<div class="resultLfConTl">
+		        				优先权年： 
 		        			</div>
-		        		    <a href="javascript:;" class="jiansuoLfMore">
-		        		    	展开更多
-		        		    </a>
+		        			<p th:text="*{year}"></p>
 		        		</div>
-		        	    <div class="jiansuoLfGp">
-		        			<h3 class="jiansuoLfGpTl">
-		        				优先权年
-		        			</h3>
-		        			
-		        			<div class="jiansuoLfGx" th:each="year : ${agyear}">
-		        					<input type="checkbox" th:id="'year'+${year.key}" th:name="year" th:value="${year.key}" />
-		        					<label th:for="'year'+${year.key}" th:text="${year.key} + '(' + ${year.value} + ')'"></label>
-		        				</div>
-		        				<div class="clearfix jiansuanDate">
-		        					<input type="text" class="left" id="dateinfo" />
-		        					<span class="left jiesunH">-</span>
-		        					<input type="text" class="left" id="dateinfo1" />
-		        				</div>
-		        				<input type="button" value="确认" class="jiansuanDateSub" />
-		        		</div>
-		        	    <div class="jiansuoLfGp">
-		        			<h3 class="jiansuoLfGpTl">
-		        				国家
-		        			</h3>
-		        			<div class="jiansuoLfGpList">
-		        				<div class="jiansuoLfGx" th:each="country : ${agcountry}">
-		        					<input type="checkbox" th:id="'country'+${country.key}" th:name="country" th:value="${country.key}" />
-		        					<label th:for="'country'+${country.key}" th:text="${country.key} + '(' + ${country.value} + ')'"></label>
-		        				</div>
+		        		<div class="resultLfCon">
+		        			<div class="resultLfConTl">
+		        				发明人:  
 		        			</div>
-		        		    <a href="javascript:;" class="jiansuoLfMore">
-		        		    	展开更多
-		        		    </a>
+		        			<p>
+		        				<span class="colorBlue" th:text="*{creator}">
+		        				</span>
+		        			</p>
 		        		</div>
-		        	    <div class="jiansuoLfGp">
-		        			<h3 class="jiansuoLfGpTl">
-		        				专利权人
-		        			</h3>
-		        			<div class="jiansuoLfGpList">
-		        				<div class="jiansuoLfGx" th:each="person : ${agperson}">
-		        					<input type="checkbox" th:id="'person'+${person.key}" th:name="person" th:value="${person.key}" />
-		        					<label th:for="'person'+${person.key}" th:text="${person.key} + '(' + ${person.value} + ')'"></label>
-		        				</div>
+		        		<div class="resultLfCon">
+		        			<div class="resultLfConTl">
+		        				专利权人：  
 		        			</div>
-		        		    <a href="javascript:;" class="jiansuoLfMore">
-		        		    	展开更多
-		        		    </a>
+		        			<p>
+		        				<span class="colorBlue" th:text="*{person}">
+		        				</span>
+		        			</p>
 		        		</div>
-		        	    <div class="jiansuoLfGp">
-		        			<h3 class="jiansuoLfGpTl">
-		        				发明人
-		        			</h3>
-		        			<div class="jiansuoLfGpList">
-		        				<div class="jiansuoLfGx" th:each="creator : ${agcreator}">
-		        					<input type="checkbox" th:id="'creator'+${creator.key}" th:name="creator" th:value="${creator.key}" />
-		        					<label th:for="'creator'+${creator.key}" th:text="${creator.key} + '(' + ${creator.value} + ')'"></label>
-		        				</div>
+		        		<div class="resultLfCon">
+		        			<div class="resultLfConTl">
+		        				IPC分类 
 		        			</div>
-		        		    <a href="javascript:;" class="jiansuoLfMore">
-		        		    	展开更多
-		        		    </a>
+		        			<p th:text="*{ipc}">
+		        			</p>
 		        		</div>
+		        		<a href="#" class="resultDown">
+		        			全文下载
+		        		</a>
+		        		</div>
+		        	    
+		        	    
+		        	   
+		        	   
+		        	    
 		        	</div>
 		            <div class="right jiansuoRt">
-		            	<ul class="jiansuoUl">
-		            		<li th:each="patent: ${patentList}">
-		            			<div class="jiansuoLiTL">
-		            				<a th:href="@{/patent/get(id=${patent.id})}" th:text="${patent.title}">
-		            				</a>
+		            	<div class="resultrTConTL" th:text="*{title}">
+		            		<a></a>
+		            	</div>
+		            	<span class="resultrtTlSmall">
+		            		专利摘要
+		            	</span>
+		            	<div class="zhuanliConOne" th:text="*{subject}">
+		            	</div>
+		            	<div class="zhuanliConTwo clearfix">
+		            		<a href="javascript:;" class="ahover">
+		            			专利描述
+		            		</a>
+		            		<a href="javascript:;">
+		            			权利要求
+		            		</a>
+		            	</div>
+		            	<div class="zhuanliConThree">
+		            		<div class="zhuanliConThreeM active">
+		            			<div class="zhuanliText" th:text="*{description}">
 		            			</div>
-		            			<div class="jiansuoLiTag">
-		            				<span th:text="'专利权人：' + ${patent.person}"></span>
-		            				<span th:text="'优先权年：' + ${patent.year}"></span>
+		            		</div>
+		            		<div class="zhuanliConThreeM">
+		            			<div class="zhuanliText" th:text="*{claim}">
 		            			</div>
-		            			<div class="jiansuoLiText">
-		            				<span class="jiansuoLiTextSpan" th:text="${patent.subject}">
-		            				</span>
-		            				<a href="javascript:;" class="jiansuoLImore">
-		            					展开更多
-		            				</a>
-		            			</div>
-		            		</li>
-		            	</ul>
+		            		</div>
+		            	</div>
 		            </div>
 		        </div>
 		    </div>
@@ -275,7 +240,7 @@
 	    		        </div>
 	    		    </div>
 	    		    <div class="right footerTopErw">
-	    		    	<img src="images/erw.png" />
+	    		    	<img th:src="@{/images/erw.png}" />
 	    		    	<p>
 	    		    		<em></em>扫码快速关注公众号
 	    		    	</p>
@@ -288,23 +253,7 @@
 	        	</div>
 	        </div>
 	    </div>
-		<script type="text/javascript" src="js/main.js" ></script>
-		<script type="text/javascript">
-    
-    jeDate({
-		dateCell:"#dateinfo",
-		format:"YYYY年MM月DD日",
-		isinitVal:true,
-		isTime:false, //isClear:false,
-        isClear:true,
-	})
-    jeDate({
-		dateCell:"#dateinfo1",
-		format:"YYYY年MM月DD日",
-		isinitVal:true,
-		isTime:false, //isClear:false,
-        isClear:true,
-	})
-</script>
+		<script type="text/javascript" th:src="@{/js/main.js}" ></script>
+		
 	</body>
 </html>

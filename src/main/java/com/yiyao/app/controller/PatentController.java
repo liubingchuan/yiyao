@@ -9,6 +9,7 @@ import java.util.Map;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yiyao.app.model.Paper;
@@ -79,7 +81,7 @@ public class PatentController {
 			patent = patentRepository.findById(id).get();
 		}
 		model.addAttribute("patent", patent);
-		return "manageProCon";
+		return "result-zlCon";
 	}
 	
 	@GetMapping(value = "patent/list")
@@ -259,6 +261,67 @@ public class PatentController {
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("title", q);
 			
+		return view;
+	}
+	
+	@GetMapping(value = "patent/agpersons")
+	public String persons(@RequestParam(required=false,value="person") String person,
+			@RequestParam(required=false,value="creator") String creator,
+			Model model) {
+		List<List<Object>> personList = new ArrayList<List<Object>>();
+		String view = "zhuanlifenxifamingrenjizhuanliquanren";
+		if(esTemplate.indexExists(Patent.class)) {
+				
+			MatchAllQueryBuilder queryBuilderAgg = QueryBuilders.matchAllQuery();
+			FunctionScoreQueryBuilder functionScoreQueryBuilderAgg = QueryBuilders.functionScoreQuery(queryBuilderAgg, ScoreFunctionBuilders.weightFactorFunction(1000));
+			NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder()
+					.withQuery(functionScoreQueryBuilderAgg)
+					.withSearchType(SearchType.QUERY_THEN_FETCH)
+					.withIndices("patent").withTypes("pt");
+			if(person != null) {
+				nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("agperson").field("person").order(Terms.Order.count(false)).size(10));
+			}
+			if(creator != null) {
+				nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("agcreator").field("creator").order(Terms.Order.count(false)).size(10));
+			}
+			Aggregations aggregations = esTemplate.query(nativeSearchQueryBuilder.build(), new ResultsExtractor<Aggregations>() {
+				@Override
+				public Aggregations extract(SearchResponse response) {
+					return response.getAggregations();
+				}
+			});
+			
+			if(aggregations != null) {
+				if(person != null) {
+					StringTerms personTerms = (StringTerms) aggregations.asMap().get("agperson");
+					Iterator<Bucket> personbit = personTerms.getBuckets().iterator();
+					List<Object> list = new ArrayList<Object>();
+					while(personbit.hasNext()) {
+						Bucket personBucket = personbit.next();
+						list.add((int)(Math.random()*90)+10);
+						list.add(personBucket.getDocCount());
+						list.add(personBucket.getKey().toString());
+						personList.add(list);
+					}
+					model.addAttribute("agpersons", personList);
+				}
+				
+				if(creator != null) {
+					StringTerms creatorTerms = (StringTerms) aggregations.asMap().get("agcreator");
+					Iterator<Bucket> creatorbit = creatorTerms.getBuckets().iterator();
+					List<Object> list = new ArrayList<Object>();
+					while(creatorbit.hasNext()) {
+						Bucket creatorBucket = creatorbit.next();
+						list.add((int)(Math.random()*90)+10);
+						list.add(creatorBucket.getDocCount());
+						list.add(creatorBucket.getKey().toString());
+						personList.add(list);
+					}
+					model.addAttribute("agcreators", personList);
+				}
+			}
+		}
+		
 		return view;
 	}
 	

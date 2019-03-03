@@ -82,7 +82,40 @@ public class ProjectController {
 			project = projectRepository.findById(id).get();
 		}
 		model.addAttribute("project", project);
-		return "manageProCon";
+		
+		Integer pageIndex = 0;
+		Integer pageSize = 10;
+		long totalCount = 0L;
+		long totalPages = 0L;
+		List<Project> projectList = new ArrayList<Project>();
+		String view = "manageProCon";
+		if(esTemplate.indexExists(Project.class)) {
+			// 分页参数
+			Pageable pageable = new PageRequest(pageIndex, pageSize);
+
+			BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("name", project.getName()));
+//			if(entrust != null) {
+//				String[] entrusts = entrust.split("-");
+//				queryBuilder.filter(QueryBuilders.termsQuery("entrust", entrusts));
+//			}
+			
+			// 分数，并自动按分排序
+			FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(queryBuilder, ScoreFunctionBuilders.weightFactorFunction(1000));
+
+			// 分数、分页
+			SearchQuery searchQuery = new NativeSearchQueryBuilder().withPageable(pageable)
+					.withQuery(functionScoreQueryBuilder).build();
+
+			Page<Project> searchPageResults = projectRepository.search(searchQuery);
+			projectList = searchPageResults.getContent();
+			totalCount = esTemplate.count(searchQuery, Project.class);
+			
+			
+			totalPages = Math.round(totalCount/pageSize);
+			model.addAttribute("projectList", projectList);
+			view = "result-xmCon";
+		}
+		return view;
 	}
 	
 	@GetMapping(value = "project/list")
@@ -116,7 +149,7 @@ public class ProjectController {
 				// 分页参数
 				Pageable pageable = new PageRequest(pageIndex, pageSize);
 
-				BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery().filter(QueryBuilders.matchQuery("name", q));
+				BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("name", q));
 				if(entrust != null) {
 					String[] entrusts = entrust.split("-");
 					queryBuilder.filter(QueryBuilders.termsQuery("entrust", entrusts));
