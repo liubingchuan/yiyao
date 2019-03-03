@@ -43,6 +43,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yiyao.app.common.R;
 import com.yiyao.app.common.request.AgPersonRequest;
+import com.yiyao.app.common.request.AgTypeRequest;
 import com.yiyao.app.common.request.RegisterRequest;
 import com.yiyao.app.model.Paper;
 import com.yiyao.app.model.Patent;
@@ -341,7 +342,75 @@ public class PatentController {
 		return R.ok().put("agpersons", personList);
 	}
 	
+	@GetMapping(value = "patent/agtype")
+	public String agtype() {
+		return "zhuanlifenxijishufenlei";
+	}
 	
+	@ResponseBody
+	@RequestMapping(value = "patent/agtypes", method = RequestMethod.POST,consumes = "application/json")
+	public R types(@RequestBody AgTypeRequest request) {
+		List<List<Object>> typeList = new ArrayList<List<Object>>();
+//		String view = "zhuanlifenxifamingrenjizhuanliquanren";
+		String type = request.getType();
+		String trend = request.getTrend();
+		if(esTemplate.indexExists(Patent.class)) {
+				
+			MatchAllQueryBuilder queryBuilderAgg = QueryBuilders.matchAllQuery();
+			FunctionScoreQueryBuilder functionScoreQueryBuilderAgg = QueryBuilders.functionScoreQuery(queryBuilderAgg, ScoreFunctionBuilders.weightFactorFunction(1000));
+			NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder()
+					.withQuery(functionScoreQueryBuilderAgg)
+					.withSearchType(SearchType.QUERY_THEN_FETCH)
+					.withIndices("patent").withTypes("pt");
+			if(type != null) {
+				nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("agipc").field("ipc").order(Terms.Order.count(true)).size(10));
+			}
+			if(trend != null) {
+				nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("agipc").field("ipc").order(Terms.Order.count(true)).size(10).subAggregation(AggregationBuilders.terms("agyear").field("year").order(Terms.Order.count(true)).size(10)));
+			}
+			Aggregations aggregations = esTemplate.query(nativeSearchQueryBuilder.build(), new ResultsExtractor<Aggregations>() {
+				@Override
+				public Aggregations extract(SearchResponse response) {
+					return response.getAggregations();
+				}
+			});
+			
+			if(aggregations != null) {
+				if(type != null) {
+					StringTerms ipcTerms = (StringTerms) aggregations.asMap().get("agipc");
+					Iterator<Bucket> ipcbit = ipcTerms.getBuckets().iterator();
+					List<Object> titleList = new ArrayList<Object>();
+					titleList.add("score");
+					titleList.add("amount");
+					titleList.add("product");
+					typeList.add(titleList);
+					while(ipcbit.hasNext()) {
+						List<Object> list = new ArrayList<Object>();
+						Bucket ipcBucket = ipcbit.next();
+						list.add((int)(Math.random()*90)+10);
+						list.add(ipcBucket.getDocCount());
+						list.add(ipcBucket.getKey().toString());
+						typeList.add(list);
+					}
+				}
+				
+				if(trend != null) {
+//					StringTerms creatorTerms = (StringTerms) aggregations.asMap().get("agcreator");
+//					Iterator<Bucket> creatorbit = creatorTerms.getBuckets().iterator();
+//					while(creatorbit.hasNext()) {
+//						List<Object> list = new ArrayList<Object>();
+//						Bucket creatorBucket = creatorbit.next();
+//						list.add((int)(Math.random()*90)+10);
+//						list.add(creatorBucket.getDocCount());
+//						list.add(creatorBucket.getKey().toString());
+//						personList.add(list);
+//					}
+				}
+			}
+		}
+		
+		return R.ok().put("agpersons", typeList);
+	}
 	
 	
 }
