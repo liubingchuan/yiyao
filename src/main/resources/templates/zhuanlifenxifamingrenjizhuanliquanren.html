@@ -228,17 +228,23 @@
 			$(document).ready(function() {
 
 				$.ajax({
-		            type: 'GET',
-		            url:'patent/agpersons',
-		            dataType: 'json',
-		            success: function( result ) {
-		               console.log(result.data.order_list);
-		               orderList.lists = result.data.order_list;
+		            url:"/patent/agpersons",
+		            type:"post",
+		            contentType: "application/json; charset=utf-8",
+		            data: JSON.stringify({"person":"0"}),
+		            dataType: "json",
+		            success:function(data){
+		                var ags = data.agpersons
+		                showfamingrenshenqingliang(ags);
+		                /* console.log("fsdf") */
+		            },
+		            error:function(e){
+		                alert("聚合错误！！");
 		            }
 		        });
 				
 				
-				var arr =[];
+				/* var arr =[];
 
 				var arr1= ['score', 'amount', 'product'];
 
@@ -251,8 +257,8 @@
 				arr.push([68.1, 79146, 'Tea']);
 				arr.push([19.6, 91852, 'Orange Juice']);
 				arr.push([10.6, 101852, 'Lemon Juice']);
-				arr.push([32.7, 20112, 'Walnut Brownie']);
-				showfamingrenshenqingliang(arr);
+				arr.push([32.7, 20112, 'Walnut Brownie']); */
+				
 			});
 			
 			 function showfamingrenshenqingliang(data){

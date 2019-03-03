@@ -35,8 +35,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yiyao.app.common.R;
+import com.yiyao.app.common.request.AgPersonRequest;
+import com.yiyao.app.common.request.RegisterRequest;
 import com.yiyao.app.model.Paper;
 import com.yiyao.app.model.Patent;
 import com.yiyao.app.repository.PatentRepository;
@@ -264,12 +271,18 @@ public class PatentController {
 		return view;
 	}
 	
-	@GetMapping(value = "patent/agpersons")
-	public String persons(@RequestParam(required=false,value="person") String person,
-			@RequestParam(required=false,value="creator") String creator,
-			Model model) {
+	@GetMapping(value = "patent/analysis")
+	public String analysis() {
+		return "zhuanlifenxifamingrenjizhuanliquanren";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "patent/agpersons", method = RequestMethod.POST,consumes = "application/json")
+	public R persons(@RequestBody AgPersonRequest request) {
 		List<List<Object>> personList = new ArrayList<List<Object>>();
-		String view = "zhuanlifenxifamingrenjizhuanliquanren";
+//		String view = "zhuanlifenxifamingrenjizhuanliquanren";
+		String person = request.getPerson();
+		String creator = request.getCreator();
 		if(esTemplate.indexExists(Patent.class)) {
 				
 			MatchAllQueryBuilder queryBuilderAgg = QueryBuilders.matchAllQuery();
@@ -279,10 +292,10 @@ public class PatentController {
 					.withSearchType(SearchType.QUERY_THEN_FETCH)
 					.withIndices("patent").withTypes("pt");
 			if(person != null) {
-				nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("agperson").field("person").order(Terms.Order.count(false)).size(10));
+				nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("agperson").field("person").order(Terms.Order.count(true)).size(10));
 			}
 			if(creator != null) {
-				nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("agcreator").field("creator").order(Terms.Order.count(false)).size(10));
+				nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("agcreator").field("creator").order(Terms.Order.count(true)).size(10));
 			}
 			Aggregations aggregations = esTemplate.query(nativeSearchQueryBuilder.build(), new ResultsExtractor<Aggregations>() {
 				@Override
@@ -295,34 +308,37 @@ public class PatentController {
 				if(person != null) {
 					StringTerms personTerms = (StringTerms) aggregations.asMap().get("agperson");
 					Iterator<Bucket> personbit = personTerms.getBuckets().iterator();
-					List<Object> list = new ArrayList<Object>();
+					List<Object> titleList = new ArrayList<Object>();
+					titleList.add("score");
+					titleList.add("amount");
+					titleList.add("product");
+					personList.add(titleList);
 					while(personbit.hasNext()) {
+						List<Object> list = new ArrayList<Object>();
 						Bucket personBucket = personbit.next();
 						list.add((int)(Math.random()*90)+10);
 						list.add(personBucket.getDocCount());
 						list.add(personBucket.getKey().toString());
 						personList.add(list);
 					}
-					model.addAttribute("agpersons", personList);
 				}
 				
 				if(creator != null) {
 					StringTerms creatorTerms = (StringTerms) aggregations.asMap().get("agcreator");
 					Iterator<Bucket> creatorbit = creatorTerms.getBuckets().iterator();
-					List<Object> list = new ArrayList<Object>();
 					while(creatorbit.hasNext()) {
+						List<Object> list = new ArrayList<Object>();
 						Bucket creatorBucket = creatorbit.next();
 						list.add((int)(Math.random()*90)+10);
 						list.add(creatorBucket.getDocCount());
 						list.add(creatorBucket.getKey().toString());
 						personList.add(list);
 					}
-					model.addAttribute("agcreators", personList);
 				}
 			}
 		}
 		
-		return view;
+		return R.ok().put("agpersons", personList);
 	}
 	
 	
