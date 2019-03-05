@@ -37,13 +37,13 @@
 						企业智库<em></em>
 				</a>
 				<div class="manageMenuS">
-					<a href="#">
+					<a th:href="@{/report/list(pageSize=10,pageIndex=0)}">
 						分析报告
 					</a>
 					<a th:href="@{/org/list}">
 						重点机构
 					</a>
-					<a href="#">
+					<a th:href="@{/expert/list(pageSize=10,pageIndex=0)}">
 						行业人才
 					</a>
 				</div>
@@ -59,7 +59,7 @@
 			<div class="right manageTx">
 				<div class="clearfix">
 				<img th:src="@{/images/tx.jpeg}" class="manageTxImg left" />
-				<span class="left manageTxName">张伟</span>
+				<span class="left manageTxName" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('account')}" th:text="${cookie.getValue()}"></span>
 				<em class="manageTxIco left"></em>
 				</div>
 			    <div class="loginAfterNo">

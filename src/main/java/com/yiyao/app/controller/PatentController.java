@@ -342,8 +342,25 @@ public class PatentController {
 		return R.ok().put("agpersons", personList);
 	}
 	
+	
 	@GetMapping(value = "patent/agtype")
 	public String agtype() {
+		return "zhuanlifenxizhuanlileixing";
+	}
+	@GetMapping(value = "patent/agmount")
+	public String agmount() {
+		return "zhuanlifenxizhuanlishenqingliang";
+	}
+	@GetMapping(value = "patent/agcountry")
+	public String agcountry() {
+		return "zhuanlifenxizhuanlishenqingguo";
+	}
+	@GetMapping(value = "patent/agpeople")
+	public String agpeople() {
+		return "zhuanlifenxifamingrenjizhuanliquanren";
+	}
+	@GetMapping(value = "patent/agclassis")
+	public String agclassis() {
 		return "zhuanlifenxijishufenlei";
 	}
 	

@@ -6,12 +6,16 @@
 		<link rel="stylesheet" th:href="@{/css/init.css}" />
 		<link rel="stylesheet" th:href="@{/css/main.css}" />
 		<script type="text/javascript" th:src="@{/js/jquery-1.7.2.js}" ></script>
+		<!--百度编辑器-->
+		<script type="text/javascript" charset="utf-8" th:src="@{/js/ueditor/ueditor.config.js}"></script>
+        <script type="text/javascript" charset="utf-8" th:src="@{/js/ueditor/ueditor.all.min.js}"></script>
+        <script type="text/javascript" charset="utf-8" th:src="@{/js/ueditor/lang/zh-cn/zh-cn.js}"></script>
 	</head>
 	<body class="manageBody">
 		<div class="manageLf">
 			<div class="manageLfM">
 				<div class="manageLfLogo">
-					<img th:src="@{/images/logo.png}" />
+					<img src="images/logo.png" />
 				</div>
 				<a href="#" class="manageMenuF">		
 						订单管理
@@ -58,7 +62,7 @@
 		<div class="managHead clearfix">
 			<div class="right manageTx">
 				<div class="clearfix">
-				<img th:src="@{/images/tx.jpeg}" class="manageTxImg left" />
+				<img src="images/tx.jpeg" class="manageTxImg left" />
 				<span class="left manageTxName">张伟</span>
 				<em class="manageTxIco left"></em>
 				</div>
@@ -67,14 +71,16 @@
 								<div class="loginAfterNoM">
 									<em class="loginAfterNoMSj"></em>
 									<p>
-										<span class="loginName" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('account')}" th:text="${cookie.getValue()}">
+										<span class="loginName">
+											张伟
 										</span>
-										<span class="vip" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('role')}" th:text="${cookie.getValue()}">
+										<span class="vip">
+											超级管理员
 										</span>
 									</p>
 									<p>
 										<a href="#">
-											<img th:src="@{/images/tuichu.png}" />
+											<img src="images/tuichu.png" />
 											退出
 										</a>
 									</p>
@@ -86,178 +92,181 @@
 		<div class="manageNr">
 			<div class="M_mess">
 				<div class="M_messOne">
-					张伟<span>操作员</span>
+					<b>人才详情</b>
 				</div>
-				<div class="M_messTwoTl clearfix">
-					<a href="javascript:;" class="ahover">
-						权限分配
-					</a>
-					<a href="javascript:;">
-						基本信息
-					</a>
-				</div>
+				
 			    <div class="M_messTwoB">
-			    	<div class="M_messTwoBm active">
-			    		<form>
+			    	
+			        <div class="M_messTwoBm active">
+			    		<form name="saveForm" th:action="@{/expert/save}" th:object="${expert}" th:method="post">
 			    		<div class="M_messGp clearfix">
 			    			<span class="left M_messGpName">
-			    				用户身份
+			    				姓名：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<select>
-			    					<option>
-			    						操作员
-			    					</option>
+			    				<input type="text" class="M_messInp" th:field="*{name}" />
+			    			</div>
+			    		</div>
+			    		<div class="M_messGp clearfix">
+			    			<span class="left M_messGpName">
+			    				其他姓名：
+			    			</span>
+			    			<div class="M_messGpRt">
+			    				<input type="text" class="M_messInp" th:field="*{alias}" />
+			    			</div>
+			    		</div>
+			    		<div class="M_messGp clearfix">
+			    			<span class="left M_messGpName">
+			    				研究领域：
+			    			</span>
+			    			<div class="M_messGpRt">
+			    				<select th:field="*{area}">
+			    					<option value="生物医药;医疗器械"></option>
 			    				</select>
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
 			    			<span class="left M_messGpName">
-			    				权限分配
+			    				简历：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<div class="M_messQX">
-			    					<p class="M_messQXTl">
-			    						所属机构
-			    					</p>
-			    					<div class="M_messJG">
-			    						<input type="checkbox" id="1" />
-			    						<label for="1">东软医疗</label>
-			    					</div>
-			    					<div class="M_messJG">
-			    						<input type="checkbox" id="2" />
-			    						<label for="2">何氏-生物医药</label>
-			    					</div>
-			    					<div class="M_messJG">
-			    						<input type="checkbox" id="3" />
-			    						<label for="3">辽宁成大生物</label>
-			    					</div>
-			    					<div class="M_messJG">
-			    						<input type="checkbox" id="4" />
-			    						<label for="4">辽宁成大生物</label>
-			    					</div>
-			    					<div class="M_messJG">
-			    						<input type="checkbox" id="5" />
-			    						<label for="5">辽宁</label>
+			    				<div class="shuru">
+						          <script id="editor" type="text/plain" style="height:228px;width: 705px;" th:field="*{resume}" th:utext="*{resume}"></script>
+	        	                </div>
+	        	                 <script>
+	        	                 	$(function() {
+
+	//本来是这样的:UE.getEditor('editor');  传入参数后就是下面那样子了，toolbars里的就是工具的图标
+
+	UE.getEditor('editor', {
+
+		toolbars: [
+
+			['undo', 'redo', 'bold', 'italic', 'underline', 'fontborder', 'backcolor', 'fontsize', 'fontfamily', 'removeformat', 'formatmatch', 'simpleupload', 'insertimage', 'forecolor', 'backcolor', 'cleardoc', 'link', 'unlink', 'emotion']
+
+		]
+
+	});
+
+})</script>
+			    			</div>
+			    		</div>
+			    		<div class="M_messGp clearfix">
+			    			<span class="left M_messGpName">
+			    				地址：
+			    			</span>
+			    			<div class="M_messGpRt" >
+			    				<input type="text" class="M_messInp" th:field="*{address}" />
+			    			</div>
+			    		</div>
+			    		
+			    		<div class="M_messGp clearfix">
+			    			<span class="left M_messGpName">
+			    				邮箱：
+			    			</span>
+			    			<div class="M_messGpRt">
+			    				<input type="text" class="M_messInp" th:field="*{email}" />
+			    			</div>
+			    		</div>
+			    		<div class="M_messGp clearfix">
+			    			<span class="left M_messGpName">
+			    				手机：
+			    			</span>
+			    			<div class="M_messGpRt">
+			    				<input type="text" class="M_messInp" th:field="*{phone}" />
+			    			</div>
+			    		</div>
+			    		<div class="M_messGp clearfix">
+			    			<span class="left M_messGpName">
+			    				办公电话：
+			    			</span>
+			    			<div class="M_messGpRt">
+			    				<input type="text" class="M_messInp" th:field="*{tel}" />
+			    			</div>
+			    		</div>
+			    		<div class="M_messGp clearfix">
+			    			<span class="left M_messGpName">
+			    				职务：
+			    			</span>
+			    			<div class="M_messGpRt">
+			    				<select th:field="*{duty}">
+			    					<option value="业务骨干"></option>
+			    				</select>
+			    			</div>
+			    		</div>
+			    		<div class="M_messGp clearfix">
+			    			<span class="left M_messGpName">
+			    				职称：
+			    			</span>
+			    			<div class="M_messGpRt">
+			    				<select th:field="*{title}">
+			    					<option value="副研究员"></option>
+			    				</select>
+			    			</div>
+			    		</div>
+			    		
+			    		<div class="M_messGp clearfix">
+			    			<span class="left M_messGpName">
+			    				照片：
+			    			</span>
+			    			<div class="M_messGpRt">
+			    				<div class="clearfix M_messGpImg">
+			    					<div class="left M_messGpImgGp">
+			    						<img src="images/per.png" />
+			    						<p>
+			    							LOGO.jpg&nbsp;1000kb&nbsp;<a href="#" class="colorRed">删除</a>
+			    						</p>
 			    					</div>
 			    				</div>
 			    			</div>
 			    		</div>
-			    		<input type="button" value="保存修改" class="M_messSub" />
-			    		</form>
-			    	</div>
-			        <div class="M_messTwoBm">
-			    		<form th:action="@{/user/update}" th:object="${user}" method="post" th:method="post">
-			    		<div class="M_messGp clearfix erro">
+			    		<div class="M_messGp clearfix">
 			    			<span class="left M_messGpName">
-			    				用户名
+			    				提交时间：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{account}"/>
-			    				<!-- <div class="erroText">
-	    				                输入错误
-	    			             </div> -->
+			    				<span class="M_messGpRtText" th:field="*{ctime}"></span>
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
 			    			<span class="left M_messGpName">
-			    				密码
+			    				上传人：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="password" class="M_messInp" th:field="*{password}"/>
+			    				<span class="M_messGpRtText">王伟</span>
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
 			    			<span class="left M_messGpName">
-			    				真实姓名
+			    				修改人：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{name}"/>
+			    				<span class="M_messGpRtText">王伟</span>
 			    			</div>
 			    		</div>
-			    		<div class="M_messGp clearfix">
-			    			<span class="left M_messGpName">
-			    				身份证
-			    			</span>
-			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{identity}"/>
-			    			</div>
-			    		</div>
-			    		<div class="M_messGp clearfix">
-			    			<span class="left M_messGpName">
-			    				工作单位
-			    			</span>
-			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{unit}"/>
-			    			</div>
-			    		</div>
-			    		<div class="M_messGp clearfix">
-			    			<span class="left M_messGpName">
-			    				职位
-			    			</span>
-			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{job}"/>
-			    			</div>
-			    		</div>
-			    		<div class="M_messGp clearfix">
-			    			<span class="left M_messGpName">
-			    				职务
-			    			</span>
-			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{duty}"/>
-			    			</div>
-			    		</div>
-			    		<div class="M_messGp clearfix">
-			    			<span class="left M_messGpName">
-			    				研究方向
-			    			</span>
-			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{major}"/>
-			    			</div>
-			    		</div>
-			    		<div class="M_messGp clearfix">
-			    			<span class="left M_messGpName">
-			    				电子邮箱
-			    			</span>
-			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{email}"/>
-			    			</div>
-			    		</div>
-			    		<div class="M_messGp clearfix">
-			    			<span class="left M_messGpName">
-			    				手机号
-			    			</span>
-			    			<div class="M_messGpRt">
-			    				<input type="text" class="M_messInp" th:field="*{phone}"/>
-			    			</div>
-			    		</div>
-			    		<div class="M_messGp clearfix">
-			    			<span class="left M_messGpName">
-			    				微信名
-			    			</span>
-			    			<div class="M_messGpRt">
-			    				<span class="M_messGpText" th:field="*{wechat}">
-			    					大伟
-			    				</span>
-			    			</div>
-			    		</div>
-			    		<div class="M_messGp clearfix">
-			    			<span class="left M_messGpName">
-			    				注册时间
-			    			</span>
-			    			<div class="M_messGpRt">
-			    				<span class="M_messGpText" th:field="*{stamp}">
-			    					2018/12/05 12:00:21
-			    				</span>
-			    			</div>
-			    		</div>
+			    		<div class="clearfix bianjinrbtn">
 			    		<input type="hidden" th:field="*{id}" />
-			    		<input type="submit" value="保存修改" class="M_messSub" />
+			    		<input name="info" type="hidden" id="info">
+			    		<input type="button" value="提交" class="M_messSub left" onClick="uptext();"/>
+			    		<a href="#" class="colorRed left shanchubtn">删除</a>
+			    		</div>
 			    		</form>
 			    	</div>
 			    </div>
 			</div>
 		</div>
 		<script type="text/javascript" th:src="@{/js/main.js}" ></script>
+		<script type="text/javascript">
+    
+			//这段要放在文本编辑器的实例化之后
+			function uptext() {
+				if (!UE.getEditor('editor').hasContents()) {
+					alert('请先填写内容!');
+				} else {
+					$("#info").val(UE.getEditor('editor').getContent());
+					$("form[name='saveForm']").submit();
+				}
+			}
+		</script>
 	</body>
 </html>

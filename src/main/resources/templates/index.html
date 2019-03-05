@@ -431,12 +431,12 @@
 	    				密码错误
 	    			</div>
 	    			</div>
-	    			<div class="alertFormGp">
+	    			<!-- <div class="alertFormGp">
 	    			<label for="" class="alertFormName">
 	    				验证码<span>*</span>
 	    			</label>
 	    			<div class="clearfix alertYzm">
-	    			<input type="text" class="alertInp left" placeholder="请输入验证码" />
+	    			<input type="text" class="alertInp left" placeholder="请输入验证码" id="yzm"/>
 	    			<input type="hidden" class="alertInp left" placeholder="请输入验证码" id="hiddentoken" name="token"/>
 	    			<a href="#" class="right alertYzmImg">
 	    				<img th:src="@{/images/yzm.jpg}" />
@@ -445,7 +445,7 @@
 	    			<div class="erroText">
 	    				输入错误
 	    			</div>
-	    			</div>
+	    			</div> -->
 	    		    <input type="submit" value="登录" class="alertSubmit" id="loginButtion"/>
 	    		    <div class="alertReg">
 	    		    	<a href="javascript:;">第一次使用？点击注册>></a>
@@ -602,7 +602,8 @@
 			});
 			
 			function search(){
-			    window.location.href="http://127.0.0.1:8088/project/list?q=" + $("#keywords").val();
+			     window.location.href="http://127.0.0.1:8088/project/list?q=" + $("#keywords").val();
+			    /*window.location.href="http://127.0.0.1:8088/paper/list?q=" + $("#keywords").val();*/
 				/* window.location.href="http://127.0.0.1:8088/patent/list?q=" + $("#keywords").val(); */
 			}
     </script>

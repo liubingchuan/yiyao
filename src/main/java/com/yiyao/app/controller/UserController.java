@@ -1,6 +1,7 @@
 package com.yiyao.app.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,14 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yiyao.app.common.R;
 import com.yiyao.app.common.SystemConstant;
 import com.yiyao.app.common.request.LoginRequest;
 import com.yiyao.app.common.request.RegisterRequest;
+import com.yiyao.app.common.request.UpdateUserRequest;
 import com.yiyao.app.mapper.UserMapper;
+import com.yiyao.app.model.Project;
 import com.yiyao.app.model.User;
 import com.yiyao.app.service.Cache;
+import com.yiyao.app.utils.BeanUtil;
 import com.yiyao.app.utils.JwtUtils;
 
 
@@ -36,8 +41,6 @@ public class UserController {
 	@Autowired
     private UserMapper userMapper;
 	
-	@Autowired
-	private Cache cache;
 	
 	
 	@RequestMapping("/")
@@ -98,8 +101,18 @@ public class UserController {
 		return "index";
 	}
 	
+	
+	@PostMapping(value = "user/update")
+	public String updateUser(UpdateUserRequest request,Model model, RedirectAttributes redirectAttributes) {
+		User user = new User();
+		BeanUtil.copyBean(request, user);
+		userMapper.updateById(user);
+		redirectAttributes.addAttribute("token", request.getToken());
+		return "redirect:/user/list";
+	}
+	
 	@GetMapping(value = "user/list")
-	public String users(@RequestParam("token") String token, 
+	public String users(@RequestParam(required=false, value="token") String token, 
 			@RequestParam(required=false,value="pageSize") String pageSize, 
 			@RequestParam(required=false, value="pageIndex") String pageIndex, 
 			Model model) {

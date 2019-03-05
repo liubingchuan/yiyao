@@ -25,6 +25,13 @@ public interface UserMapper {
 	@InsertProvider(type = BasedProvider.class, method = BasedProvider.INSERT)
 	int insertUser(User user);
 	
+	@Update("UPDATE yiyao_user SET account = #{user.account}, password = #{user.password}, name = #{user.name}, "
+			    + "identity = #{user.identity}, unit = #{user.unit}, job = #{user.job}, "
+			    + "duty = #{user.duty}, major = #{user.major}, email = #{user.email}, "
+			    + "phone = #{user.phone} "
+		        + "WHERE id = #{user.id}")
+	void updateById(@Param("user") User user);
+	
 //    @Select("SELECT * FROM car_user")
 //    List<User> getAll();
 //

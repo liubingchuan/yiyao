@@ -16,7 +16,7 @@
 				<a href="index.html" class="left logo">
 					<img src="images/logo.png" />
 				</a>
-				<a href="#" class="left headBack">
+				<a href="/" class="left headBack">
 					<<返回首页
 				</a>
 				<div class="left headsuos">
@@ -87,27 +87,27 @@
 						</div>
 						<ul class="rencaiLfUl">
 							<li>
-								<a href="#">
+								<a th:href="@{/patent/agmount}">
 									<span>专利申请量</span>
 								</a>
 							</li>
 							<li>
-								<a href="#">
+								<a th:href="@{/patent/agcountry}">
 									<span>专利申请国</span>
 								</a>
 							</li>
 							<li>
-								<a href="#">
+								<a th:href="@{/patent/agpeople}">
 									<span>发明人及专利权人</span>
 								</a>
 							</li>
 							<li>
-								<a href="#">
+								<a th:href="@{/patent/agclassis}">
 									<span>技术分类</span>
 								</a>
 							</li>
 							<li>
-								<a href="#">
+								<a th:href="@{/patent/agtype}">
 									<span>专利类型</span>
 								</a>
 							</li>
@@ -221,7 +221,7 @@
 	    </div>
 		
 		<script type="text/javascript" th:src="@{/js/main.js}" ></script>
-		<script>
+		<script type="text/javascript" th:inline="none">
 		
 			
 			$(document).ready(function() {
