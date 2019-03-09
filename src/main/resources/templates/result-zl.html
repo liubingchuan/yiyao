@@ -134,7 +134,7 @@
 		        		</div>
 		        	    <div class="jiansuoLfGp">
 		        			<h3 class="jiansuoLfGpTl">
-		        				优先权年
+		        				公开（公告）年
 		        			</h3>
 		        			
 		        			<div class="jiansuoLfGx" th:each="year : ${agyear}">
@@ -200,7 +200,7 @@
 		            			</div>
 		            			<div class="jiansuoLiTag">
 		            				<span th:text="'专利权人：' + ${patent.person}"></span>
-		            				<span th:text="'优先权年：' + ${patent.year}"></span>
+		            				<span th:text="'公开（公告）日：' + ${patent.publictime}"></span>
 		            			</div>
 		            			<div class="jiansuoLiText">
 		            				<span class="jiansuoLiTextSpan" th:text="${patent.subject}">

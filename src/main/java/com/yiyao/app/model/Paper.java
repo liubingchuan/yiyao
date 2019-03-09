@@ -1,6 +1,7 @@
 package com.yiyao.app.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -14,40 +15,37 @@ public class Paper implements Serializable{
 	@Id
 	private String id;
 	private String title;  //标题
-	private String author;
 	private String subject; //摘要
-	private String journal;
+	@Field(type=FieldType.Text,fielddata=true)
+	private List<String> person;   // 专利权人
+	@Field(type=FieldType.Text,fielddata=true)
+	private List<String> creator;
 	@Field(type=FieldType.Keyword)
-	private String year; // 发表年
-	private String vp; // 卷期
-	private String page; // 页码
-	private String issn;
-	private String pdf;
-	private String link; //pubmed连接
-	private String number; // pubmed 号
-	private Long ref; // 被引量
-	private String keywords;
+	private String applytime; // 申请日
+	@Field(type=FieldType.Keyword)
+	private String publictime; // 公开（公告）日
+	@Field(type=FieldType.Keyword)
+	private String applyyear; // 申请年
+	@Field(type=FieldType.Keyword)
+	private String publicyear; // 公开年
+	@Field(type=FieldType.Keyword)
+	private String type; // 专利类型
+	private String description; // 专利描述
+	@Field(type=FieldType.Keyword)
+	private String claim; //权利要求
+	@Field(type=FieldType.Keyword)
+	private String publicnumber; //公开号
+	@Field(type=FieldType.Keyword)
+	private String applynumber; //申请号
+	@Field(type=FieldType.Text,fielddata=true)
+	private String ipc; // ipc
+	@Field(type=FieldType.Text,fielddata=true)
+	private String cpc; // cpc
+	@Field(type=FieldType.Keyword)
+	private String piroryear; //优先权年
+	@Field(type=FieldType.Keyword)
+	private String country; //国家
 	private Long now;
-	
-	
-	public Long getNow() {
-		return now;
-	}
-	public void setNow(Long now) {
-		this.now = now;
-	}
-	public Long getRef() {
-		return ref;
-	}
-	public void setRef(Long ref) {
-		this.ref = ref;
-	}
-	public String getKeywords() {
-		return keywords;
-	}
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
 	public String getId() {
 		return id;
 	}
@@ -60,66 +58,109 @@ public class Paper implements Serializable{
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getAuthor() {
-		return author;
-	}
-	public void setAuthor(String author) {
-		this.author = author;
-	}
 	public String getSubject() {
 		return subject;
 	}
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public String getJournal() {
-		return journal;
+	public List<String> getPerson() {
+		return person;
 	}
-	public void setJournal(String journal) {
-		this.journal = journal;
+	public void setPerson(List<String> person) {
+		this.person = person;
 	}
-	public String getYear() {
-		return year;
+	public List<String> getCreator() {
+		return creator;
 	}
-	public void setYear(String year) {
-		this.year = year;
+	public void setCreator(List<String> creator) {
+		this.creator = creator;
 	}
-	public String getVp() {
-		return vp;
+	public String getApplytime() {
+		return applytime;
 	}
-	public void setVp(String vp) {
-		this.vp = vp;
+	public void setApplytime(String applytime) {
+		this.applytime = applytime;
 	}
-	public String getPage() {
-		return page;
+	public String getPublictime() {
+		return publictime;
 	}
-	public void setPage(String page) {
-		this.page = page;
+	public void setPublictime(String publictime) {
+		this.publictime = publictime;
 	}
-	public String getIssn() {
-		return issn;
+	public String getApplyyear() {
+		return applyyear;
 	}
-	public void setIssn(String issn) {
-		this.issn = issn;
+	public void setApplyyear(String applyyear) {
+		this.applyyear = applyyear;
 	}
-	public String getPdf() {
-		return pdf;
+	public String getPublicyear() {
+		return publicyear;
 	}
-	public void setPdf(String pdf) {
-		this.pdf = pdf;
+	public void setPublicyear(String publicyear) {
+		this.publicyear = publicyear;
 	}
-	public String getLink() {
-		return link;
+	public String getType() {
+		return type;
 	}
-	public void setLink(String link) {
-		this.link = link;
+	public void setType(String type) {
+		this.type = type;
 	}
-	public String getNumber() {
-		return number;
+	public String getDescription() {
+		return description;
 	}
-	public void setNumber(String number) {
-		this.number = number;
+	public void setDescription(String description) {
+		this.description = description;
 	}
+	public String getClaim() {
+		return claim;
+	}
+	public void setClaim(String claim) {
+		this.claim = claim;
+	}
+	public String getPublicnumber() {
+		return publicnumber;
+	}
+	public void setPublicnumber(String publicnumber) {
+		this.publicnumber = publicnumber;
+	}
+	public String getApplynumber() {
+		return applynumber;
+	}
+	public void setApplynumber(String applynumber) {
+		this.applynumber = applynumber;
+	}
+	public String getIpc() {
+		return ipc;
+	}
+	public void setIpc(String ipc) {
+		this.ipc = ipc;
+	}
+	public String getCpc() {
+		return cpc;
+	}
+	public void setCpc(String cpc) {
+		this.cpc = cpc;
+	}
+	public String getPiroryear() {
+		return piroryear;
+	}
+	public void setPiroryear(String piroryear) {
+		this.piroryear = piroryear;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public Long getNow() {
+		return now;
+	}
+	public void setNow(Long now) {
+		this.now = now;
+	}
+	
 	
 	
 }

@@ -1,6 +1,7 @@
 package com.yiyao.app.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -13,60 +14,43 @@ public class Patent implements Serializable{
 
 	@Id
 	private String id;
-	private String ticket;  //公开号
-	private String number; // 申请号
+	private String title;  //标题
 	private String subject; //摘要
-	private String title; // 标题
 	@Field(type=FieldType.Keyword)
-	private String ipc; // ipc分类
+	private List<String> person;   // 专利权人
 	@Field(type=FieldType.Keyword)
-	private String cpc; // cpc分类
+	private List<String> creator;
 	@Field(type=FieldType.Keyword)
-	private String year; // 优先权年
+	private String applytime; // 申请日
 	@Field(type=FieldType.Keyword)
-	private String country; // 国家
+	private String publictime; // 公开（公告）日
+	@Field(type=FieldType.Keyword)
+	private String applyyear; // 申请年
+	@Field(type=FieldType.Keyword)
+	private String publicyear; // 公开年
+	@Field(type=FieldType.Keyword)
+	private String type; // 专利类型
 	private String description; // 专利描述
-	private String claim; // 权利要求
 	@Field(type=FieldType.Keyword)
-	private String person; // 专利权人
+	private String claim; //权利要求
 	@Field(type=FieldType.Keyword)
-	private String creator; // 发明人
-	private String pdf; //pdf全文
-	private String law; //法律状态
+	private String publicnumber; //公开号
+	@Field(type=FieldType.Keyword)
+	private String applynumber; //申请号
+	@Field(type=FieldType.Keyword)
+	private List<String> ipc; // ipc
+	@Field(type=FieldType.Keyword)
+	private List<String> cpc; // cpc
+	@Field(type=FieldType.Keyword)
+	private String piroryear; //优先权年
+	@Field(type=FieldType.Keyword)
+	private String country; //国家
 	private Long now;
-	
-	
-	
-	
-	public String getClaim() {
-		return claim;
-	}
-	public void setClaim(String claim) {
-		this.claim = claim;
-	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public String getTicket() {
-		return ticket;
-	}
-	public void setTicket(String ticket) {
-		this.ticket = ticket;
-	}
-	public String getNumber() {
-		return number;
-	}
-	public void setNumber(String number) {
-		this.number = number;
-	}
-	public String getSubject() {
-		return subject;
-	}
-	public void setSubject(String subject) {
-		this.subject = subject;
 	}
 	public String getTitle() {
 		return title;
@@ -74,29 +58,53 @@ public class Patent implements Serializable{
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getIpc() {
-		return ipc;
+	public String getSubject() {
+		return subject;
 	}
-	public void setIpc(String ipc) {
-		this.ipc = ipc;
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
-	public String getCpc() {
-		return cpc;
+	public List<String> getPerson() {
+		return person;
 	}
-	public void setCpc(String cpc) {
-		this.cpc = cpc;
+	public void setPerson(List<String> person) {
+		this.person = person;
 	}
-	public String getYear() {
-		return year;
+	public List<String> getCreator() {
+		return creator;
 	}
-	public void setYear(String year) {
-		this.year = year;
+	public void setCreator(List<String> creator) {
+		this.creator = creator;
 	}
-	public String getCountry() {
-		return country;
+	public String getApplytime() {
+		return applytime;
 	}
-	public void setCountry(String country) {
-		this.country = country;
+	public void setApplytime(String applytime) {
+		this.applytime = applytime;
+	}
+	public String getPublictime() {
+		return publictime;
+	}
+	public void setPublictime(String publictime) {
+		this.publictime = publictime;
+	}
+	public String getApplyyear() {
+		return applyyear;
+	}
+	public void setApplyyear(String applyyear) {
+		this.applyyear = applyyear;
+	}
+	public String getPublicyear() {
+		return publicyear;
+	}
+	public void setPublicyear(String publicyear) {
+		this.publicyear = publicyear;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getDescription() {
 		return description;
@@ -104,29 +112,35 @@ public class Patent implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getPerson() {
-		return person;
+	public String getClaim() {
+		return claim;
 	}
-	public void setPerson(String person) {
-		this.person = person;
+	public void setClaim(String claim) {
+		this.claim = claim;
 	}
-	public String getCreator() {
-		return creator;
+	public String getPublicnumber() {
+		return publicnumber;
 	}
-	public void setCreator(String creator) {
-		this.creator = creator;
+	public void setPublicnumber(String publicnumber) {
+		this.publicnumber = publicnumber;
 	}
-	public String getPdf() {
-		return pdf;
+	public String getApplynumber() {
+		return applynumber;
 	}
-	public void setPdf(String pdf) {
-		this.pdf = pdf;
+	public void setApplynumber(String applynumber) {
+		this.applynumber = applynumber;
 	}
-	public String getLaw() {
-		return law;
+	public String getPiroryear() {
+		return piroryear;
 	}
-	public void setLaw(String law) {
-		this.law = law;
+	public void setPiroryear(String piroryear) {
+		this.piroryear = piroryear;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	public Long getNow() {
 		return now;
@@ -134,6 +148,21 @@ public class Patent implements Serializable{
 	public void setNow(Long now) {
 		this.now = now;
 	}
+	public List<String> getIpc() {
+		return ipc;
+	}
+	public void setIpc(List<String> ipc) {
+		this.ipc = ipc;
+	}
+	public List<String> getCpc() {
+		return cpc;
+	}
+	public void setCpc(List<String> cpc) {
+		this.cpc = cpc;
+	}
+	
+	
+	
 	
 	
 	
