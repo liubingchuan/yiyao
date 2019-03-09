@@ -1,9 +1,12 @@
 package com.yiyao.app.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Document(indexName = "org", type = "og")
 public class Org implements Serializable{
@@ -15,11 +18,13 @@ public class Org implements Serializable{
 	private String name; // 机构名称
 	private String alias; // 其他名称
 	private String description; // 机构介绍
-	private String area;  // 研究领域 
+	@Field(type=FieldType.Keyword)
+	private List<String> area;  // 研究领域 
 	private String type;  // 机构类型
 	private String country; // 国家
 	private String link; // 产业链
-	private String classic; // 产品类型
+	@Field(type=FieldType.Keyword)
+	private List<String> classic; // 产品类型
 	private String logo; // 机构logo
 	private String professors; // 专家数量
 	private String patents;   // 专利数量
@@ -68,12 +73,6 @@ public class Org implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getArea() {
-		return area;
-	}
-	public void setArea(String area) {
-		this.area = area;
-	}
 	public String getType() {
 		return type;
 	}
@@ -91,12 +90,6 @@ public class Org implements Serializable{
 	}
 	public void setLink(String link) {
 		this.link = link;
-	}
-	public String getClassic() {
-		return classic;
-	}
-	public void setClassic(String classic) {
-		this.classic = classic;
 	}
 	public String getLogo() {
 		return logo;
@@ -151,6 +144,18 @@ public class Org implements Serializable{
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	public List<String> getArea() {
+		return area;
+	}
+	public void setArea(List<String> area) {
+		this.area = area;
+	}
+	public List<String> getClassic() {
+		return classic;
+	}
+	public void setClassic(List<String> classic) {
+		this.classic = classic;
 	}
 	
 	

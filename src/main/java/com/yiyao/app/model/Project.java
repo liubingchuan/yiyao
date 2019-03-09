@@ -16,12 +16,13 @@ public class Project implements Serializable{
 	@Id
 	private String id;
 	private String name;
+	@Field(type=FieldType.Keyword)
 	private String classis; // 分类
 	private String description; // 介绍
 	@Field(type=FieldType.Keyword)
 	private String budget; 
-	private String start;
-	private String end;
+	private String start;   //开始日期
+	private String end;    // 截止日期
 	@Field(type=FieldType.Keyword)
 	private String entrust; // 委托
 	private String contacts;
@@ -32,6 +33,7 @@ public class Project implements Serializable{
 	private String ctime;  // 提交时间
 	private String uploader;
 	private String modifier;
+	private String year; // 发表时间
 	private Long now;
 	
 	@Field(type=FieldType.Text,fielddata=true)

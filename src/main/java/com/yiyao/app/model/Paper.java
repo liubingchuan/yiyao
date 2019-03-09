@@ -16,147 +16,157 @@ public class Paper implements Serializable{
 	private String id;
 	private String title;  //标题
 	private String subject; //摘要
-	@Field(type=FieldType.Text,fielddata=true)
-	private List<String> person;   // 专利权人
-	@Field(type=FieldType.Text,fielddata=true)
-	private List<String> creator;
 	@Field(type=FieldType.Keyword)
-	private String applytime; // 申请日
+	private List<String> author;   // 作者
+	
 	@Field(type=FieldType.Keyword)
-	private String publictime; // 公开（公告）日
+	private List<String> institution; // 机构
+	
 	@Field(type=FieldType.Keyword)
-	private String applyyear; // 申请年
+	private List<String> keywords; // 关键词
+	
 	@Field(type=FieldType.Keyword)
-	private String publicyear; // 公开年
+	private String journal; // 期刊（出处）
+	
 	@Field(type=FieldType.Keyword)
-	private String type; // 专利类型
-	private String description; // 专利描述
+	private String volume; // 卷
+	
 	@Field(type=FieldType.Keyword)
-	private String claim; //权利要求
+	private String issue; // 期
+	
 	@Field(type=FieldType.Keyword)
-	private String publicnumber; //公开号
+	private String page; // 页码
+	
 	@Field(type=FieldType.Keyword)
-	private String applynumber; //申请号
-	@Field(type=FieldType.Text,fielddata=true)
-	private String ipc; // ipc
-	@Field(type=FieldType.Text,fielddata=true)
-	private String cpc; // cpc
+	private String issn; // issn
+	
 	@Field(type=FieldType.Keyword)
-	private String piroryear; //优先权年
+	private String year; // 年
+	
 	@Field(type=FieldType.Keyword)
-	private String country; //国家
+	private List<String> link; // 全文链接
+	
+	@Field(type=FieldType.Keyword)
+	private String citenum; // 被引量
+	
 	private Long now;
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getSubject() {
 		return subject;
 	}
+
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public List<String> getPerson() {
-		return person;
+
+	public List<String> getAuthor() {
+		return author;
 	}
-	public void setPerson(List<String> person) {
-		this.person = person;
+
+	public void setAuthor(List<String> author) {
+		this.author = author;
 	}
-	public List<String> getCreator() {
-		return creator;
+
+	public List<String> getInstitution() {
+		return institution;
 	}
-	public void setCreator(List<String> creator) {
-		this.creator = creator;
+
+	public void setInstitution(List<String> institution) {
+		this.institution = institution;
 	}
-	public String getApplytime() {
-		return applytime;
+
+	public List<String> getKeywords() {
+		return keywords;
 	}
-	public void setApplytime(String applytime) {
-		this.applytime = applytime;
+
+	public void setKeywords(List<String> keywords) {
+		this.keywords = keywords;
 	}
-	public String getPublictime() {
-		return publictime;
+
+	public String getJournal() {
+		return journal;
 	}
-	public void setPublictime(String publictime) {
-		this.publictime = publictime;
+
+	public void setJournal(String journal) {
+		this.journal = journal;
 	}
-	public String getApplyyear() {
-		return applyyear;
+
+	public String getVolume() {
+		return volume;
 	}
-	public void setApplyyear(String applyyear) {
-		this.applyyear = applyyear;
+
+	public void setVolume(String volume) {
+		this.volume = volume;
 	}
-	public String getPublicyear() {
-		return publicyear;
+
+	public String getIssue() {
+		return issue;
 	}
-	public void setPublicyear(String publicyear) {
-		this.publicyear = publicyear;
+
+	public void setIssue(String issue) {
+		this.issue = issue;
 	}
-	public String getType() {
-		return type;
+
+	public String getPage() {
+		return page;
 	}
-	public void setType(String type) {
-		this.type = type;
+
+	public void setPage(String page) {
+		this.page = page;
 	}
-	public String getDescription() {
-		return description;
+
+	public String getIssn() {
+		return issn;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+
+	public void setIssn(String issn) {
+		this.issn = issn;
 	}
-	public String getClaim() {
-		return claim;
+
+	public String getYear() {
+		return year;
 	}
-	public void setClaim(String claim) {
-		this.claim = claim;
+
+	public void setYear(String year) {
+		this.year = year;
 	}
-	public String getPublicnumber() {
-		return publicnumber;
+
+	public List<String> getLink() {
+		return link;
 	}
-	public void setPublicnumber(String publicnumber) {
-		this.publicnumber = publicnumber;
+
+	public void setLink(List<String> link) {
+		this.link = link;
 	}
-	public String getApplynumber() {
-		return applynumber;
+
+	public String getCitenum() {
+		return citenum;
 	}
-	public void setApplynumber(String applynumber) {
-		this.applynumber = applynumber;
+
+	public void setCitenum(String citenum) {
+		this.citenum = citenum;
 	}
-	public String getIpc() {
-		return ipc;
-	}
-	public void setIpc(String ipc) {
-		this.ipc = ipc;
-	}
-	public String getCpc() {
-		return cpc;
-	}
-	public void setCpc(String cpc) {
-		this.cpc = cpc;
-	}
-	public String getPiroryear() {
-		return piroryear;
-	}
-	public void setPiroryear(String piroryear) {
-		this.piroryear = piroryear;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
+
 	public Long getNow() {
 		return now;
 	}
+
 	public void setNow(Long now) {
 		this.now = now;
 	}

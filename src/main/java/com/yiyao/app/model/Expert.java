@@ -22,12 +22,16 @@ public class Expert implements Serializable{
 	private String phone; // 手机
 	private String tel; // 办公电话
 	private String email; 
-	private String area; //研究领域
+	@Field(type=FieldType.Keyword)
+	private List<String> area; //研究领域
 	private String address; // 地址
-	private String duty; // 职务
-	private String title; // 职称
+	@Field(type=FieldType.Keyword)
+	private List<String> duty; // 职务
+	@Field(type=FieldType.Keyword)
+	private List<String> title; // 职称
 	private String resume; // 简历
-	private String project; // 科研项目
+	@Field(type=FieldType.Keyword)
+	private List<String> project; // 科研项目
 	private String photo;   // 照片
 	private String ctime;  // 提交时间
 	private String uploader; // 提交人
@@ -82,41 +86,17 @@ public class Expert implements Serializable{
 		this.email = email;
 	}
 	
-	public String getArea() {
-		return area;
-	}
-	public void setArea(String area) {
-		this.area = area;
-	}
 	public String getAddress() {
 		return address;
 	}
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getDuty() {
-		return duty;
-	}
-	public void setDuty(String duty) {
-		this.duty = duty;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
 	public String getResume() {
 		return resume;
 	}
 	public void setResume(String resume) {
 		this.resume = resume;
-	}
-	public String getProject() {
-		return project;
-	}
-	public void setProject(String project) {
-		this.project = project;
 	}
 	public String getPhoto() {
 		return photo;
@@ -141,6 +121,30 @@ public class Expert implements Serializable{
 	}
 	public void setNow(Long now) {
 		this.now = now;
+	}
+	public List<String> getArea() {
+		return area;
+	}
+	public void setArea(List<String> area) {
+		this.area = area;
+	}
+	public List<String> getDuty() {
+		return duty;
+	}
+	public void setDuty(List<String> duty) {
+		this.duty = duty;
+	}
+	public List<String> getTitle() {
+		return title;
+	}
+	public void setTitle(List<String> title) {
+		this.title = title;
+	}
+	public List<String> getProject() {
+		return project;
+	}
+	public void setProject(List<String> project) {
+		this.project = project;
 	}
 	
 	

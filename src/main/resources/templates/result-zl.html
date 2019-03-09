@@ -34,7 +34,7 @@
 					<div class="loginAfter">
 						<div class="loginAfterM">
 							<a href="#" class="loginAfterTx">
-								<img src="images/tx.jpeg" />
+								<img th:src="@{/images/tx.jpeg}" />
 							</a>
 							<div class="loginAfterNo">
 								
@@ -50,19 +50,19 @@
 									</p>
 									<p>
 										<a href="#">
-											<img src="images/houtai.png" />
+											<img th:src="@{/images/houtai.png}" />
 											进入管理后台
 										</a>
 									</p>
 									<p>
 										<a href="#">
-											<img src="images/dingdan.png" />
+											<img th:src="@{/images/dingdan.png}" />
 											我的申请
 										</a>
 									</p>
 									<p>
 										<a href="#">
-											<img src="images/tuichu.png" />
+											<img th:src="@{/images/tuichu.png}" />
 											退出
 										</a>
 									</p>
@@ -77,8 +77,7 @@
 		</div>              
 		    <div class="jiansuoNR">
 		    	<div class="jiansuoOne clearfix">
-		    		<div class="left jiansuoOnelf">
-		    			检索结果：43,345
+		    		<div class="left jiansuoOnelf" th:text="检索结果：+ ${totalCount}" >
 		    		</div>
 		    		<div class="jiansuoOneRt">
 		    			<a href="#">
@@ -141,12 +140,12 @@
 		        					<input type="checkbox" th:id="'year'+${year.key}" th:name="year" th:value="${year.key}" />
 		        					<label th:for="'year'+${year.key}" th:text="${year.key} + '(' + ${year.value} + ')'"></label>
 		        				</div>
-		        				<div class="clearfix jiansuanDate">
+		        				<!-- <div class="clearfix jiansuanDate">
 		        					<input type="text" class="left" id="dateinfo" />
 		        					<span class="left jiesunH">-</span>
 		        					<input type="text" class="left" id="dateinfo1" />
 		        				</div>
-		        				<input type="button" value="确认" class="jiansuanDateSub" />
+		        				<input type="button" value="确认" class="jiansuanDateSub" /> -->
 		        		</div>
 		        	    <div class="jiansuoLfGp">
 		        			<h3 class="jiansuoLfGpTl">
@@ -221,7 +220,7 @@
 	    		<div class="index-container clearfix">
 	    			<div class="left footerTopLf">
 	    				<p class="footerTopTl">
-	    					<img src="images/pingtai.png" />
+	    					<img th:src="@{/images/pingtai.png}" />
 	    					平台介绍
 	    				</p>
 	    				<div class="footerTopText">
@@ -247,7 +246,7 @@
 	    		    <div class="left footerTopLX">
 	    		    	<div class="footerTopLXT">
 	    		    	<p class="footerTopTl">	    				
-	    					<img src="images/lianxifangshi.png" />联系方式
+	    					<img th:src="@{/images/lianxifangshi.png}" />联系方式
 	    				</p>
 	    				<div class="footerTopText">
 	    					<p>电话：010-82626611-6302</p>
@@ -256,7 +255,7 @@
 	    		    	</div>
 	    		        <div class="footerTopText footerTopLXB">
 	    		        	<p class="footerTopTl">	    				
-	    				 	<img src="images/jigou.png" />合作机构
+	    				 	<img th:src="@{/images/jigou.png}" />合作机构
 	    				    </p>
 	    		        	<ul>
 	    		        		<li>
@@ -275,7 +274,7 @@
 	    		        </div>
 	    		    </div>
 	    		    <div class="right footerTopErw">
-	    		    	<img src="images/erw.png" />
+	    		    	<img th:src="@{/images/erw.png}" />
 	    		    	<p>
 	    		    		<em></em>扫码快速关注公众号
 	    		    	</p>
@@ -288,7 +287,7 @@
 	        	</div>
 	        </div>
 	    </div>
-		<script type="text/javascript" src="js/main.js" ></script>
+		<script type="text/javascript" th:src="@{/js/main.js}" ></script>
 		<script type="text/javascript">
     
     jeDate({
