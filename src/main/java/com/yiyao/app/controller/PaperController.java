@@ -116,7 +116,7 @@ public class PaperController {
 				// 分页参数
 				Pageable pageable = new PageRequest(pageIndex, pageSize);
 
-				BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("title", q));
+				BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("title", q)).should(QueryBuilders.matchQuery("subject", q));
 				if(year != null) {
 					String[] years = year.split("-");
 					queryBuilder.filter(QueryBuilders.termsQuery("year", years));
@@ -182,7 +182,7 @@ public class PaperController {
 		model.addAttribute("pageIndex", pageIndex);
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("title", q);
+		model.addAttribute("query", q);
 			
 		return view;
 	}

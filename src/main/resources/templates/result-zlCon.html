@@ -17,7 +17,7 @@
 				<a href="index.html" class="left logo">
 					<img th:src="@{/images/logo.png}" />
 				</a>
-				<a href="#" class="left headBack">
+				<a href="/" class="left headBack">
 					<<返回首页
 				</a>
 				<div class="left headsuos">
@@ -81,15 +81,15 @@
 		    			<!-- 检索结果：43,345 -->
 		    		</div>
 		    		<div class="jiansuoOneRt">
-		    			<a href="#">
-		    				专利
+		    			<!-- <a href="#">
+		    				<font color="red">专利</font>
 		    			</a>
 		    			<a href="#">
 		    				论文
 		    			</a>
 		    			<a href="#">
 		    				项目
-		    			</a>
+		    			</a> -->
 		    		</div>
 		    		<em class="jiansuoOneIco">
 		    			专利分析
@@ -167,11 +167,11 @@
 		            		</a>
 		            	</div>
 		            	<div class="zhuanliConThree">
-		            		<div class="zhuanliConThreeM">
+		            		<div class="zhuanliConThreeM active">
 		            			<div class="zhuanliText" th:text="*{claim}">
 		            			</div>
 		            		</div>
-		            		<div class="zhuanliConThreeM active">
+		            		<div class="zhuanliConThreeM">
 		            			<div class="zhuanliText" th:text="*{description}">
 		            			</div>
 		            		</div>

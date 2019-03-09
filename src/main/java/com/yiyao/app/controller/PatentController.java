@@ -93,7 +93,7 @@ public class PatentController {
 	}
 	
 	@GetMapping(value = "patent/list")
-	public String projects(@RequestParam(required=false,value="q") String q,
+	public String patents(@RequestParam(required=false,value="q") String q,
 			@RequestParam(required=false,value="year") String year,
 			@RequestParam(required=false,value="ipc") String ipc,
 			@RequestParam(required=false,value="cpc") String cpc,
@@ -267,7 +267,7 @@ public class PatentController {
 		model.addAttribute("pageIndex", pageIndex);
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("title", q);
+		model.addAttribute("query", q);
 			
 		return view;
 	}

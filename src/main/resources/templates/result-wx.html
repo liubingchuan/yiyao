@@ -14,10 +14,10 @@
 			<div class="nycontainer">
 			<div class="head">
 			<div class="clearfix">
-				<a href="index.html" class="left logo">
+				<a href="/" class="left logo">
 					<img th:src="@{/images/logo.png}" />
 				</a>
-				<a href="#" class="left headBack">
+				<a href="/" class="left headBack">
 					<<返回首页
 				</a>
 				<div class="left headsuos">
@@ -34,7 +34,7 @@
 					<div class="loginAfter">
 						<div class="loginAfterM">
 							<a href="#" class="loginAfterTx">
-								<img src="images/tx.jpeg" />
+								<img th:src="@{/images/tx.jpeg}" />
 							</a>
 							<div class="loginAfterNo">
 								
@@ -50,19 +50,19 @@
 									</p>
 									<p>
 										<a href="#">
-											<img src="images/houtai.png" />
+											<img th:src="@{/images/houtai.png}" />
 											进入管理后台
 										</a>
 									</p>
 									<p>
 										<a href="#">
-											<img src="images/dingdan.png" />
+											<img th:src="@{/images/dingdan.png}" />
 											我的申请
 										</a>
 									</p>
 									<p>
 										<a href="#">
-											<img src="images/tuichu.png" />
+											<img th:src="@{/images/tuichu.png}" />
 											退出
 										</a>
 									</p>
@@ -77,17 +77,16 @@
 		</div>              
 		    <div class="jiansuoNR">
 		    	<div class="jiansuoOne clearfix">
-		    		<div class="left jiansuoOnelf">
-		    			检索结果：43,345
+		    		<div class="left jiansuoOnelf" th:text="检索结果：+ ${totalCount}">
 		    		</div>
 		    		<div class="jiansuoOneRt">
-		    			<a href="#">
+		    			<a th:href="@{/patent/list(q=${query})}">
 		    				专利
 		    			</a>
-		    			<a href="#">
-		    				论文
+		    			<a th:href="@{/paper/list(q=${query})}">
+		    				<font color="red">论文</font>
 		    			</a>
-		    			<a href="#">
+		    			<a th:href="@{/project/list(q=${query})}">
 		    				项目
 		    			</a>
 		    		</div>
