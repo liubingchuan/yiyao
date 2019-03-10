@@ -113,29 +113,33 @@ public class UserController {
 	
 	@GetMapping(value = "user/list")
 	public String users(@RequestParam(required=false, value="token") String token, 
-			@RequestParam(required=false,value="pageSize") String pageSize, 
-			@RequestParam(required=false, value="pageIndex") String pageIndex, 
+			@RequestParam(required=false,value="pageSize") Integer pageSize, 
+			@RequestParam(required=false, value="pageIndex") Integer pageIndex, 
 			Model model) {
-		if(pageSize != null && pageIndex != null) {
-			if("-1".equals(pageIndex)) {
-				pageIndex = "0";
-			}
-			int start = Integer.valueOf(pageIndex) * Integer.valueOf(pageSize);
-			int totalCount = userMapper.getUserCount();
-			int end = totalCount-1;
-			int totalPages = totalCount/Integer.valueOf(pageSize) + 1;
-			if(pageIndex.equals(String.valueOf(totalPages))) {
-				pageIndex = String.valueOf(Integer.valueOf(pageIndex) - 1);
-			}else {
-				end = Integer.valueOf(pageSize) * Integer.valueOf((Integer.valueOf(pageIndex)+1));
-			}
-			List<User> userList = userMapper.getUsers(start, end);
-			model.addAttribute("userList", userList);
-			model.addAttribute("pageSize", pageSize);
-			model.addAttribute("pageIndex", pageIndex);
-			model.addAttribute("totalPages", totalPages);
-			
+		if(pageSize == null) {
+			pageSize = 10;
 		}
+		if(pageIndex == null) {
+			pageIndex = 0;
+		}
+		if("-1".equals(String.valueOf(pageIndex))) {
+			pageIndex = 0;
+		}
+		int start = Integer.valueOf(pageIndex) * Integer.valueOf(pageSize);
+		int totalCount = userMapper.getUserCount();
+		int end = totalCount-1;
+		int totalPages = totalCount/Integer.valueOf(pageSize) + 1;
+		if(pageIndex.equals(String.valueOf(totalPages))) {
+			pageIndex = pageIndex - 1;
+		}else {
+			end = pageSize * (pageIndex+1);
+		}
+		List<User> userList = userMapper.getUsers(start, end);
+		model.addAttribute("userList", userList);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("pageIndex", pageIndex);
+		model.addAttribute("totalPages", totalPages);
+			
 		return "manage";
 	}
 	
