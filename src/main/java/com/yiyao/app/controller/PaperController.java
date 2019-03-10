@@ -82,7 +82,7 @@ public class PaperController {
 			paper = paperRepository.findById(id).get();
 		}
 		model.addAttribute("paper", paper);
-		return "manageProCon";
+		return "result-wxCon";
 	}
 	
 	@GetMapping(value = "paper/list")
