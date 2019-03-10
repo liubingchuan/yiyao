@@ -76,7 +76,9 @@ public class ProjectController {
 	}
 	
 	@GetMapping(value = "project/get")
-	public String getProject(@RequestParam(required=false,value="id") String id, Model model) {
+	public String getProject(@RequestParam(required=false,value="id") String id, 
+			@RequestParam(required=false,value="front") String front,
+			Model model) {
 		Project project = new Project();
 		if(id != null) {
 			project = projectRepository.findById(id).get();
@@ -89,7 +91,7 @@ public class ProjectController {
 		long totalPages = 0L;
 		List<Project> projectList = new ArrayList<Project>();
 		String view = "manageProCon";
-		if(esTemplate.indexExists(Project.class)) {
+		if(esTemplate.indexExists(Project.class) && project.getName() != null) {
 			// 分页参数
 			Pageable pageable = new PageRequest(pageIndex, pageSize);
 
@@ -113,7 +115,9 @@ public class ProjectController {
 			
 			totalPages = Math.round(totalCount/pageSize);
 			model.addAttribute("projectList", projectList);
-			view = "result-xmCon";
+			if(front != null) {
+				view = "result-xmCon";
+			}
 		}
 		return view;
 	}
