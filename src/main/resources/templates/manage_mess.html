@@ -246,12 +246,15 @@
 			    				注册时间
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<span class="M_messGpText" th:field="*{stamp}">
-			    					2018/12/05 12:00:21
+			    				<span class="M_messGpText" th:text="*{stamp}">
+			    					
+			    					<!-- 2018/12/05 12:00:21 -->
 			    				</span>
 			    			</div>
 			    		</div>
 			    		<input type="hidden" th:field="*{id}" />
+			    		<input type="hidden" class="M_messInp" th:field="*{stamp}"/>
+			    		<input type="hidden" class="M_messInp" th:field="*{wechat}"/>
 			    		<input type="submit" value="保存修改" class="M_messSub" />
 			    		</form>
 			    	</div>

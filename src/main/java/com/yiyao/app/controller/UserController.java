@@ -1,7 +1,8 @@
 package com.yiyao.app.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,7 @@ import com.yiyao.app.common.request.LoginRequest;
 import com.yiyao.app.common.request.RegisterRequest;
 import com.yiyao.app.common.request.UpdateUserRequest;
 import com.yiyao.app.mapper.UserMapper;
-import com.yiyao.app.model.Project;
 import com.yiyao.app.model.User;
-import com.yiyao.app.service.Cache;
 import com.yiyao.app.utils.BeanUtil;
 import com.yiyao.app.utils.JwtUtils;
 
@@ -55,6 +54,7 @@ public class UserController {
 		String account = request.getAccount();
 		String password = request.getPassword();
 		String email = request.getEmail();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		User user = userMapper.getUserByAccount(account);
 		if(user != null) {
 			return R.error().put("token", "0");
@@ -63,6 +63,7 @@ public class UserController {
 		user.setAccount(account);
 		user.setPassword(password);
 		user.setEmail(email);
+		user.setStamp(df.format(new Date()));
 		userMapper.insertUser(user);
 		String JWT = JwtUtils.createJWT("1", account, SystemConstant.JWT_TTL);
 		
@@ -138,6 +139,7 @@ public class UserController {
 		model.addAttribute("userList", userList);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("pageIndex", pageIndex);
+		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("totalPages", totalPages);
 			
 		return "manage";

@@ -18,7 +18,7 @@ public class UpdateUserRequest extends BaseRequest{
 	private String email;
 	private String phone;
 	private String wechat;
-	private Long stamp;
+	private String stamp;
 	private String role;
 	private String token;
 	
@@ -101,10 +101,10 @@ public class UpdateUserRequest extends BaseRequest{
 	public void setWechat(String wechat) {
 		this.wechat = wechat;
 	}
-	public Long getStamp() {
+	public String getStamp() {
 		return stamp;
 	}
-	public void setStamp(Long stamp) {
+	public void setStamp(String stamp) {
 		this.stamp = stamp;
 	}
 	public String getRole() {

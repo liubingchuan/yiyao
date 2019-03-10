@@ -28,7 +28,7 @@ public interface UserMapper {
 	@Update("UPDATE yiyao_user SET account = #{user.account}, password = #{user.password}, name = #{user.name}, "
 			    + "identity = #{user.identity}, unit = #{user.unit}, job = #{user.job}, "
 			    + "duty = #{user.duty}, major = #{user.major}, email = #{user.email}, "
-			    + "phone = #{user.phone} "
+			    + "phone = #{user.phone}, stamp = #{user.stamp} "
 		        + "WHERE id = #{user.id}")
 	void updateById(@Param("user") User user);
 	

@@ -23,7 +23,7 @@ public class User {
 	private String email;
 	private String phone;
 	private String wechat;
-	private Long stamp;
+	private String stamp;
 	private String role;
 	
 	
@@ -105,10 +105,10 @@ public class User {
 	public void setWechat(String wechat) {
 		this.wechat = wechat;
 	}
-	public Long getStamp() {
+	public String getStamp() {
 		return stamp;
 	}
-	public void setStamp(Long stamp) {
+	public void setStamp(String stamp) {
 		this.stamp = stamp;
 	}
 
