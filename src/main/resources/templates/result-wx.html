@@ -97,40 +97,20 @@
 		        <div class="jiansuoCon clearfix">
 		        	<div class="left jiansuoLf">
 		        		<div class="jiansuoTl">
-		        			<img src="images/1.png" />
+		        			<img th:src="@{/images/1.png}" />
 		        			<a href="#">首页</a>><span>论文</span>
 		        		</div>
 		        		<div class="jiansuoZX">
-		        			<img src="images/2.png" style="width: 100%;vertical-align: middle;" />
+		        			<img th:src="@{/images/2.png}" style="width: 100%;vertical-align: middle;" />
 		        		</div>
 		        		<div class="jiansuoLfGp">
 		        			<h3 class="jiansuoLfGpTl">
 		        				研究机构
 		        			</h3>
 		        			<div class="jiansuoLfGpList">
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="10" />
-		        					<label for="10">清华大学（23123）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="11" />
-		        					<label for="11">复旦大学（2321）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="12" />
-		        					<label for="12">中国科学院微生物所（2324）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="13" />
-		        					<label for="13">中国科学院生物物理所（1234）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="14" />
-		        					<label for="14">华南生物医药研究所（234）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="15" />
-		        					<label for="15">中国科学院生物物理所（1234）</label>
+		        				<div class="jiansuoLfGx" th:each="institution : ${aginstitution}">
+		        					<input type="checkbox" th:id="'institution'+${institution.key}" th:name="institution" th:value="${institution.key}" />
+		        					<label th:for="'institution'+${institution.key}" th:text="${institution.key} + '(' + ${institution.value} + ')'"></label>
 		        				</div>
 		        			</div>
 		        		    <a href="javascript:;" class="jiansuoLfMore">
@@ -146,41 +126,21 @@
 		        					<input type="checkbox" th:id="'year'+${year.key}" th:name="year" th:value="${year.key}" />
 		        					<label th:for="'year'+${year.key}" th:text="${year.key} + '(' + ${year.value} + ')'"></label>
 		        				</div>
-		        				<div class="clearfix jiansuanDate">
+		        				<!-- <div class="clearfix jiansuanDate">
 		        					<input type="text" class="left" id="dateinfo" />
 		        					<span class="left jiesunH">-</span>
 		        					<input type="text" class="left" id="dateinfo1" />
 		        				</div>
-		        				<input type="button" value="确认" class="jiansuanDateSub" />
+		        				<input type="button" value="确认" class="jiansuanDateSub" /> -->
 		        		</div>
 		        	    <div class="jiansuoLfGp">
 		        			<h3 class="jiansuoLfGpTl">
 		        				文献出处
 		        			</h3>
 		        			<div class="jiansuoLfGpList">
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="20" />
-		        					<label for="20">生物医药杂志（23123）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="21" />
-		        					<label for="21">医疗器械杂志（2321）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="22" />
-		        					<label for="22">管理评论（2324）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="23" />
-		        					<label for="23">生物化工（1234）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="24" />
-		        					<label for="24">中成药（234）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="25" />
-		        					<label for="25">生物化工（1234）</label>
+		        				<div class="jiansuoLfGx" th:each="journal : ${agjournal}">
+		        					<input type="checkbox" th:id="'journal'+${journal.key}" th:name="journal" th:value="${journal.key}" />
+		        					<label th:for="'journal'+${journal.key}" th:text="${journal.key} + '(' + ${journal.value} + ')'"></label>
 		        				</div>
 		        			</div>
 		        		    <a href="javascript:;" class="jiansuoLfMore">
@@ -193,29 +153,9 @@
 		        				作者
 		        			</h3>
 		        			<div class="jiansuoLfGpList">
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="60" />
-		        					<label for="60">张伟（23123）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="61" />
-		        					<label for="61">刘忻（2321）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="62" />
-		        					<label for="62">李伟健（2324）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="63" />
-		        					<label for="63">李照过（1234）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="64" />
-		        					<label for="64">辛弃疾（234）</label>
-		        				</div>
-		        				<div class="jiansuoLfGx">
-		        					<input type="checkbox" id="65" />
-		        					<label for="65">李照过（1234）</label>
+		        				<div class="jiansuoLfGx" th:each="author : ${agauthor}">
+		        					<input type="checkbox" th:id="'author'+${author.key}" th:name="author" th:value="${author.key}" />
+		        					<label th:for="'author'+${author.key}" th:text="${author.key} + '(' + ${author.value} + ')'"></label>
 		        				</div>
 		        			</div>
 		        		    <a href="javascript:;" class="jiansuoLfMore">

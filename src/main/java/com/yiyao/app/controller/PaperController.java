@@ -143,6 +143,9 @@ public class PaperController {
 						.withSearchType(SearchType.QUERY_THEN_FETCH)
 						.withIndices("paper").withTypes("pr")
 						.addAggregation(AggregationBuilders.terms("agyear").field("year").order(Terms.Order.count(false)).size(10))
+						.addAggregation(AggregationBuilders.terms("aginstitution").field("institution").order(Terms.Order.count(false)).size(10))
+						.addAggregation(AggregationBuilders.terms("agjournal").field("journal").order(Terms.Order.count(false)).size(10))
+						.addAggregation(AggregationBuilders.terms("agauthor").field("author").order(Terms.Order.count(false)).size(10))
 						.build();
 				Aggregations aggregations = esTemplate.query(nativeSearchQueryBuilder, new ResultsExtractor<Aggregations>() {
 			        @Override
@@ -161,17 +164,34 @@ public class PaperController {
 					}
 					model.addAttribute("agyear", yearMap);
 					
+					StringTerms institutionTerms = (StringTerms) aggregations.asMap().get("aginstitution");
+					Iterator<Bucket> institutionbit = institutionTerms.getBuckets().iterator();
+					Map<String, Long> institutionMap = new HashMap<String, Long>();
+					while(institutionbit.hasNext()) {
+						Bucket institutionBucket = institutionbit.next();
+						institutionMap.put(institutionBucket.getKey().toString(), Long.valueOf(institutionBucket.getDocCount()));
+					}
+					model.addAttribute("aginstitution", institutionMap);
+					
+					StringTerms journalTerms = (StringTerms) aggregations.asMap().get("agjournal");
+					Iterator<Bucket> journalbit = journalTerms.getBuckets().iterator();
+					Map<String, Long> journalMap = new HashMap<String, Long>();
+					while(journalbit.hasNext()) {
+						Bucket journalBucket = journalbit.next();
+						journalMap.put(journalBucket.getKey().toString(), Long.valueOf(journalBucket.getDocCount()));
+					}
+					model.addAttribute("agjournal", journalMap);
+					
+					StringTerms authorTerms = (StringTerms) aggregations.asMap().get("agauthor");
+					Iterator<Bucket> authorbit = authorTerms.getBuckets().iterator();
+					Map<String, Long> authorMap = new HashMap<String, Long>();
+					while(authorbit.hasNext()) {
+						Bucket authorBucket = authorbit.next();
+						authorMap.put(authorBucket.getKey().toString(), Long.valueOf(authorBucket.getDocCount()));
+					}
+					model.addAttribute("agauthor", authorMap);
+					
 				}
-//				nativeSearchQueryBuilder.withQuery(functionScoreQueryBuilder);
-//				nativeSearchQueryBuilder.withSearchType(SearchType.QUERY_THEN_FETCH);
-//				TermsAggregationBuilder termsAggregation = AggregationBuilders.terms("aglist").field("list").order(Terms.Order.count(false)).size(10);
-//				nativeSearchQueryBuilder.addAggregation(termsAggregation);
-//		    	NativeSearchQuery nativeSearchQuery = nativeSearchQueryBuilder.build();
-//		    	Page<Project> search = projectRepository.search(nativeSearchQuery);
-//		    	List<Project> content = search.getContent();
-//		    	for (Project project : content) {
-//		    		pList.add(esBlog.getUsername());
-//				}
 				totalPages = Math.round(totalCount/pageSize);
 				
 				
