@@ -95,7 +95,7 @@ public class ProjectController {
 			// 分页参数
 			Pageable pageable = new PageRequest(pageIndex, pageSize);
 
-			BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("name", project.getName()));
+			BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery().should(QueryBuilders.matchPhraseQuery("name", project.getName()));
 //			if(entrust != null) {
 //				String[] entrusts = entrust.split("-");
 //				queryBuilder.filter(QueryBuilders.termsQuery("entrust", entrusts));
@@ -114,6 +114,11 @@ public class ProjectController {
 			
 			
 			totalPages = Math.round(totalCount/pageSize);
+			if(projectList.size()<2) {
+				projectList = new ArrayList<Project>();
+			}else {
+				projectList = projectList.subList(1, projectList.size());
+			}
 			model.addAttribute("projectList", projectList);
 			if(front != null) {
 				view = "result-xmCon";

@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yiyao.app.common.request.SavePaperRequest;
 import com.yiyao.app.model.Paper;
+import com.yiyao.app.model.Project;
 import com.yiyao.app.repository.PaperRepository;
 import com.yiyao.app.utils.BeanUtil;
 
@@ -82,6 +83,41 @@ public class PaperController {
 			paper = paperRepository.findById(id).get();
 		}
 		model.addAttribute("paper", paper);
+		Integer pageIndex = 0;
+		Integer pageSize = 10;
+		long totalCount = 0L;
+		long totalPages = 0L;
+		List<Paper> paperList = new ArrayList<Paper>();
+		if(esTemplate.indexExists(Paper.class) && paper.getTitle() != null) {
+			// 分页参数
+			Pageable pageable = new PageRequest(pageIndex, pageSize);
+
+			BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery().should(QueryBuilders.matchPhraseQuery("title", paper.getTitle()));
+//			if(entrust != null) {
+//				String[] entrusts = entrust.split("-");
+//				queryBuilder.filter(QueryBuilders.termsQuery("entrust", entrusts));
+//			}
+			
+			// 分数，并自动按分排序
+			FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(queryBuilder, ScoreFunctionBuilders.weightFactorFunction(1000));
+
+			// 分数、分页
+			SearchQuery searchQuery = new NativeSearchQueryBuilder().withPageable(pageable)
+					.withQuery(functionScoreQueryBuilder).build();
+
+			Page<Paper> searchPageResults = paperRepository.search(searchQuery);
+			paperList = searchPageResults.getContent();
+			totalCount = esTemplate.count(searchQuery, Paper.class);
+			
+			
+			totalPages = Math.round(totalCount/pageSize);
+			if(paperList.size()<2) {
+				paperList = new ArrayList<Paper>();
+			}else {
+				paperList = paperList.subList(1, paperList.size());
+			}
+			model.addAttribute("paperList", paperList);
+		}
 		return "result-wxCon";
 	}
 	
