@@ -1,8 +1,8 @@
 package com.yiyao.app.controller;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,11 +28,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yiyao.app.common.request.SaveOrgRequest;
-import com.yiyao.app.common.request.SaveProjectRequest;
 import com.yiyao.app.model.Org;
 import com.yiyao.app.model.Project;
 import com.yiyao.app.repository.OrgRepository;
-import com.yiyao.app.repository.ProjectRepository;
 import com.yiyao.app.utils.BeanUtil;
 
 
@@ -54,11 +52,19 @@ public class OrgController {
 		
 		Org org = new Org();
 		BeanUtil.copyBean(request, org);
-		if(org.getId() == null) {
+		if(org.getId() == null || "".equals(org.getId())) {
 			org.setId(UUID.randomUUID().toString());
 		}
+		List<String> area = new ArrayList<String>();
+		List<String> classic = new ArrayList<String>();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		area.add(request.getArea());
+		classic.add(request.getClassic());
+		org.setArea(area);
+		org.setClassic(classic);
 		org.setDescription(request.getInfo());
 		org.setNow(System.currentTimeMillis());
+		org.setCtime(df.format(new Date()));
 		orgRepository.save(org);
 		return "redirect:/org/list";
 	}
@@ -77,6 +83,15 @@ public class OrgController {
 		
 		model.addAttribute("org", org);
 		return view;
+	}
+	
+	@GetMapping(value = "org/delete")
+	public String deleteOrg(@RequestParam(required=false,value="id") String id) {
+		if(id != null) {
+			orgRepository.deleteById(id);
+		}
+		
+		return "redirect:/org/list";
 	}
 	
 	@GetMapping(value = "org/list")
@@ -129,6 +144,7 @@ public class OrgController {
 		}
 		model.addAttribute("orgList", orgList);
 		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("pageIndex", pageIndex);
 		model.addAttribute("totalPages", totalPages);
 			

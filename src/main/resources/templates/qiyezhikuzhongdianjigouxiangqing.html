@@ -119,9 +119,13 @@
 			    			<span class="left M_messGpName">
 			    				研究领域：
 			    			</span>
-			    			<div class="M_messGpRt" th:field="*{area}">
-			    				<select>
-			    					<option></option>
+			    			<div class="M_messGpRt">
+			    				<select th:field="*{area}" th:value="*{area}" name="area">
+			    					<option value="">请选择项目分类</option>
+			    					<option th:selected="*{area=='疫苗'}" value="疫苗">疫苗</option>
+			    					<option th:selected="*{area=='医疗器械'}" value="医疗器械">医疗器械</option>
+			    					<option th:selected="*{area=='制药'}" value="制药">制药</option>
+			    					<option th:selected="*{area=='医疗保健'}" value="医疗保健">医疗保健</option>
 			    				</select>
 			    			</div>
 			    		</div>
@@ -155,9 +159,10 @@
 			    			<span class="left M_messGpName">
 			    				机构类型：
 			    			</span>
-			    			<div class="M_messGpRt" th:field="*{type}">
-			    				<select>
-			    					<option value="企业"></option>
+			    			<div class="M_messGpRt">
+			    				<select th:field="*{type}" th:value="*{type}" name="type">
+			    					<option value="">请选择机构类型</option>
+			    					<option th:selected="*{type=='企业'}" value="企业">企业</option>
 			    				</select>
 			    			</div>
 			    		</div>
@@ -166,8 +171,10 @@
 			    				国家：
 			    			</span>
 			    			<div class="M_messGpRt" th:field="*{country}">
-			    				<select>
-			    					<option value="美国"></option>
+			    				<select th:field="*{country}" th:value="*{country}" name="country">
+			    					<option value="">请选择国家</option>
+			    					<option th:selected="*{country=='中国'}" value="中国">中国</option>
+			    					<option th:selected="*{country=='美国'}" value="美国">美国</option>
 			    				</select>
 			    			</div>
 			    		</div>
@@ -176,8 +183,11 @@
 			    				产业链：
 			    			</span>
 			    			<div class="M_messGpRt" th:field="*{link}">
-			    				<select>
-			    					<option>下游</option>
+			    				<select th:field="*{link}" th:value="*{link}" name="link">
+			    					<option value="">请选择产业链</option>
+			    					<option th:selected="*{link=='上游'}" value="上游">上游</option>
+			    					<option th:selected="*{link=='中游'}" value="中游">中游</option>
+			    					<option th:selected="*{link=='下游'}" value="下游">下游</option>
 			    				</select>
 			    			</div>
 			    		</div>
@@ -186,9 +196,13 @@
 			    				产品类型：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<div class="clearfix" th:field="*{classic}">
-			    				<select class="left">
-			    					<option>CT设备；分析仪</option>
+			    				<div class="clearfix" >
+			    				<select th:field="*{classic}" th:value="*{classic}" name="classic">
+			    					<option value="">请选择产品类型</option>
+			    					<option th:selected="*{classic=='疫苗'}" value="疫苗">疫苗</option>
+			    					<option th:selected="*{classic=='眼科'}" value="眼科">眼科</option>
+			    					<option th:selected="*{classic=='保健'}" value="保健">保健</option>
+			    					<option th:selected="*{classic=='中成药;化学药;生物制品'}" value="中成药;化学药;生物制品">中成药;化学药;生物制品</option>
 			    				</select>
 			    				<a href="#" class="left colorBlue zengjialx">+增加产品类型</a>
 			    				</div>
@@ -237,6 +251,7 @@
 			    		<div class="clearfix bianjinrbtn">
 			    		<input type="hidden" th:field="*{id}" />
 			    		<input name="info" type="hidden" id="info">
+			    		<input type="hidden" th:field="*{ctime}" th:value="${new java.util.Date()}">
 			    		<input type="button" value="提交" class="M_messSub left" onClick="uptext();"/>
 			    		<a href="#" class="colorRed left shanchubtn">删除</a>
 			    		</div>

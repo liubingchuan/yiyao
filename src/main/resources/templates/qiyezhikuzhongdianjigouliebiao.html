@@ -89,8 +89,7 @@
 			<div class="usermanageOne">
 				<form>
 					<div class="clearfix">
-						<span class="left usermanageOneTl">
-							重点机构（20）
+						<span class="left usermanageOneTl" th:text="重点机构 + '(' + ${totalCount} + ')'">
 						</span>
 						<a th:href="@{/org/get}" class="left manageproAddA">
 							新增机构
@@ -141,7 +140,7 @@
 		    				<a th:href="@{/org/get(id=${org.id})}" class="manageProBj">
 		    					编辑
 		    				</a>
-		    				<a href="#" class="manageProsc">
+		    				<a th:href="@{/org/delete(id=${org.id})}" class="manageProsc">
 		    					删除
 		    				</a>
 		    			</td>
@@ -150,14 +149,11 @@
 		    	    
 		    	</table>
 		        <div class="page">
-		        	<a href="#" class="ahover">1</a>
-		        	<a href="#">2</a>
-		        	<a href="#">3</a>
-		        	<a href="#">4</a>
-		        	<a href="#">5</a>
-		        	<a href="#">6</a>
-		        	<span>...</span>
-		        	<a href="#">下一页<em>></em></a>
+		        	<a th:style="'display:' + @{((${pageIndex}+1) == 1 ? 'none' : 'inline-block')} + ''" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}" th:href="@{/org/list(token=${cookie.getValue()},pageIndex=0,pageSize=10)}">首页</a>
+      				<a th:style="'display:' + @{((${pageIndex}+1) == 1 ? 'none' : 'inline-block')} + ''" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}" th:href="@{/org/list(token=${cookie.getValue()},pageIndex=(${pageIndex}-1),pageSize=10)}">上一页</a>
+		        	<a th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}" th:href="@{/org/list(token=${cookie.getValue()},pageIndex=(${pageIndex}),pageSize=10)}" th:text="(${pageIndex}+1) + '/' + ${totalPages}" ></a>
+		        	<a th:style="'display:' + @{((${pageIndex}+1) == ${totalPages} ? 'none' : 'inline-block')} + ''" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}" th:href="@{/org/list(token=${cookie.getValue()},pageIndex=(${pageIndex}+1),pageSize=10)}">下一页<em>></em></a>
+		        	<a th:style="'display:' + @{((${pageIndex}+1) == ${totalPages} ? 'none' : 'inline-block')} + ''" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}" th:href="@{/org/list(token=${cookie.getValue()},pageIndex=(${totalPages}-1),pageSize=10)}">尾页<em>></em></a>
 		        </div>
 		    </div>
 		</div>
