@@ -147,6 +147,12 @@ public class Project implements Serializable{
 	public void setNow(Long now) {
 		this.now = now;
 	}
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
 	
 	
 }

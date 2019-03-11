@@ -153,7 +153,7 @@ public class ProjectController {
 				// 分页参数
 				Pageable pageable = new PageRequest(pageIndex, pageSize);
 
-				BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("name", q));
+				BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery().should(QueryBuilders.matchPhraseQuery("name", q));
 				if(entrust != null) {
 					String[] entrusts = entrust.split("-");
 					queryBuilder.filter(QueryBuilders.termsQuery("entrust", entrusts));
@@ -181,6 +181,7 @@ public class ProjectController {
 						.withIndices("project").withTypes("pt")
 						.addAggregation(AggregationBuilders.terms("agentrust").field("entrust").order(Terms.Order.count(false)).size(10))
 						.addAggregation(AggregationBuilders.terms("agbudget").field("budget").order(Terms.Order.count(false)).size(10))
+						.addAggregation(AggregationBuilders.terms("agclassis").field("classis").order(Terms.Order.count(false)).size(10))
 						.build();
 				Aggregations aggregations = esTemplate.query(nativeSearchQueryBuilder, new ResultsExtractor<Aggregations>() {
 			        @Override
@@ -206,24 +207,21 @@ public class ProjectController {
 						Bucket buBucket = bubit.next();
 						budgetMap.put(buBucket.getKey().toString(), Long.valueOf(buBucket.getDocCount()));
 					}
-					model.addAttribute("agbudget", budgetTerms);
+					model.addAttribute("agbudget", budgetMap);
+					
+					StringTerms classisTerms = (StringTerms) aggregations.asMap().get("agclassis");
+					Iterator<Bucket> classisbit = classisTerms.getBuckets().iterator();
+					Map<String, Long> classisMap = new HashMap<String, Long>();
+					while(classisbit.hasNext()) {
+						Bucket classisBucket = classisbit.next();
+						classisMap.put(classisBucket.getKey().toString(), Long.valueOf(classisBucket.getDocCount()));
+					}
+					model.addAttribute("agclassis", classisMap);
 				}
-//				nativeSearchQueryBuilder.withQuery(functionScoreQueryBuilder);
-//				nativeSearchQueryBuilder.withSearchType(SearchType.QUERY_THEN_FETCH);
-//				TermsAggregationBuilder termsAggregation = AggregationBuilders.terms("aglist").field("list").order(Terms.Order.count(false)).size(10);
-//				nativeSearchQueryBuilder.addAggregation(termsAggregation);
-//		    	NativeSearchQuery nativeSearchQuery = nativeSearchQueryBuilder.build();
-//		    	Page<Project> search = projectRepository.search(nativeSearchQuery);
-//		    	List<Project> content = search.getContent();
-//		    	for (Project project : content) {
-//		    		pList.add(esBlog.getUsername());
-//				}
-				totalPages = Math.round(totalCount/pageSize);
 				view = "result-xm";
-				
-				
 			}
 		}
+		totalPages = Double.valueOf(Math.ceil(Double.valueOf(totalCount)/Double.valueOf(pageSize))).intValue();
 		model.addAttribute("projectList", projectList);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("pageIndex", pageIndex);
