@@ -511,7 +511,7 @@
 	    </div>
 	    </th:block>
 	    <script type="text/javascript" th:src="@{/js/main.js}" ></script>
-	    <script type="text/javascript" th:inline="javascript">
+	    <script type="text/javascript">
 	    	/* var token =  [[${token}]];
 	    	var account =  [[${account}]];
 	    	var role =  [[${role}]]; */
@@ -539,7 +539,7 @@
 					alert("密码输入错误") */
 					/* $('#noaccount').css('display','none');
 					$('#passworderror').css('display','block'); */
-				}/* 
+				/*}
 				
 				if(token == "2"){
 					$('.alertZh').css('display','block');
@@ -616,7 +616,7 @@
 			function search(){
 			    /*  window.location.href="http://127.0.0.1:8088/project/list?q=" + $("#keywords").val(); */
 			    /*window.location.href="http://127.0.0.1:8088/paper/list?q=" + $("#keywords").val();*/
-				window.location.href="http://127.0.0.1:8088/patent/list?q=" + $("#keywords").val();
+				window.location.href="http://localhost/patent/list?q=" + $("#keywords").val();
 			}
     </script>
 	</body>
