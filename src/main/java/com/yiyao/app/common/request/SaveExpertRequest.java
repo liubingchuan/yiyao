@@ -10,7 +10,7 @@ public class SaveExpertRequest extends BaseRequest{
 	private String phone; // 手机
 	private String tel; // 办公电话
 	private String email; 
-	private String erea; //研究领域
+	private String area; //研究领域
 	private String address; // 地址
 	private String duty; // 职务
 	private String title; // 职称
@@ -79,12 +79,6 @@ public class SaveExpertRequest extends BaseRequest{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getErea() {
-		return erea;
-	}
-	public void setErea(String erea) {
-		this.erea = erea;
-	}
 	public String getAddress() {
 		return address;
 	}
@@ -132,6 +126,12 @@ public class SaveExpertRequest extends BaseRequest{
 	}
 	public void setUploader(String uploader) {
 		this.uploader = uploader;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
 	}
 	
 	

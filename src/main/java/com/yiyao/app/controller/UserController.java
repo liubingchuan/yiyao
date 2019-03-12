@@ -43,7 +43,9 @@ public class UserController {
 	
 	
 	@RequestMapping("/")
-	public String index(){
+	public String index(Model model){
+		User user = new User();
+		model.addAttribute("user", user);
 		return "index";
 	}
 

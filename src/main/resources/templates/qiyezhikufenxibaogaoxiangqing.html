@@ -63,7 +63,7 @@
 		<div class="managHead clearfix">
 			<div class="right manageTx">
 				<div class="clearfix">
-				<img src="images/tx.jpeg" class="manageTxImg left" />
+				<img th:src="@{/images/tx.jpeg}" class="manageTxImg left" />
 				<span class="left manageTxName">张伟</span>
 				<em class="manageTxIco left"></em>
 				</div>
@@ -81,7 +81,7 @@
 									</p>
 									<p>
 										<a href="#">
-											<img src="images/tuichu.png" />
+											<img th:src="@{/images/tuichu.png}" />
 											退出
 										</a>
 									</p>
@@ -113,9 +113,10 @@
 			    			<span class="left M_messGpName">
 			    				报告分类：
 			    			</span>
-			    			<div class="M_messGpRt" th:field="*{type}">
-			    				<select>
-			    					<option>生物医药</option>
+			    			<div class="M_messGpRt">
+			    				<select th:field="*{type}" th:value="*{type}" name="type">
+			    					<option value="">请选择报告分类</option>
+			    					<option th:selected="*{type=='生物医药'}" value="生物医药">生物医药</option>
 			    				</select>
 			    			</div>
 			    		</div>
@@ -125,7 +126,7 @@
 			    			</span>
 			    			<div class="M_messGpRt">
 			    				<div class="shuru">
-						          <script id="editor" type="text/plain" style="height:228px;width: 705px;" th:field="*{subject}"></script>
+						          <script id="editor" type="text/plain" style="height:228px;width: 705px;" th:field="*{subject}" th:utext="*{subject}"></script>
 	        	                </div>
 	        	                 <script>
 	        	                 	$(function() {
@@ -177,7 +178,7 @@
 			    			<div class="M_messGpRt">
 			    				<div class="clearfix M_messGpImg">
 			    					<div class="left M_messGpImgGp">
-			    						<img src="images/hangye_03.png" />
+			    						<img th:src="@{/images/hangye_03.png}" />
 			    						<p>
 			    							报告封面.jpg&nbsp;1000kb&nbsp;<a href="#" class="colorRed">删除</a>
 			    						</p>
@@ -224,14 +225,14 @@
 			    		<input type="hidden" th:field="*{id}" />
 			    		<input name="info" type="hidden" id="info">
 			    		<input type="button" value="提交" class="M_messSub left" onClick="uptext();"/>
-			    		<a href="#" class="colorRed left shanchubtn">删除</a>
+			    		<a th:href="@{/report/list(pageSize=10,pageIndex=0)}" class="colorRed left shanchubtn">取消</a>
 			    		</div>
 			    		</form>
 			    	</div>
 			    </div>
 			</div>
 		</div>
-		<script type="text/javascript" src="js/main.js" ></script>
+		<script type="text/javascript" th:src="@{/js/main.js}" ></script>
 		<script type="text/javascript">
     
     jeDate({

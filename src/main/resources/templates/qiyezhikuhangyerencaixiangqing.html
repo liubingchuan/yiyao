@@ -15,7 +15,7 @@
 		<div class="manageLf">
 			<div class="manageLfM">
 				<div class="manageLfLogo">
-					<img src="images/logo.png" />
+					<img th:src="@{/images/logo.png}" />
 				</div>
 				<a href="#" class="manageMenuF">		
 						订单管理
@@ -62,7 +62,7 @@
 		<div class="managHead clearfix">
 			<div class="right manageTx">
 				<div class="clearfix">
-				<img src="images/tx.jpeg" class="manageTxImg left" />
+				<img th:src="@{/images/tx.jpeg}" class="manageTxImg left" />
 				<span class="left manageTxName">张伟</span>
 				<em class="manageTxIco left"></em>
 				</div>
@@ -80,7 +80,7 @@
 									</p>
 									<p>
 										<a href="#">
-											<img src="images/tuichu.png" />
+											<img th:src="@{/images/tuichu.png}" />
 											退出
 										</a>
 									</p>
@@ -120,8 +120,10 @@
 			    				研究领域：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<select th:field="*{area}">
-			    					<option value="生物医药;医疗器械"></option>
+			    				<select th:field="*{area}" th:value="*{area}" name="area">
+			    					<option value="">请选择研究领域</option>
+			    					<option th:selected="*{type=='生物质转化'}" value="生物质转化">生物质转化</option>
+			    					<option th:selected="*{type=='森林土壤发生特性、系统分类、森林土壤碳、氮循环、农林废弃物资源转化利用的研究'}" value="森林土壤发生特性、系统分类、森林土壤碳、氮循环、农林废弃物资源转化利用的研究">森林土壤发生特性、系统分类、森林土壤碳、氮循环、农林废弃物资源转化利用的研究</option>
 			    				</select>
 			    			</div>
 			    		</div>
@@ -189,8 +191,11 @@
 			    				职务：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<select th:field="*{duty}">
-			    					<option value="业务骨干"></option>
+			    				<select th:field="*{duty}" th:value="*{duty}" name="duty">
+			    					<option value="">请选择职务</option>
+			    					<option th:selected="*{type=='团队负责人'}" value="团队负责人">团队负责人</option>
+			    					<option th:selected="*{type=='主任'}" value="主任">主任</option>
+			    					<option th:selected="*{type=='无'}" value="无">无</option>
 			    				</select>
 			    			</div>
 			    		</div>
@@ -199,8 +204,13 @@
 			    				职称：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<select th:field="*{title}">
-			    					<option value="副研究员"></option>
+			    				<select th:field="*{title}" th:value="*{title}" name="title">
+			    					<option value="">请选择职称</option>
+			    					<option th:selected="*{type=='研究员'}" value="研究员">研究员</option>
+			    					<option th:selected="*{type=='项目研究员'}" value="项目研究员">项目研究员</option>
+			    					<option th:selected="*{type=='副研究员'}" value="副研究员">副研究员</option>
+			    					<option th:selected="*{type=='教授'}" value="教授">教授</option>
+			    					<option th:selected="*{type=='教授（博导）'}" value="教授（博导）">教授（博导）</option>
 			    				</select>
 			    			</div>
 			    		</div>
@@ -212,7 +222,7 @@
 			    			<div class="M_messGpRt">
 			    				<div class="clearfix M_messGpImg">
 			    					<div class="left M_messGpImgGp">
-			    						<img src="images/per.png" />
+			    						<img th:src="@{/images/per.png}" />
 			    						<p>
 			    							LOGO.jpg&nbsp;1000kb&nbsp;<a href="#" class="colorRed">删除</a>
 			    						</p>
@@ -225,7 +235,7 @@
 			    				提交时间：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<span class="M_messGpRtText" th:field="*{ctime}"></span>
+			    				<span class="M_messGpRtText" th:text="${new java.util.Date()}"></span>
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">

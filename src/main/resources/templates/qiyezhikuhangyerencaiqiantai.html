@@ -87,12 +87,12 @@
 						<ul class="rencaiLfUl">
 							<ul class="rencaiLfUl">
 							<li>
-								<a th:href="@{/org/list(front=0)}" class="ahover">
+								<a th:href="@{/org/list(front=0)}">
 									<span>重点机构</span>
 								</a>
 							</li>
 							<li>
-								<a th:href="@{/expert/list(front=0)}">
+								<a th:href="@{/expert/list(front=0)}" class="ahover">
 									<span>行业人才</span>
 								</a>
 							</li>
@@ -127,12 +127,10 @@
 				    	</form>
 				        <ul class="clearfix rencaiUl">
 				        	<li th:each="expert: ${expertList}">
-				        		<a href="#" class="rencailiM clearfix">
+				        		<a th:href="@{/expert/get(id=${expert.id},front=0)}" class="rencailiM clearfix">
 				        			<img th:src="@{/images/per.png}" class="left rencailiMImg" />
 				        			<div class="rencailiMRt">
-				        				<div class="rencailiMRtName">
-				        					<a th:href="@{/expert/get(id=${expert.id},front=0)}" th:text="${expert.name}">
-		            						</a>
+				        				<div class="rencailiMRtName" th:text="${expert.name}">
 				        				</div>
 				        				<div class="rencailiMList">
 				        					<p th:text="'单位：' + ${expert.unit}">
@@ -155,7 +153,7 @@
 	    		<div class="index-container clearfix">
 	    			<div class="left footerTopLf">
 	    				<p class="footerTopTl">
-	    					<img src="images/pingtai.png" />
+	    					<img th:src="@{/images/pingtai.png}" />
 	    					平台介绍
 	    				</p>
 	    				<div class="footerTopText">
@@ -181,7 +179,7 @@
 	    		    <div class="left footerTopLX">
 	    		    	<div class="footerTopLXT">
 	    		    	<p class="footerTopTl">	    				
-	    					<img src="images/lianxifangshi.png" />联系方式
+	    					<img th:src="@{/images/lianxifangshi.png}" />联系方式
 	    				</p>
 	    				<div class="footerTopText">
 	    					<p>电话：010-82626611-6302</p>
@@ -190,7 +188,7 @@
 	    		    	</div>
 	    		        <div class="footerTopText footerTopLXB">
 	    		        	<p class="footerTopTl">	    				
-	    				 	<img src="images/jigou.png" />合作机构
+	    				 	<img th:src="@{/images/jigou.png}" />合作机构
 	    				    </p>
 	    		        	<ul>
 	    		        		<li>
@@ -209,7 +207,7 @@
 	    		        </div>
 	    		    </div>
 	    		    <div class="right footerTopErw">
-	    		    	<img src="images/erw.png" />
+	    		    	<img th:src="@{/images/erw.png}" />
 	    		    	<p>
 	    		    		<em></em>扫码快速关注公众号
 	    		    	</p>

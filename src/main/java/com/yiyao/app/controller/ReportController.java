@@ -1,23 +1,13 @@
 package com.yiyao.app.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.Aggregations;
-import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
-import org.elasticsearch.search.aggregations.bucket.terms.StringTerms.Bucket;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.ResultsExtractor;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Controller;
@@ -37,10 +26,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.yiyao.app.common.request.SaveProjectRequest;
-import com.yiyao.app.model.Project;
+import com.yiyao.app.common.request.SaveReportRequest;
 import com.yiyao.app.model.Report;
-import com.yiyao.app.repository.ProjectRepository;
 import com.yiyao.app.repository.ReportRepository;
 import com.yiyao.app.utils.BeanUtil;
 
@@ -59,7 +46,7 @@ public class ReportController {
 	private ElasticsearchTemplate esTemplate;
 	
 	@PostMapping(value = "report/save")
-	public String saveReport(SaveProjectRequest request,Model model) {
+	public String saveReport(SaveReportRequest request,Model model) {
 		
 		Report report = new Report();
 		BeanUtil.copyBean(request, report);
@@ -69,6 +56,15 @@ public class ReportController {
 		report.setNow(System.currentTimeMillis());
 		report.setSubject(request.getInfo());
 		reportRepository.save(report);
+		return "redirect:/report/list";
+	}
+	
+	@GetMapping(value = "report/delete")
+	public String deleteReport(@RequestParam(required=false,value="id") String id) {
+		if(id != null) {
+			reportRepository.deleteById(id);
+		}
+		
 		return "redirect:/report/list";
 	}
 	
@@ -162,12 +158,9 @@ public class ReportController {
 				reportList = searchPageResults.getContent();
 				totalCount = esTemplate.count(searchQuery, Report.class);
 				
-				
-				totalPages = Math.round(totalCount/pageSize);
-				
-				
 			}
 		}
+		totalPages = Double.valueOf(Math.ceil(Double.valueOf(totalCount)/Double.valueOf(pageSize))).intValue();
 		model.addAttribute("reportList", reportList);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("pageIndex", pageIndex);

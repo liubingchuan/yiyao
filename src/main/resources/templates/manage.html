@@ -68,6 +68,7 @@
 									<em class="loginAfterNoMSj"></em>
 									<p>
 										<span class="loginName" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('account')}" th:text="${cookie.getValue()}">
+											张伟
 										</span>
 										<span class="vip" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('role')}" th:text="${cookie.getValue()}">
 										</span>

@@ -29,14 +29,15 @@
 				</div>
 				<div class="right">
 					<!--登录前-->
-					<th:block th:if="${user}==null">
-					<div class="loginbefore">
+					<!-- <th:block th:if="${user}==null"> -->
+					<div class="loginbefore" id="loginBefore" style="display:none">
 						<a href="javascript:;" class="loginBtn">登录</a><span>/</span><a href="loginBtn">注册</a>
 					</div>
-					</th:block>
+					<!-- </th:block> -->
 					<!--登陆后-->
-					<th:block th:unless="${user}==null">
-					<div class="loginAfter">
+					<!-- <th:block th:unless="${user}==null"> -->
+					<th:block >
+					<div class="loginAfter" id="loginAfter">
 						<div class="loginAfterM">
 							<a href="#" class="loginAfterTx">
 								<img th:src="@{/images/tx.jpeg}" />
@@ -46,7 +47,8 @@
 								<div class="loginAfterNoM">
 									<em class="loginAfterNoMSj"></em>
 									<p>
-										<span class="loginName" th:text="${user.account}"></span>
+										<!-- <span class="loginName" th:text="${user.account}"></span> -->
+										<span class="loginName">张伟</span>
 										<span class="vip" th:text="${user.role}">
 										</span>
 									</p>
@@ -510,13 +512,22 @@
 	    </th:block>
 	    <script type="text/javascript" th:src="@{/js/main.js}" ></script>
 	    <script type="text/javascript" th:inline="javascript">
-	    	var token =  [[${token}]];
+	    	/* var token =  [[${token}]];
 	    	var account =  [[${account}]];
-	    	var role =  [[${role}]];
+	    	var role =  [[${role}]]; */
 	    	
-			$(document).ready(function () {
+			/* $(document).ready(function () {
 				console.log($.cookie("account"))
 				console.log($.cookie("role"))
+				
+				if(($.cookie("account")!=null) {
+					$("#loginBefore").css('display','none'); 
+					$("#loginAfter").css('display','block'); 
+				}else {
+					$("#loginBefore").css('display','block'); 
+					$("#loginAfter").css('display','none'); 
+				}
+				
 				if($.cookie("account")!=account){
 					$.cookie('account', account);
 				}
@@ -525,17 +536,17 @@
 				}
 				if(token == "1"){
 					$('.alertZh').css('display','block');
-					alert("密码输入错误")
+					alert("密码输入错误") */
 					/* $('#noaccount').css('display','none');
 					$('#passworderror').css('display','block'); */
-				}
+				}/* 
 				
 				if(token == "2"){
 					$('.alertZh').css('display','block');
 					alert("未找到该用户名")
 					/* $('#passworderror').css('display','none');
-					$('#noaccount').css('display','block'); */
-				}
+					$('#noaccount').css('display','block'); 
+					}
 				
 				 $("#bindButtion").click(function(){
 					if($("#bdaccount").val() == ""){
@@ -600,7 +611,7 @@
 				$(".alertInp").bind('input propertychange',function(){ 
 					$('.erroText').css('display','none');
 				});
-			});
+			});*/
 			
 			function search(){
 			    /*  window.location.href="http://127.0.0.1:8088/project/list?q=" + $("#keywords").val(); */

@@ -58,7 +58,7 @@
 		<div class="managHead clearfix">
 			<div class="right manageTx">
 				<div class="clearfix">
-				<img src="images/tx.jpeg" class="manageTxImg left" />
+				<img th:src="@{/images/tx.jpeg}" class="manageTxImg left" />
 				<span class="left manageTxName">张伟</span>
 				<em class="manageTxIco left"></em>
 				</div>
@@ -76,7 +76,7 @@
 									</p>
 									<p>
 										<a href="#">
-											<img src="images/tuichu.png" />
+											<img th:src="@{/images/tuichu.png}" />
 											退出
 										</a>
 									</p>
@@ -89,8 +89,7 @@
 			<div class="usermanageOne">
 				<form>
 					<div class="clearfix">
-						<span class="left usermanageOneTl">
-							分析报告（20）
+						<span class="left usermanageOneTl" th:text="'分析报告' + '(' + ${totalCount} + ')'">
 						</span>
 						<a th:href="@{/report/get}" class="left manageproAddA">
 						新增报告
@@ -142,7 +141,7 @@
 		    				<a th:href="@{/report/get(id=${report.id})}" class="manageProBj">
 		    					编辑
 		    				</a>
-		    				<a href="#" class="manageProsc">
+		    				<a th:href="@{/report/delete(id=${report.id})}" class="manageProsc">
 		    					删除
 		    				</a>
 		    			</td>
@@ -150,17 +149,14 @@
 		    		</tr>
 		    	</table>
 		        <div class="page">
-		        	<a href="#" class="ahover">1</a>
-		        	<a href="#">2</a>
-		        	<a href="#">3</a>
-		        	<a href="#">4</a>
-		        	<a href="#">5</a>
-		        	<a href="#">6</a>
-		        	<span>...</span>
-		        	<a href="#">下一页<em>></em></a>
+		        	<a th:style="'display:' + @{((${pageIndex}+1) == 1 ? 'none' : 'inline-block')} + ''" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}" th:href="@{/report/list(token=${cookie.getValue()},pageIndex=0,pageSize=10)}">首页</a>
+      				<a th:style="'display:' + @{((${pageIndex}+1) == 1 ? 'none' : 'inline-block')} + ''" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}" th:href="@{/report/list(token=${cookie.getValue()},pageIndex=(${pageIndex}-1),pageSize=10)}">上一页</a>
+		        	<a th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}" th:href="@{/report/list(token=${cookie.getValue()},pageIndex=(${pageIndex}),pageSize=10)}" th:text="(${pageIndex}+1) + '/' + ${totalPages}" ></a>
+		        	<a th:style="'display:' + @{((${pageIndex}+1) == ${totalPages} ? 'none' : 'inline-block')} + ''" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}" th:href="@{/report/list(token=${cookie.getValue()},pageIndex=(${pageIndex}+1),pageSize=10)}">下一页<em>></em></a>
+		        	<a th:style="'display:' + @{((${pageIndex}+1) == ${totalPages} ? 'none' : 'inline-block')} + ''" th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}" th:href="@{/report/list(token=${cookie.getValue()},pageIndex=(${totalPages}-1),pageSize=10)}">尾页<em>></em></a>
 		        </div>
 		    </div>
 		</div>
-		<script type="text/javascript" src="js/main.js" ></script>
+		<script type="text/javascript" th:src="@{/js/main.js}" ></script>
 	</body>
 </html>

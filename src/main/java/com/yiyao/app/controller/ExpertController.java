@@ -1,8 +1,8 @@
 package com.yiyao.app.controller;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,14 +28,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yiyao.app.common.request.SaveExpertRequest;
-import com.yiyao.app.common.request.SaveOrgRequest;
-import com.yiyao.app.common.request.SaveProjectRequest;
 import com.yiyao.app.model.Expert;
-import com.yiyao.app.model.Org;
-import com.yiyao.app.model.Project;
 import com.yiyao.app.repository.ExpertRepository;
-import com.yiyao.app.repository.OrgRepository;
-import com.yiyao.app.repository.ProjectRepository;
 import com.yiyao.app.utils.BeanUtil;
 
 
@@ -60,11 +54,30 @@ public class ExpertController {
 		if(expert.getId() == null || "".equals(request.getId())) {
 			expert.setId(UUID.randomUUID().toString());
 		}
+		List<String> areaList =new ArrayList<String>();
+		List<String> dutyList =new ArrayList<String>();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		areaList.add(request.getArea());
+		dutyList.add(request.getDuty());
+		expert.setArea(areaList);;
+		expert.setDuty(dutyList);
 		expert.setResume(request.getInfo());
 		expert.setNow(System.currentTimeMillis());
+		expert.setCtime(df.format(new Date()));
+		expert.setUnit("中国科学院青岛生物能源与过程研究所");
 		expertRepository.save(expert);
 		return "redirect:/expert/list";
 	}
+	
+	
+	@GetMapping(value = "expert/delete")
+	public String deleteExpert(@RequestParam(required=false,value="id") String id) {
+		if(id != null) {
+			expertRepository.deleteById(id);
+		}
+		return "redirect:/expert/list";
+	}
+	
 	
 	@GetMapping(value = "expert/get")
 	public String getExpert(@RequestParam(required=false,value="front") String front,
@@ -135,6 +148,7 @@ public class ExpertController {
 		model.addAttribute("expertList", expertList);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("pageIndex", pageIndex);
+		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("totalPages", totalPages);
 			
 		return view;
