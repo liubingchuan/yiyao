@@ -23,7 +23,7 @@
 				<div class="left headsuos">
 					<em></em>
 					<input type="button" class="headsuosBtn" value="搜索" onClick="search();"/>
-					<input type="text" class="headsuosInp" th:text="${name}" id="keywords"/>
+					<input type="text" class="headsuosInp" th:text="${query}" id="keywords"/>
 				</div>
 				<div class="right">
 					<!--登录前-->
@@ -247,7 +247,7 @@
 	        </div>
 	    </div>
 		<script type="text/javascript" th:src="@{/js/main.js}" ></script>
-		<script type="text/javascript">
+		<script type="text/javascript" th:inline="javascript">
     
     /* jeDate({
 		dateCell:"#dateinfo",
@@ -282,7 +282,10 @@
     	if(entrust != '') {
     		uri = uri + 'entrust=' + entrust + ''
     	}
-		window.location.href="http://127.0.0.1:80/project/list?q=" + $("#keywords").val() + "&" + uri;
+		/* window.location.href="http://47.104.7.73/project/list?q=" + $("#keywords").val() + "&" + uri; */
+		if($("#keywords").val() != "") {
+	    	window.location.href="/project/list?q=" + $("#keywords").val() + "&" + uri;
+		}
 	}
 		</script>
 	</body>

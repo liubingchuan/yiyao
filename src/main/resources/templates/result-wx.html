@@ -23,7 +23,7 @@
 				<div class="left headsuos">
 					<em></em>
 					<input type="button" class="headsuosBtn" value="搜索"  onClick="search();"/>
-					<input type="text" class="headsuosInp" th:text="${title}" id="keywords"/>
+					<input type="text" class="headsuosInp" th:text="${query}" id="keywords"/>
 				</div>
 				<div class="right">
 					<!--登录前-->
@@ -193,7 +193,7 @@
 	    		<div class="index-container clearfix">
 	    			<div class="left footerTopLf">
 	    				<p class="footerTopTl">
-	    					<img src="images/pingtai.png" />
+	    					<img th:src="@{/images/pingtai.png}" />
 	    					平台介绍
 	    				</p>
 	    				<div class="footerTopText">
@@ -219,7 +219,7 @@
 	    		    <div class="left footerTopLX">
 	    		    	<div class="footerTopLXT">
 	    		    	<p class="footerTopTl">	    				
-	    					<img src="images/lianxifangshi.png" />联系方式
+	    					<img th:src="@{/images/lianxifangshi.png}" />联系方式
 	    				</p>
 	    				<div class="footerTopText">
 	    					<p>电话：010-82626611-6302</p>
@@ -228,7 +228,7 @@
 	    		    	</div>
 	    		        <div class="footerTopText footerTopLXB">
 	    		        	<p class="footerTopTl">	    				
-	    				 	<img src="images/jigou.png" />合作机构
+	    				 	<img th:src="@{/images/jigou.png}" />合作机构
 	    				    </p>
 	    		        	<ul>
 	    		        		<li>
@@ -247,7 +247,7 @@
 	    		        </div>
 	    		    </div>
 	    		    <div class="right footerTopErw">
-	    		    	<img src="images/erw.png" />
+	    		    	<img th:src="@{/images/erw.png}" />
 	    		    	<p>
 	    		    		<em></em>扫码快速关注公众号
 	    		    	</p>
@@ -261,22 +261,46 @@
 	        </div>
 	    </div>
 		<script type="text/javascript" th:src="@{/js/main.js}" ></script>
-		<script type="text/javascript">
-    
-    jeDate({
-		dateCell:"#dateinfo",
-		format:"YYYY年MM月DD日",
-		isinitVal:true,
-		isTime:false, //isClear:false,
-        isClear:true,
-	})
-    jeDate({
-		dateCell:"#dateinfo1",
-		format:"YYYY年MM月DD日",
-		isinitVal:true,
-		isTime:false, //isClear:false,
-        isClear:true,
-	})
-</script>
+		<script type="text/javascript" th:inline="javascript">
+		    
+			jeDate({
+				dateCell:"#dateinfo",
+				format:"YYYY年MM月DD日",
+				isinitVal:true,
+				isTime:false, //isClear:false,
+			    isClear:true,
+			})
+			jeDate({
+				dateCell:"#dateinfo1",
+				format:"YYYY年MM月DD日",
+				isinitVal:true,
+				isTime:false, //isClear:false,
+			    isClear:true,
+			})
+			
+			function search(){
+		    	var uri = '';
+		    	/* var entrust = ''
+		    	$.each($('input:checkbox:checked'),function(){
+		    		if($(this).attr("name") == "entrust") {
+		    			if(entrust == '') 
+		    			{
+		    				entrust = $(this).val()
+		    			}
+		    			else
+		    			{
+		    				entrust = entrust + '-' + $(this).val()
+		    			}
+		    		}
+		        });
+		    	if(entrust != '') {
+		    		uri = uri + 'entrust=' + entrust + ''
+		    	} */
+				/* window.location.href="http://47.104.7.73/project/list?q=" + $("#keywords").val() + "&" + uri; */
+				if($("#keywords").val() != "") {
+			    	window.location.href="/paper/list?q=" + $("#keywords").val() + "&" + uri;
+				}
+			}
+				</script>
 	</body>
 </html>

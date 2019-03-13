@@ -147,6 +147,7 @@ public class OrgController {
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("pageIndex", pageIndex);
 		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("query", q);
 			
 		return view;
 	}

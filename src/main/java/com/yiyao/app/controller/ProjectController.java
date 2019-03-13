@@ -232,7 +232,7 @@ public class ProjectController {
 		model.addAttribute("pageIndex", pageIndex);
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("name", q);
+		model.addAttribute("query", q);
 			
 		return view;
 	}
