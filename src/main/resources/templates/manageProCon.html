@@ -251,8 +251,8 @@
 			    		<div class="clearfix bianjinrbtn">
 				    		<input type="hidden" th:field="*{id}" />
 				    		<input name="info" type="hidden" id="info">
+				    		<input th:if="${disable.equals('0')}" type="button" value="保存修改" class="M_messSub" onClick="uptext();"/>
 				    		<a href="#" onClick="javascript:history.back(-1);" class="colorRed left shanchubtn">返回</a>
-				    		<input type="button" value="保存修改" class="M_messSub" onClick="uptext();"/>
 			    		</div>
 			    		</form>
 			    	</div>

@@ -83,13 +83,18 @@ public class ProjectController {
 	@GetMapping(value = "project/get")
 	public String getProject(@RequestParam(required=false,value="id") String id, 
 			@RequestParam(required=false,value="front") String front,
+			@RequestParam(required=false,value="disable") String disable,
 			Model model) {
 		Project project = new Project();
 		if(id != null) {
 			project = projectRepository.findById(id).get();
 		}
 		model.addAttribute("project", project);
-		
+		if(disable !=null) {
+			model.addAttribute("disable", "0");
+		}else {
+			model.addAttribute("disable", "1");
+		}
 		Item item = itemMapper.selectItemByService("xmfl");
 		List<String> items = new ArrayList<String>();
 		for(String s: item.getItem().split(";")) {

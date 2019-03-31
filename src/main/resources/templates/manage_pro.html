@@ -133,10 +133,10 @@
 		    			<td th:text="${project.ctime}">
 		    			</td>
 		    			<td>
-		    				<a th:href="@{/project/get(id=${project.id})}" class="manageProBj">
+		    				<a th:href="@{/project/get(id=${project.id},disable='0')}" class="manageProBj">
 		    					编辑
 		    				</a>
-		    				<a th:href="@{/project/delete(id=${report.id})}" class="manageProsc">
+		    				<a th:href="@{/project/delete(id=${project.id})}" class="manageProsc">
 		    					删除
 		    				</a>
 		    			</td>
