@@ -38,6 +38,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yiyao.app.common.request.SaveProjectRequest;
+import com.yiyao.app.mapper.ItemMapper;
+import com.yiyao.app.model.Item;
 import com.yiyao.app.model.Project;
 import com.yiyao.app.repository.ProjectRepository;
 import com.yiyao.app.utils.BeanUtil;
@@ -55,6 +57,9 @@ public class ProjectController {
 	
 	@Autowired
 	private ElasticsearchTemplate esTemplate;
+	
+	@Autowired
+    private ItemMapper itemMapper;
 	
 	@PostMapping(value = "project/save")
 	public String saveProject(SaveProjectRequest request,Model model) {
@@ -85,6 +90,12 @@ public class ProjectController {
 		}
 		model.addAttribute("project", project);
 		
+		Item item = itemMapper.selectItemByService("xmfl");
+		List<String> items = new ArrayList<String>();
+		for(String s: item.getItem().split(";")) {
+			items.add(s);
+		}
+		model.addAttribute("items", items);
 		Integer pageIndex = 0;
 		Integer pageSize = 10;
 		long totalCount = 0L;
@@ -237,7 +248,14 @@ public class ProjectController {
 		return view;
 	}
 	
-	
+	@GetMapping(value = "project/delete")
+	public String deleteProject(@RequestParam(required=false,value="id") String id) {
+		if(id != null) {
+			projectRepository.deleteById(id);
+		}
+		
+		return "redirect:/project/list";
+	}
 	
 	
 }

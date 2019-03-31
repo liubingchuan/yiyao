@@ -26,4 +26,7 @@ public interface ItemMapper {
 	
 	@Delete("delete from yiyao_item where service = #{service}")
     void deleteItemByService(@Param("service") String service);
+	
+	@Select("select * from yiyao_item where service = #{service} limit 1")
+	Item selectItemByService(@Param("service") String service);
 }

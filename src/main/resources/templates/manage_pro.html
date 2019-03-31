@@ -50,7 +50,7 @@
 				<a th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}"  th:href="@{/user/list(token=${cookie.getValue()},pageIndex=0,pageSize=10)}" class="manageMenuF">		
 						用户管理
 				</a>
-				<a href="#" class="manageMenuF">		
+				<a th:href="@{/item/config}" class="manageMenuF">		
 						分类设置
 				</a>
 			</div>
@@ -121,8 +121,8 @@
 		    			
 		    		</tr>
 		    		<tr th:each="project : ${projectList}">
-		    			<td th:text="${project.name}">
-		    				<a href="#" class="manageProTl">
+		    			<td >
+		    				<a th:href="@{/project/get(id=${project.id})}" class="manageProTl" th:text="${project.name}">
 		    				</a>
 		    			</td>
 		    			<td th:text="${project.entrust}">
@@ -136,7 +136,7 @@
 		    				<a th:href="@{/project/get(id=${project.id})}" class="manageProBj">
 		    					编辑
 		    				</a>
-		    				<a href="#" class="manageProsc">
+		    				<a th:href="@{/project/delete(id=${report.id})}" class="manageProsc">
 		    					删除
 		    				</a>
 		    			</td>

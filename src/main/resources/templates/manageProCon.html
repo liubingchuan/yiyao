@@ -113,12 +113,17 @@
 			    				项目分类：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<select th:field="*{classis}" th:value="*{classis}" name="classis">
-			    					<option value="">请选择项目分类</option>
-			    					<option th:selected="*{classis=='物化转化技术'}" value="物化转化技术">物化转化技术</option>
-			    					<option th:selected="*{classis=='生物固体成型燃料'}" value="生物固体成型燃料">生物固体成型燃料</option>
-			    					<option th:selected="*{classis=='生物质发电，生物质供热'}" value="生物质发电，生物质供热">生物质发电，生物质供热</option>
-			    				</select>
+<!-- 			    				<select th:field="*{classis}" th:value="*{classis}" name="classis"> -->
+<!-- 			    					<option value="">请选择项目分类</option> -->
+<!-- 			    					<option th:selected="*{classis=='物化转化技术'}" value="物化转化技术">物化转化技术</option> -->
+<!-- 			    					<option th:selected="*{classis=='生物固体成型燃料'}" value="生物固体成型燃料">生物固体成型燃料</option> -->
+<!-- 			    					<option th:selected="*{classis=='生物质发电，生物质供热'}" value="生物质发电，生物质供热">生物质发电，生物质供热</option> -->
+<!-- 			    				</select> -->
+			    				
+			    				<select th:field="*{classis}"  th:value="*{classis}" name="classis">
+                            		<option value="">请选择项目分类</option>
+                            		<option th:each="item : ${items}" th:value="${item}" th:text="${item}"></option>
+                        		</select>
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">
@@ -243,9 +248,12 @@
 			    				<input type="text" class="M_messInp" th:field="*{modifier}" />
 			    			</div>
 			    		</div>
-			    		<input type="hidden" th:field="*{id}" />
-			    		<input name="info" type="hidden" id="info">
-			    		<input type="button" value="保存修改" class="M_messSub" onClick="uptext();"/>
+			    		<div class="clearfix bianjinrbtn">
+				    		<input type="hidden" th:field="*{id}" />
+				    		<input name="info" type="hidden" id="info">
+				    		<a href="#" onClick="javascript:history.back(-1);" class="colorRed left shanchubtn">返回</a>
+				    		<input type="button" value="保存修改" class="M_messSub" onClick="uptext();"/>
+			    		</div>
 			    		</form>
 			    	</div>
 			    </div>
