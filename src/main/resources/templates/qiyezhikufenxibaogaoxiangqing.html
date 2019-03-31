@@ -55,7 +55,7 @@
 				<a th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}"  th:href="@{/user/list(token=${cookie.getValue()},pageIndex=0,pageSize=10)}" class="manageMenuF">		
 						用户管理
 				</a>
-				<a href="#" class="manageMenuF">		
+				<a th:href="@{/item/config}" class="manageMenuF">		
 						分类设置
 				</a>
 			</div>
@@ -114,10 +114,10 @@
 			    				报告分类：
 			    			</span>
 			    			<div class="M_messGpRt">
-			    				<select th:field="*{type}" th:value="*{type}" name="type">
-			    					<option value="">请选择报告分类</option>
-			    					<option th:selected="*{type=='生物医药'}" value="生物医药">生物医药</option>
-			    				</select>
+			    				<select th:field="*{type}"  th:value="*{type}" name="type">
+                            		<option value="">请选择报告分类</option>
+                            		<option th:each="item : ${items}" th:value="${item}" th:text="${item}"></option>
+                        		</select>
 			    			</div>
 			    		</div>
 			    		<div class="M_messGp clearfix">

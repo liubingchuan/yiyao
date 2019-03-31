@@ -61,6 +61,7 @@ public class ItemController {
 		map.put("xkfl", new ArrayList<String>());
 		map.put("rczc", new ArrayList<String>());
 		map.put("xmfl", new ArrayList<String>());
+		map.put("bglx", new ArrayList<String>());
 		if(items==null || items.size()==0) {
 			return R.notFound().put("services", map);
 		}

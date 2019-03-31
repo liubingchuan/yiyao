@@ -50,7 +50,7 @@
 				<a th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}"  th:href="@{/user/list(token=${cookie.getValue()},pageIndex=0,pageSize=10)}" class="manageMenuF">		
 						用户管理
 				</a>
-				<a href="#" class="manageMenuF">		
+				<a th:href="@{/item/config}" class="manageMenuF">		
 						分类设置
 				</a>
 			</div>

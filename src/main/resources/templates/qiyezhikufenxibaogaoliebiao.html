@@ -50,7 +50,7 @@
 				<a th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}"  th:href="@{/user/list(token=${cookie.getValue()},pageIndex=0,pageSize=10)}" class="manageMenuF">		
 						用户管理
 				</a>
-				<a href="#" class="manageMenuF">		
+				<a th:href="@{/item/config}" class="manageMenuF">		
 						分类设置
 				</a>
 			</div>
@@ -129,13 +129,13 @@
 		    					2018年中国生物制品医药制品行业细分市
 		    				</a>
 		    			</td>
-		    			<td th:text="'完成单位: ' + ${report.unit}">
+		    			<td th:text="${report.unit}">
 		    			</td>
 		    			<td>
-		    				<span class="colorGreen" th:text="'分类: ' + ${report.type}">生物医药</span>
+		    				<span class="colorGreen" th:text="${report.type}">生物医药</span>
 		    			</td>
 		    			
-		    			<td th:text="'发布时间: ' + ${report.ptime}">
+		    			<td th:text="${report.ptime}">
 		    			</td>
 		    			<td>
 		    				<a th:href="@{/report/get(id=${report.id})}" class="manageProBj">

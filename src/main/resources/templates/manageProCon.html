@@ -55,7 +55,7 @@
 				<a th:each="cookie :${#httpServletRequest.getCookies()}" th:if="${cookie.getName().equals('token')}"  th:href="@{/user/list(token=${cookie.getValue()},pageIndex=0,pageSize=10)}" class="manageMenuF">		
 						用户管理
 				</a>
-				<a href="#" class="manageMenuF">		
+				<a th:href="@{/item/config}" class="manageMenuF">		
 						分类设置
 				</a>
 			</div>
@@ -113,13 +113,6 @@
 			    				项目分类：
 			    			</span>
 			    			<div class="M_messGpRt">
-<!-- 			    				<select th:field="*{classis}" th:value="*{classis}" name="classis"> -->
-<!-- 			    					<option value="">请选择项目分类</option> -->
-<!-- 			    					<option th:selected="*{classis=='物化转化技术'}" value="物化转化技术">物化转化技术</option> -->
-<!-- 			    					<option th:selected="*{classis=='生物固体成型燃料'}" value="生物固体成型燃料">生物固体成型燃料</option> -->
-<!-- 			    					<option th:selected="*{classis=='生物质发电，生物质供热'}" value="生物质发电，生物质供热">生物质发电，生物质供热</option> -->
-<!-- 			    				</select> -->
-			    				
 			    				<select th:field="*{classis}"  th:value="*{classis}" name="classis">
                             		<option value="">请选择项目分类</option>
                             		<option th:each="item : ${items}" th:value="${item}" th:text="${item}"></option>
