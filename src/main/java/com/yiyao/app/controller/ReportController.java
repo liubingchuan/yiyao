@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yiyao.app.common.request.SaveReportRequest;
+import com.yiyao.app.mapper.ItemMapper;
+import com.yiyao.app.model.Item;
 import com.yiyao.app.model.Report;
 import com.yiyao.app.repository.ReportRepository;
 import com.yiyao.app.utils.BeanUtil;
@@ -44,6 +46,9 @@ public class ReportController {
 	
 	@Autowired
 	private ElasticsearchTemplate esTemplate;
+	
+	@Autowired
+    private ItemMapper itemMapper;
 	
 	@PostMapping(value = "report/save")
 	public String saveReport(SaveReportRequest request,Model model) {
@@ -75,6 +80,14 @@ public class ReportController {
 			report = reportRepository.findById(id).get();
 		}
 		model.addAttribute("report", report);
+		
+		
+		Item item = itemMapper.selectItemByService("xmfl");
+		List<String> items = new ArrayList<String>();
+		for(String s: item.getItem().split(";")) {
+			items.add(s);
+		}
+		model.addAttribute("items", items);
 		
 		String view = "qiyezhikufenxibaogaoxiangqing";
 //		if(esTemplate.indexExists(Report.class)) {
