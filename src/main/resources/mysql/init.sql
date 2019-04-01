@@ -22,6 +22,26 @@ CREATE TABLE IF NOT EXISTS yiyao_item(
   item VARCHAR(255) DEFAULT NULL
 ) DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS paper (
+  identifier varchar(255) character set utf8 NOT NULL default '',
+  datestamp varchar(500) character set utf8 default NULL,
+  setSpec varchar(500) character set utf8 default NULL,
+  title text character set utf8,
+  creator text character set utf8,
+  subjects text character set utf8,
+  description text character set utf8,
+  dates varchar(500) character set utf8 default NULL,
+  types varchar(500) character set utf8 default NULL,
+  gooaidentifier varchar(500) character set utf8 default NULL,
+  language varchar(500) character set utf8 default NULL,
+  publisher varchar(500) character set utf8 default NULL,
+  keywords text character set utf8,
+  relation varchar(500) character set utf8 default NULL,
+  source varchar(500) character set utf8 default NULL,
+  doiidentifier varchar(500) character set utf8 default NULL,
+  PRIMARY KEY  (identifier)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
 
 
 
