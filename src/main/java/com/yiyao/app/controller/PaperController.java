@@ -50,7 +50,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.yiyao.app.common.R;
 import com.yiyao.app.common.request.SavePaperRequest;
+import com.yiyao.app.mapper.PaperMapper;
+import com.yiyao.app.mapper.UserMapper;
 import com.yiyao.app.model.Paper;
+import com.yiyao.app.model.PaperMysql;
 import com.yiyao.app.model.Project;
 import com.yiyao.app.repository.PaperRepository;
 import com.yiyao.app.utils.BeanUtil;
@@ -69,24 +72,22 @@ public class PaperController {
 	@Autowired
 	private ElasticsearchTemplate esTemplate;
 	
-//	@PostMapping(value = "papepr/save")
-//	public String savePaper(SavePaperRequest request,Model model) {
-//		
-//		Paper paper = new Project();
-//		BeanUtil.copyBean(request, project);
-//		if(project.getId() == null || "".equals(project.getId())) {
-//			project.setId(UUID.randomUUID().toString());
-//		}
-//		project.setDescription(request.getInfo());
-//		project.setNow(System.currentTimeMillis());
-////		List<String> list = new ArrayList<String>();
-////		list.add("sdf");
-////		list.add("gasdf");
-////		list.add("kkkkkk");
-////		project.setList(list);
-//		projectRepository.save(project);
-//		return "redirect:/project/list";
-//	}
+	@Autowired
+    private PaperMapper paperMapper;
+	
+	
+	@GetMapping(value = "paper/transfer")
+	@ResponseBody
+	public R transferPaper() {
+		List<PaperMysql> papers = paperMapper.getPapers(1, 100);
+		for(PaperMysql paperMysql: papers) {
+			Paper paperES = new Paper();
+			// paperES.set....
+			paperRepository.save(paperES);
+		}
+		return R.ok();
+	}
+	
 	
 	@GetMapping(value = "paper/get")
 	public String getPaper(@RequestParam(required=false,value="id") String id, Model model) {
