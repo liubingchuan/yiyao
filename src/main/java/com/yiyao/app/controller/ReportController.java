@@ -1,8 +1,15 @@
 package com.yiyao.app.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -11,6 +18,7 @@ import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +31,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.yiyao.app.common.R;
 import com.yiyao.app.common.request.SaveReportRequest;
 import com.yiyao.app.mapper.ItemMapper;
 import com.yiyao.app.model.Item;
@@ -49,6 +63,9 @@ public class ReportController {
 	
 	@Autowired
     private ItemMapper itemMapper;
+	
+	@Value("${files.path}")
+	private String fileRootPath;
 	
 	@PostMapping(value = "report/save")
 	public String saveReport(SaveReportRequest request,Model model) {
@@ -78,6 +95,12 @@ public class ReportController {
 		Report report = new Report();
 		if(id != null) {
 			report = reportRepository.findById(id).get();
+			model.addAttribute("pdfId", "".equals(report.getPdf())?null:report.getPdf());
+			model.addAttribute("pdfFileName", "".equals(report.getPdfFileName())?null:report.getPdfFileName());
+			model.addAttribute("pdfSize", "".equals(report.getPdfSize())?null:report.getPdfSize());
+			model.addAttribute("frontendId", "".equals(report.getFrontend())?null:report.getFrontend());
+			model.addAttribute("frontendFileName", "".equals(report.getFrontendFileName())?null:report.getFrontendFileName());
+			model.addAttribute("frontendSize", "".equals(report.getFrontendSize())?null:report.getFrontendSize());
 		}
 		model.addAttribute("report", report);
 		
@@ -183,8 +206,5 @@ public class ReportController {
 			
 		return view;
 	}
-	
-	
-	
 	
 }

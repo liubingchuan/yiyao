@@ -6,12 +6,14 @@
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/R.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/request/GetUserInfoRequest.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/request/LoginRequest.java
+/Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/controller/TaskController.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/request/AgPersonRequest.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/config/DatasourceConfig.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/request/RegisterRequest.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/request/SavePaperRequest.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/controller/ExpertController.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/annotation/IdFlag.java
+/Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/request/SaveItemRequest.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/PagedRequest.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/request/SaveReportRequest.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/config/RestTemplateConfig.java
@@ -19,6 +21,7 @@
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/model/User.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/request/AgTypeRequest.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/SystemConstant.java
+/Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/model/Task.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/annotation/ColumnName.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/controller/PaperController.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/model/Paper.java
@@ -47,10 +50,14 @@
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/controller/ProjectController.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/utils/JsonUtil.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/model/Report.java
+/Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/controller/ItemController.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/request/UpdateUserRequest.java
+/Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/mapper/TaskMapper.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/CheckResult.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/annotation/DontMapping.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/utils/SHA1.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/controller/ReportController.java
+/Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/model/Item.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/controller/UserController.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/controller/WeChatController.java
+/Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/mapper/ItemMapper.java
