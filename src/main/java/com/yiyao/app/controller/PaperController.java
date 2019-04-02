@@ -79,10 +79,11 @@ public class PaperController {
 	@GetMapping(value = "paper/transfer")
 	@ResponseBody
 	public R transferPaper() {
-		List<PaperMysql> papers = paperMapper.getPapers(1, 100);
+		List<PaperMysql> papers = paperMapper.getPapers(1, 1);
 		for(PaperMysql paperMysql: papers) {
 			Paper paperES = new Paper();
-			// paperES.set....
+			paperES.setTitle(paperMysql.getTitle());
+			paperES.setNow(System.currentTimeMillis());
 			paperRepository.save(paperES);
 		}
 		return R.ok();

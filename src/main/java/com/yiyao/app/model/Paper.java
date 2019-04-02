@@ -16,6 +16,7 @@ public class Paper implements Serializable{
 	private String id;
 	private String title;  //标题
 	private String subject; //摘要
+	
 	@Field(type=FieldType.Keyword)
 	private List<String> author;   // 作者
 	
@@ -50,7 +51,15 @@ public class Paper implements Serializable{
 	private String citenum; // 被引量
 	
 	private Long now;
-
+	
+	private String subjects; //学科分类
+	private String date; //日期
+	private String gooalink; //gooa链接
+	private String relation; //relation链接
+	private String doi; //doi
+	private String publisher; //出版商
+	private String type; //资源类型
+	
 	public String getId() {
 		return id;
 	}
@@ -170,7 +179,61 @@ public class Paper implements Serializable{
 	public void setNow(Long now) {
 		this.now = now;
 	}
-	
-	
+
+	public String getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(String subjects) {
+		this.subjects = subjects;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getGooalink() {
+		return gooalink;
+	}
+
+	public void setGooalink(String gooalink) {
+		this.gooalink = gooalink;
+	}
+
+	public String getRelation() {
+		return relation;
+	}
+
+	public void setRelation(String relation) {
+		this.relation = relation;
+	}
+
+	public String getDoi() {
+		return doi;
+	}
+
+	public void setDoi(String doi) {
+		this.doi = doi;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 	
 }
