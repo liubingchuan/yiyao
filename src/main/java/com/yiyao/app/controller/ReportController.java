@@ -91,7 +91,7 @@ public class ReportController {
 	}
 	
 	@GetMapping(value = "report/get")
-	public String getReport(@RequestParam(required=false,value="id") String id, Model model) {
+	public String getReport(@RequestParam(required=false,value="id") String id,@RequestParam(required=false,value="disable") String disable, Model model) {
 		Report report = new Report();
 		if(id != null) {
 			report = reportRepository.findById(id).get();
@@ -103,7 +103,11 @@ public class ReportController {
 			model.addAttribute("frontendSize", "".equals(report.getFrontendSize())?null:report.getFrontendSize());
 		}
 		model.addAttribute("report", report);
-		
+		if(disable !=null) {
+			model.addAttribute("disable", "0");
+		}else {
+			model.addAttribute("disable", "1");
+		}
 		
 		Item item = itemMapper.selectItemByService("xmfl");
 		List<String> items = new ArrayList<String>();

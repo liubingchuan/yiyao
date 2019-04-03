@@ -246,8 +246,8 @@
 			    		<div class="clearfix bianjinrbtn">
 			    		<input type="hidden" th:field="*{id}" />
 			    		<input name="info" type="hidden" id="info">
-			    		<input value="提交" class="M_messSub left" onClick="uptext();"/>
-			    		<a th:href="@{/report/list(pageSize=10,pageIndex=0)}" class="colorRed left shanchubtn">取消</a>
+			    		<input style="display:inline;" th:if="${disable.equals('0')}" type="button" value="保存修改" class="M_messSub" onClick="uptext();"/>
+			    		<input style="display:inline;" type="button" value="返回" class="M_messSub" onClick="javascript:history.back(-1);"/>
 			    		</div>
 			    		</form>
 			    	</div>
