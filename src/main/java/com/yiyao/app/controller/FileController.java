@@ -63,7 +63,7 @@ public class FileController {
             	tbdFile.delete();
             	System.out.println("老文件删除成功");
             }
-            return R.ok().put("img", "/report/fileDownload?filename="+uuid + "_" + fileName).put("size", Math.round(file.getSize()/1000)).put("filename", fileName).put("uuid", uuid);
+            return R.ok().put("img", "/file/fileDownload?filename="+uuid + "_" + fileName).put("size", Math.round(file.getSize()/1000)).put("filename", fileName).put("uuid", uuid);
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
