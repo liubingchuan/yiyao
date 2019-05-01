@@ -7,12 +7,16 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Source;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -79,13 +83,164 @@ public class PaperController {
 	@GetMapping(value = "paper/transfer")
 	@ResponseBody
 	public R transferPaper() {
-		List<PaperMysql> papers = paperMapper.getPapers(1, 1);
-		for(PaperMysql paperMysql: papers) {
-			Paper paperES = new Paper();
-			paperES.setTitle(paperMysql.getTitle());
-			paperES.setNow(System.currentTimeMillis());
-			paperRepository.save(paperES);
+		int currentPage = 0;
+		int pageSize = 0;
+		int index = 0;
+		for(int i=2061;i<2359;i++){
+			
+			currentPage = (currentPage <= 0) ?1:currentPage;
+			pageSize = (pageSize<=0) ? 100:pageSize;
+			index = (currentPage - 1) * pageSize;
+			System.out.println(i);
+			List<PaperMysql> papers = paperMapper.getPapers(index, pageSize);
+			currentPage++;
+			List<Paper> tobesaved = new LinkedList<Paper>();
+			for(PaperMysql paperMysql: papers) {
+				Paper paperES = new Paper();
+				
+				paperES.setId(paperMysql.getId()+"");
+				
+				if (paperMysql.getTitle() != null) {
+					paperES.setTitle(paperMysql.getTitle().trim());
+				}
+				
+				String description = paperMysql.getDescription();
+				if (description != null) {
+					String regEx_html="<[^>]+>";
+					Pattern p_html=Pattern.compile(regEx_html,Pattern.CASE_INSENSITIVE); 
+			        Matcher m_html=p_html.matcher(description); 
+			        description=m_html.replaceAll(""); 
+					paperES.setSubject(description.replaceAll("\\s+", " "));
+				}
+				
+				String author = paperMysql.getCreator();
+				if (author != null && !author.trim().equals("")) {
+					author = author.trim();
+					String regEx_html="<[^>]+>";
+					Pattern p_html=Pattern.compile(regEx_html,Pattern.CASE_INSENSITIVE); 
+			        Matcher m_html=p_html.matcher(author); 
+			        author=m_html.replaceAll(""); 
+					
+					List<String> authorlist = new ArrayList<String>();
+					if (author.contains(";")) {
+						String[] authors = author.split(";");
+						for(String s:authors){
+							authorlist.add(s);
+						}
+					}else{
+						authorlist.add(author);
+					}
+					paperES.setAuthor(authorlist);
+				}
+				
+				String keyword = paperMysql.getKeywords();
+				if (keyword != null && !keyword.trim().equals("")) {
+					if (keyword.contains("keyword:")) {
+						keyword = keyword.replace("keyword:", "").trim();
+						List<String> keywordlist = new ArrayList<String>();
+						if (keyword.contains(",")) {
+							String[] keywords = keyword.split(",");
+							for(String s:keywords){
+								keywordlist.add(s);
+							}
+						}else{
+							keywordlist.add(keyword);
+						}
+						paperES.setKeywords(keywordlist);
+					}
+				}
+				
+				if (paperMysql.getSource()!= null) {
+					String source = paperMysql.getSource().trim();
+					int n = source.indexOf("(");
+					source = source.substring(0, n);
+					if (source.contains(",")) {
+						String[] so = source.split(",");
+						if (so.length == 3) {
+							if (!so[0].trim().equals("")) {
+								paperES.setJournal(so[0].trim());
+							}
+							if (!so[1].trim().equals("")) {
+								paperES.setVolume(so[1].trim());
+							}
+							if (!so[2].trim().equals("")) {
+								paperES.setIssue(so[2].trim());
+							}
+						}
+						if (so.length == 2) {
+							if (!so[0].trim().equals("")) {
+								paperES.setJournal(so[0].trim());
+							}
+							if (!so[1].trim().equals("")) {
+								paperES.setVolume(so[1].trim());
+							}
+							
+						}
+					}
+				}
+				
+				String date = paperMysql.getDates();
+				if (date != null && !date.trim().equals("")) {
+					date = date.trim();
+					paperES.setPublictime(date);
+					
+					if (date.contains("-")) {
+						paperES.setYear(date.split("-")[0]);
+					}else{
+						paperES.setYear(date);
+					}
+				}
+				
+				paperES.setNow(System.currentTimeMillis());
+				
+				String subjects = paperMysql.getSubjects();
+				if (subjects != null && !subjects.trim().equals("")) {
+					subjects = subjects.trim();
+					List<String> subjectslist = new ArrayList<String>();
+					if (subjects.contains(",")) {
+						String[] subjectss = subjects.split(",");
+						for(String s:subjectss){
+							subjectslist.add(s);
+						}
+					}else {
+						subjectslist.add(subjects);
+					}
+					paperES.setSubjects(subjectslist);
+				}
+				
+				if (paperMysql.getGooaidentifier()!= null) {
+					paperES.setGooalink(paperMysql.getGooaidentifier().trim());
+				}
+				
+				if (paperMysql.getDoiidentifier()!= null) {
+					paperES.setDoi(paperMysql.getDoiidentifier().trim());
+				}
+				
+				if (paperMysql.getRelation()!= null) {
+					paperES.setRelation(paperMysql.getRelation().trim());
+				}
+				
+				if (paperMysql.getPublisher()!= null) {
+					paperES.setPublisher(paperMysql.getPublisher().trim());
+				}
+				
+				if (paperMysql.getTypes()!= null) {
+					paperES.setType(paperMysql.getTypes().trim());
+				}
+				tobesaved.add(paperES);
+//				paperRepository.save(paperES);
+				
+				
+			}
+			paperRepository.saveAll(tobesaved);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
 		return R.ok();
 	}
 	
@@ -258,7 +413,14 @@ public class PaperController {
 	}
 	
 	 
-
+	public static void main(String[] args){
+		String subjects ="         <h4>Background</h4>  <tt>    <p style=\"line-height:160%\">Prognosis of ";
+		String regEx_html="<[^>]+>";
+		Pattern p_html=Pattern.compile(regEx_html,Pattern.CASE_INSENSITIVE); 
+        Matcher m_html=p_html.matcher(subjects); 
+        subjects=m_html.replaceAll(""); 
+		System.out.println(subjects.replaceAll("\\s+", " "));
+	}
 	
 	
 }

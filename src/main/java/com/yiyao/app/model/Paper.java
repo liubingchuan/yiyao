@@ -52,8 +52,11 @@ public class Paper implements Serializable{
 	
 	private Long now;
 	
-	private String subjects; //学科分类
-	private String date; //日期
+	@Field(type=FieldType.Keyword)
+	private List<String> subjects; //学科分类
+	
+	@Field(type=FieldType.Text)
+	private String publictime; //日期
 	private String gooalink; //gooa链接
 	private String relation; //relation链接
 	private String doi; //doi
@@ -180,20 +183,20 @@ public class Paper implements Serializable{
 		this.now = now;
 	}
 
-	public String getSubjects() {
+	public List<String> getSubjects() {
 		return subjects;
 	}
 
-	public void setSubjects(String subjects) {
+	public void setSubjects(List<String> subjects) {
 		this.subjects = subjects;
 	}
 
-	public String getDate() {
-		return date;
+	public String getPublictime() {
+		return publictime;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setPublictime(String publictime) {
+		this.publictime = publictime;
 	}
 
 	public String getGooalink() {

@@ -13,6 +13,7 @@ public class PaperMysql {
 	@IdFlag
 	private Integer id;
 	private String identifier;
+	private String creator;
 	private String datestamp;
 	private String setSpec;
 	private String title;
@@ -122,6 +123,12 @@ public class PaperMysql {
 	}
 	public void setDoiidentifier(String doiidentifier) {
 		this.doiidentifier = doiidentifier;
+	}
+	public String getCreator() {
+		return creator;
+	}
+	public void setCreator(String creator) {
+		this.creator = creator;
 	}
 	
 	
