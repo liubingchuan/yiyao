@@ -27,6 +27,7 @@
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/model/Paper.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/repository/PatentRepository.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/model/Org.java
+/Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/controller/FileController.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/utils/DateUtil.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/request/SaveOrgRequest.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/model/Project.java
@@ -34,6 +35,7 @@
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/utils/CheckUtil.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/annotation/TableName.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/repository/ProjectRepository.java
+/Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/model/PaperMysql.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/service/Cache.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/repository/ExpertRepository.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/mapper/BasedProvider.java
@@ -49,6 +51,7 @@
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/model/Expert.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/controller/ProjectController.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/utils/JsonUtil.java
+/Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/mapper/PaperMapper.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/model/Report.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/controller/ItemController.java
 /Users/liubingchuan/git/yiyao/src/main/java/com/yiyao/app/common/request/UpdateUserRequest.java

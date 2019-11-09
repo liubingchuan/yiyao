@@ -8,6 +8,7 @@ com/yiyao/app/common/request/SaveItemRequest.class
 com/yiyao/app/common/request/AgPersonRequest.class
 com/yiyao/app/model/Project.class
 com/yiyao/app/common/request/LoginRequest.class
+com/yiyao/app/mapper/PaperMapper.class
 com/yiyao/app/repository/PaperRepository.class
 com/yiyao/app/utils/JsonUtil.class
 com/yiyao/app/config/DatasourceConfig.class
@@ -16,6 +17,7 @@ com/yiyao/app/common/request/SaveReportRequest.class
 com/yiyao/app/service/Cache.class
 com/yiyao/app/controller/PatentController$3.class
 com/yiyao/app/model/Patent.class
+com/yiyao/app/controller/FileController.class
 com/yiyao/app/config/WebSocketConfig.class
 com/yiyao/app/common/request/AgTypeRequest.class
 com/yiyao/app/common/request/SavePaperRequest.class
@@ -40,6 +42,7 @@ com/yiyao/app/controller/PaperController$1.class
 com/yiyao/app/controller/ItemController.class
 com/yiyao/app/common/request/SaveProjectRequest.class
 com/yiyao/app/utils/SHA1.class
+com/yiyao/app/model/PaperMysql.class
 com/yiyao/app/utils/BeanUtil.class
 com/yiyao/app/repository/ProjectRepository.class
 com/yiyao/app/model/Report.class
